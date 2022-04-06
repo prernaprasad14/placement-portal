@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap');
+body{
+  /* display: flex;
+  justify-content: center; */
+	font-family: 'Open Sans', sans-serif;
+	/* background-image: url('../img/leafbg.png'); */
+	background-repeat: no-repeat;	
+	height:100vh;
+	background-position: center;
+	background-size: cover;
+}
+body, *{
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+  color:black ;
+}
+.homepage, .dashboard,.login, .brochure{
+  margin-top: 20px;
+  background-color: #317ac2;
+}
+.nav-container ul{
+  align-items: center;
+  display: flex;
+}
+.navItems li{
+  list-style-type: none;
+  padding: 5px 20px;
+}
+.home{
+  display: flex; 
+}
+.home div{ 
+  padding:5px;
+  box-sizing: border-box;
+}
+.item:nth-child(2){
+	box-sizing: border-box;
+	margin-left:auto;
+}
+
+input, textarea{	
+	background-color: white;
+	margin: auto;
+	margin-top: 20px;
+	height: 45px;
+	width:400px;
+	padding: 12px;
+	display: block;
+	border-radius:5px; 
+}
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+}
+form div{
+	margin: 16px 0;
+}
+
+label{
+	margin:2px 1px ;
+	padding: 2px 0;
+	color: rgb(43, 43, 43);
+	font-weight: 500;
+}
+input+p{
+	height: 0;
+	opacity: 0;
+}
+input.valid + p{
+	font-size: 14px;
+	opacity: 0;
+}
+
+input.invalid + p{
+	margin-left: 20px;
+	height: auto;
+	color: #e9255d;
+	font-size: 13px;
+	font-weight: 500;
+	opacity: 1;
+}

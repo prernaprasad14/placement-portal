@@ -1,0 +1,15 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev" :  "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" "
+  },
+  "proxy": "http://localhost:4000",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.0.0"
+  }
+}
