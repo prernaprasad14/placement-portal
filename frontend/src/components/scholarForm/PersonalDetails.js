@@ -11,11 +11,12 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
     // const [disable, setDisable] = useState(false)
     const Continue = e =>{
         e.preventDefault()  
-        const isValid=e.target.classList.contains('invalid')
-        if(!isValid)
-        {
-            setError(true)
-        }
+        // const isValid=e.target.classList.contains('invalid')
+        // if(!isValid)
+        // {
+        //     console.log("handleChange")
+        //     setError(true)
+        // }
         
         // console.log("1 btn clicked")        
         // if(!fname|| !lname || !dob || !gender || !phone ||
@@ -28,11 +29,11 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
         //     console.log("3 Continue: error false")
         //     setError(false)
         // }
-           else{
-            setError(false)
-            nextStep();
-           }
-          
+        //    else{
+        //     setError(false)
+            
+        //    }
+          nextStep();
     }
    
     return(    

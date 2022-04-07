@@ -9,6 +9,12 @@ const scholarSchema = new mongoose.Schema({
         default:true,
         required:true
     },
+    placement_status:{
+        type : String,
+        enum:['placed','unplaced'],
+        required:true,
+        default: 'unplaced'
+    },
     loginDetails:{
         username:{
             type: String,
@@ -45,12 +51,6 @@ const scholarSchema = new mongoose.Schema({
             enum: ['male', 'female', 'prefer not to say'] ,
             required:true,
             default : 'prefer not to say'
-        },
-        placement_status:{
-            type : String,
-            enum:['placed','unplaced'],
-            required:true,
-            default: 'unplaced'
         },
         phone:{
             type : String,

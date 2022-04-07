@@ -7,7 +7,7 @@
 - Mongo Database
 
 Installation steps
-1. Install the required pacakges
+1. Install the required packages in root, backend and frontend directories
 ```sh
 npm install
 ```

@@ -6,7 +6,6 @@ import Intermediate from './scholarForm/Intermediate'
 import HighSchool from './scholarForm/HighSchool'
 import LoginDetails from './scholarForm/LoginDetails'
 import axios from '../axiosConfig';
-import {scholarSchema} from '../validation/scholarValidation'
 
 export default class ScholarRegistration extends Component {
 
@@ -151,14 +150,14 @@ export default class ScholarRegistration extends Component {
     };
     
     var val = JSON.stringify(input) ;
-    const [valid , setValid]= useState(false)
+    // const [valid , setValid]= useState(false)
     console.log("3 const val= JSON.stringify(input), val:: "+val)
     console.log("4 pattern.val:: "+`${pattern.val}`)
     console.log("5 e:: "+e.target )
     // console.log("pattern.[e.target.value]:: "+pattern.val)
     if(pattern[input].test(e.target.value) ){
         console.log("valid")
-        setValid(true)
+        //  
         console.log("input.classList"+input.className)
         console.log("e.target.classList "+e.target.classList )
         e.target.classList.remove('invalid')
@@ -167,7 +166,7 @@ export default class ScholarRegistration extends Component {
     }
     else{
         console.log("invalid")
-        setValid(false)
+        // setValid(false)
         e.target.classList.remove('valid')
         e.target.classList.add('invalid')
         e.target.style.borderColor="#DB2777";

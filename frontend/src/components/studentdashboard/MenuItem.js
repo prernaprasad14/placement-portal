@@ -5,7 +5,6 @@ const  MenuItem = ({menuitem}) => {
  
     const link = menuitem.toLowerCase()
 
-  
 
     return(  
         <>

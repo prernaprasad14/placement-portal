@@ -5,13 +5,13 @@ import WorkArea from './WorkArea'
 
 import CreateUser from './CreateUser'
 const  Dashboard = () => {
-
+  console.log("1 inside Dashboard")
   
   return(  
     <>
     <div>
-        <ul>
-            <li className='item'><Link to="/dashboard">Dashboard</Link></li>    
+        <ul className=''>
+            <li className='item bg-orange-400'><Link to="/dashboard">Dashboard</Link></li>    
             <li className='item'><Link to="/dashboard/profile">Profile</Link></li>    
             <li className='item'><Link to="/dashboard/scholar">Scholars</Link></li>    
             <li className='item'><Link to="/dashboard/companies">Companies</Link></li>    
@@ -19,12 +19,12 @@ const  Dashboard = () => {
         </ul>
     </div>
     <div className='flex '>
-      <div>
+      <div className='w-1/6'>
 
-        <Sidebar/>
+        <Sidebar className="bg-pink-200"/>
        
       </div>
-      <div>
+      <div className='w-5/6'>
        
         <WorkArea/>
       </div>

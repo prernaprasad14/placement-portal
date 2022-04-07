@@ -52,7 +52,7 @@ const  SelectionDetails= ({ prevStep, nextStep, handleChange, values }) => {
                     <label className="px-4" >No</label>
                 </div>
             </div>
-            <div onChange={handleChange('coding_test')} name="coding_test" defaultValue={values.coding_test} className=" my-1 inline-block ">
+            <div onChange={handleChange('coding_test')} name="coding_test" defaultValue={values.coding_test} className=" my-1 ">
                 <p className='font-semibold'>Coding test<span className='text-pink-600'>*</span></p>
                 <div className="inline-block ">
                     <input type="radio" name="group3" value="yes" className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>

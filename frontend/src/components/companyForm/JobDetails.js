@@ -46,8 +46,6 @@ const JobDetails = ({ prevStep, nextStep, handleChange, values}) => {
                 <input type="text" placeholder="" onChange={handleChange('job_desc')} defaultValue={values.job_desc}
                  className="px-3 my-2 border-2 rounded-md  border-violet-200" />
               </div>
-              
-              <div> Salary Details
               <div onChange={handleChange('recruitment_type')} defaultValue={values.recruitment_type} className=" my-1 ">
                   <p className='font-semibold'>Recruitment type<span className='text-pink-600'>*</span></p>
                   <div className="inline-block ">
@@ -63,6 +61,8 @@ const JobDetails = ({ prevStep, nextStep, handleChange, values}) => {
                       <label className="px-4">Internship + Fulltime</label>
                   </div> 
               </div>
+              <div className='my-5'>
+                <p className='font-bold'>Salary details</p>
                 <div className='my-5'>
                   <label  className='m-0 p-0'>Annual package<span className='text-pink-600'>*</span></label>
                   <input type="text" placeholder="" onChange={handleChange('annual_package')} defaultValue={values.annual_package}
@@ -70,8 +70,8 @@ const JobDetails = ({ prevStep, nextStep, handleChange, values}) => {
                 </div>
                 <div className='my-5'>
                   <label  className='m-0 p-0'>Breakage of ctc<span className='text-pink-600'>*</span></label>
-                  <input type="text" placeholder="" onChange={handleChange('breakage_ctc')} defaultValue={values.breakage_ctc}
-                  className="px-3 my-2 border-2 rounded-md  border-violet-200" />
+                  <textarea type="text" name="pg_backlog_details" maxLength="100"  placeholder={`description of backlogs (if applicable)\nfor example: 1. Maths, otherwise NA`} onChange={handleChange('pg_backlog_details')} defaultValue={values.pg_backlog_details}
+                    className="px-3 my-5 min-h-[90px] max-h-[160px]  border-2 rounded-md  border-violet-200 placeholder:italic"></textarea>
                 </div>
               </div>
                 

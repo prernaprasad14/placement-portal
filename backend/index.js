@@ -1,20 +1,22 @@
 
 const express = require('express');
-
 const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const Scholar = require('./model/Scholar')
 //Import routes
 const companyRoute = require('./routes/company');
 const scholarRoute = require('./routes/scholar');
 const userRoute = require('./routes/user');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 dotenv.config();
 
 //connect to database
 require('./db/conn.js')
-app.use(cookieParser());
+
+
 //Middleware
 app.use(
     cors({
@@ -24,12 +26,21 @@ app.use(
 )
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 
 
 app.get('/' ,(req, res)=>{
-    res.send("this is homepage");
+    console.log("request for homepage"+req)
 });
 //Route middleware
+app.use('/scholars', async (req, res)=>{
+    console.log("! scholar passed ")
+    const scholars = await Scholar.find({})
+    console.log("2 scholar passed "+ scholars)
+    const date= new Date()
+    console.log(date)
+    res.json({success: true, message:"retrieved scholars", scholars})
+});
 app.use('/api/user', userRoute);
 app.use('/api/scholar', scholarRoute);
 app.use('/api/company', companyRoute);
