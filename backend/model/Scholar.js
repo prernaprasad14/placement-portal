@@ -220,12 +220,11 @@ const scholarSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    tokens:[{
-        token: {
-            type: String,
-            required: true 
-        }
-    }]
+    token: {
+        type: String,
+        required: true 
+    }
+
     
 });
 
@@ -236,7 +235,7 @@ scholarSchema.methods.generateToken = async function (){
         const token = jwt.sign({_id: this._id}, process.env.TOKEN_SECRET)
         console.log("2 here")
         // if(this.tokens.length == 0 ){
-            this.tokens = this.tokens.concat({token:token})
+            this.token = token
             console.log("3 here "+token)
             await this.save();  
             console.log("4here ")

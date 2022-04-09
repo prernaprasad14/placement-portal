@@ -45,7 +45,7 @@ router.post('/create-user', validateCompanyCreate, async(req,res)=>{
                 path: __dirname+'/img/logo.png',
                 cid: 'logo'
             }],
-            html: generateCreateUserMail(`http://localhost:3000/comapny-registration?email=${user.email}&user=${hash}&token=${user.token}`, user.username ),
+            html: generateCreateUserMail(`http://localhost:3000/company-registration?email=${user.email}&user=${hash}&token=${user.token}`, user.username ),
      
         });
     
