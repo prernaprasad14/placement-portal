@@ -5,8 +5,9 @@ var nodemailer = require('nodemailer');
 const Scholar = require('../model/Scholar')
 const Company = require('../model/Company')
 const ResetPassword = require('../model/resetPasswordSchema');
+const {isResetTokenValid} = require('../userinputvalidation');
 const { createRandomBytes  } = require('../helper');
-const { generatePasswordResetMail } = require('../mail');
+const { generatePasswordResetMail, generateSuccessPasswordResetMail } = require('../mail');
 
 router.get('/logout', async(req,res)=>{
     res.clearCookie('jwt',{ path :'/'})
@@ -61,7 +62,7 @@ router.post('/forgot-password' , async (req, res)=>{
                     path: __dirname+'/img/logo.png',
                     cid: 'logo'
                 }],
-                html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, scholar.username),
+                html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, scholar.loginDetails.username),
             });
 
             return res.status(200).send("password link sent has been sent to your account")
@@ -93,7 +94,7 @@ router.post('/forgot-password' , async (req, res)=>{
                 path: __dirname+'/img/logo.png',
                 cid: 'logo'
             }],
-            html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, user.username),
+            html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, user.loginDetails.username),
         });
 
     return res.status(200).send("password link sent has been sent to your account")
@@ -117,7 +118,7 @@ router.post('/reset-password',  async(req, res)=>{
             pass: process.env.MAILTRAP_PASSWORD
         }
     });
-    const user = await Scholar.findOne({"loginDetails.email":req.query.email})
+    const user = await Company.findOne({"loginDetails.email":req.query.email})
     if(!user) {
         const scholar = await Scholar.findOne({"loginDetails.email":req.query.email})
         if(!scholar){
@@ -147,7 +148,7 @@ router.post('/reset-password',  async(req, res)=>{
                     path: __dirname+'/img/logo.png',
                     cid: 'logo'
                 }],
-                html: generateSuccessPasswordResetMail(scholar.username),  
+                html: generateSuccessPasswordResetMail(scholar.loginDetails.username),  
             });
             console.log(`password has been reset`)
             return res.status(200).json({success: true, message:"Password has been reset successfully"})
@@ -165,7 +166,8 @@ router.post('/reset-password',  async(req, res)=>{
 
         await Scholar.findOneAndUpdate({"loginDetails.email":req.query.email}, {"loginDetails.password" : hashedPassword})
         await ResetPassword.findByIdAndDelete(tokenDetails._id);
-        
+        console.log("user.loginDetails.username")
+        console.log(user.loginDetails.username)
         transporter.sendMail({
             from: 'placementcellducs@cs.du.ac.in',
             to: `${user.loginDetails.email}`,
@@ -175,7 +177,7 @@ router.post('/reset-password',  async(req, res)=>{
                 path: __dirname+'/img/logo.png',
                 cid: 'logo'
             }],
-            html: generateSuccessPasswordResetMail(user.username),  
+            html: generateSuccessPasswordResetMail(user.loginDetails.username),  
         });
         
         console.log(`password has been reset`)
@@ -185,5 +187,9 @@ router.post('/reset-password',  async(req, res)=>{
         
 });
 
+router.get('/verify-token', isResetTokenValid, async(req,res)=>{
+    console.log("verify-token")
+    res.json({success:true})
+}); 
 
 module.exports = router;  

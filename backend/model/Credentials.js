@@ -29,7 +29,7 @@ const credentialsSchema = new mongoose.Schema( {
 
 credentialsSchema.methods.generateToken = async function (){
     try{
-        console.log("1 1 here")
+        console.log("1 1 here credentials")
         const token = jwt.sign({_id: this._id}, process.env.TOKEN_SECRET)
         console.log("2 2 here")
         // if(this.tokens.length == 0 ){

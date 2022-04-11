@@ -35,9 +35,12 @@ app.get('/' ,(req, res)=>{
     console.log("request for homepage"+req)
 });
 //Route middleware
+
+
+
 app.use('/scholars', async (req, res)=>{
     console.log("scholars route passed !")
-    const scholars = await Scholar.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
+    const scholars = await Scholar.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0})
     const date= new Date()
     console.log(date)
     res.json({success: true, message:"retrieved scholars", scholars})

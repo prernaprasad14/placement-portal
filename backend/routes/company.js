@@ -8,8 +8,7 @@ const ResetPassword = require('../model/resetPasswordSchema');
 const jwt = require('jsonwebtoken');
 const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate, isResetTokenValid} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
-const { createRandomBytes  } = require('../helper');
-const { generateCreateUserMail, generatePasswordResetMail , generateSuccessPasswordResetMail } = require('../mail');
+const { generateCreateUserMail } = require('../mail');
 
 router.post('/create-user', validateCompanyCreate, async(req,res)=>{
 
@@ -188,13 +187,9 @@ router.get('/verify-email', async(req, res)=>{
     const exists = await Company.findOne({email})
     console.log("2 exists"+ exists)
     if(exists) return res.status(400).json({success: false, message:"already registered"})
-    return res.status(200).json({success: true, message:"Notregistered"})
+    return res.status(200).json({success: true, message:"Not registered"})
 })
 
-router.get('/verify-token', isResetTokenValid, async(req,res)=>{
-    console.log("verify-token")
-    res.json({success:true})
-}); 
 
 
 

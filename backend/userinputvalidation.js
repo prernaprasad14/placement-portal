@@ -2,21 +2,25 @@ const {check,validationResult} = require('express-validator')
 const User= require('./model/User')
 const ResetPassword = require('./model/resetPasswordSchema');
 
-exports.validateScholarCreate =[
-    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
+exports.validateScholarCreate=[
+    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
     check('username').not().isEmpty().withMessage("Username This field is required") 
 ]
-exports.validateCompanyCreate =[
+exports.validateCompanyCreate=[
     check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
     check('username').not().isEmpty().withMessage("Username This field is required") 
 ]
 
-exports.validateLogin =[
-    check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
-    check('loginDetails.password').not().isEmpty().withMessage("Password This field is required") ,
+exports.validateScholarLogin=[
+    check('email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
+    check('password').not().isEmpty().withMessage("Password This field is required"),
+]
+exports.validateLogin=[
+    check('email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address"),
+    check('password').not().isEmpty().withMessage("Password This field is required"),
 ]
 
-exports.validateCompanyRegistration =[
+exports.validateCompanyRegistration=[
     check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().isEmail().withMessage('Please enter a avlid email'),
     check('loginDetails.password').not().isEmpty().withMessage("Password This field is required").bail() ,
     // check('personalDetails.fname').not().isEmpty().withMessage("First name This field is required").bail().isLength({min: 3, max:20}),
@@ -30,22 +34,31 @@ exports.validateCompanyRegistration =[
     // check('course').not().isEmpty().withMessage("course This field is required"),
     
 ] ;
-exports.validateRegistration =[
+exports.validateScholarRegistration=[
     check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
     check('loginDetails.password').not().isEmpty().withMessage("Password This field is required").bail() ,
-    // check('personalDetails.fname').not().isEmpty().withMessage("First name This field is required").bail().isLength({min: 3, max:20}),
-    // check('personalDetails.lname').not().isEmpty().withMessage("Last name This field is required").bail().isLength({min: 3, max:20}),
-    // check('personalDetails.dob').not().isEmpty().withMessage("Date of Birth This field is required").bail(),
-    // check('personalDetails.gender').not().isEmpty().withMessage("Gender This field is required").bail(),
-    // check('personalDetails.phone_no').not().isEmpty().withMessage("Phone no. This field is required").bail().isLength({min: 3, max:20}),
-    // check('personalDetails.alternative_phone').not().isEmpty().withMessage("Alternative phone no. This field is required").bail().isLength({min: 3, max:20}),
-    // check('personalDetails.permanent_addr').not().isEmpty().withMessage("Permanent address This field is required").bail().isLength({min: 3, max:40}),
-    // check('personalDetails.correspondence_addr').not().isEmpty().withMessage("Correspondence This field is required").bail().isLength({min: 3, max:40}),
-    // check('course').not().isEmpty().withMessage("course This field is required"),
+    check('personalDetails.fname').not().isEmpty().withMessage("First name This field is required").bail().isLength({min: 3, max:20}),
+    check('personalDetails.lname').not().isEmpty().withMessage("Last name This field is required").bail().isLength({min: 3, max:20}),
+    check('personalDetails.dob').not().isEmpty().withMessage("Date of Birth This field is required").bail(),
+    check('personalDetails.gender').not().isEmpty().withMessage("Gender This field is required").bail(),
+    check('personalDetails.phone_no').not().isEmpty().withMessage("Phone no. This field is required").bail().isLength({min: 3, max:20}),
+    check('personalDetails.alternative_phone').not().isEmpty().withMessage("Alternative phone no. This field is required").bail().isLength({min: 3, max:20}),
+    check('personalDetails.permanent_addr.perma_addr1').not().isEmpty().withMessage("Permanent address: address line 1 is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.permanent_addr.peram_addr2').not().isEmpty().withMessage("Permanent address: address line 1 is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.permanent_addr.perma_city').not().isEmpty().withMessage("Permanent address: city  is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.permanent_addr.perma_state').not().isEmpty().withMessage("Permanent address: state  is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.permanent_addr.perma_pin').not().isEmpty().withMessage("Permanent address: pin  is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.correspondence_addr.corr_addr1').not().isEmpty().withMessage("correspondence address line 1 is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.correspondence_addr.corr_addr2').not().isEmpty().withMessage("correspondence addrecorrddress line 1 is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.correspondence_addr.corr_city').not().isEmpty().withMessage("correspondence city  is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.correspondence_addr.corr_state').not().isEmpty().withMessage("correspondence state  is required").bail().isLength({min: 3, max:40}),
+    check('personalDetails.correspondence_addr.corr_pin').not().isEmpty().withMessage("correspondence address: pin  is required").bail().isLength({min: 3, max:40}),
+    
+    check('course').not().isEmpty().withMessage("course This field is required"),
     
 ] ;
 
-exports.validate = (req, res, next) =>{ 
+exports.validate = (req, res, next)=>{ 
     const error = validationResult(req).array()
     if(!error.length) return next()
  

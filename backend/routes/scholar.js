@@ -3,11 +3,15 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
+
+
 const {generateToken}= require('../model/Scholar');
+
 const Scholar = require('../model/Scholar');
+
 const User = require('../model/User');
 const ResetPassword = require('../model/resetPasswordSchema');
-const {validateRegistration, validateScholarCreate, validateLogin, validate, isResetTokenValid} = require('../userinputvalidation');
+const {validateScholarRegistration, validateScholarCreate, validateScholarLogin, validate, isResetTokenValid} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
 const { createRandomBytes  } = require('../helper');
 const { generateCreateUserMail, generatePasswordResetMail , generateSuccessPasswordResetMail } = require('../mail');
@@ -69,7 +73,7 @@ router.post('/verify-email', async(req, res)=>{
     if(exists) return res.status(200).json({success: true, message:"already registered"})
     return res.status(400).json({success: false, message:"Notregistered"})
 })
-router.post('/register', validateRegistration, validate , async (req, res)=>{
+router.post('/register', validateScholarRegistration, validate , async (req, res)=>{
     try{
         console.log("hello")
         
@@ -157,7 +161,7 @@ router.post('/register', validateRegistration, validate , async (req, res)=>{
         }catch{err => console.log(err);}
    
 });
-router.post('/login', validateLogin, validate,  async (req, res)=>{
+router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
     const user = await Scholar.findOne({"loginDetails.email":req.body.loginDetails.email})
     console.log("check1")
     if(!user) return res.status(400).send("Invalid credentails");
@@ -184,27 +188,38 @@ router.post('/login', validateLogin, validate,  async (req, res)=>{
     
 });
 
+router.get('/profile/:id', async(req,res)=>{
+    console.log("/profile/:id   passed route")
+    console.log("id:: " + req.params.id) 
+    console.log(req.params) 
+    const id  = req.params.id
 
+    const scholar = Scholar.findById({_id: req.params.id}, function (err, scholar) {
+        if(err){
+            console.log(err);
+            return res.send(error)
+        }
+        else{
+            console.log( scholar);
+            return res.json({success:true ,message:"retrieved scholar ",scholar}) 
+        }})
+    
 
-
+});
 
 router.get('/dashboard/:id', async(req,res)=>{
     const id = req.params.id
-    console.log("id"+id)
-    const scholar = await Scholar.findOne({_id:req.params.id})
+    
+    
+    const scholar = await Scholar.findOne({_id:id})
     console.log("Scholar "+ scholar)
     if(!scholar) return res.json({success: false , message:"Invalid request"})
     return res.json({success:true, data: scholar})
 })
-router.post('/update', async(req,res)=>{
-    
-})
-
 
 router.get('/verify-token', isResetTokenValid, async(req,res)=>{
     console.log("verify-token")
     res.json({succes:true})
 }); 
-
 
 module.exports = router;  
