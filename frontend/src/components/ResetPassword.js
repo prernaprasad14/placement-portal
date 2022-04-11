@@ -19,7 +19,7 @@ const ResetPassword = () =>{
     console.log(location)
     
     const verifyToken=async()=>{
-        const {email, token, id} = queryString.parse(location.search)
+        const {email, token} = queryString.parse(location.search)
         try{
             
             const {data} = await axios(`api/user/verify-token?email=${email}&token=${token}`);
@@ -53,7 +53,7 @@ const ResetPassword = () =>{
         if(password !== confirmPassword)
             return setError('Passwords do not match')
         try{
-            const {email, token, id} = queryString.parse(location.search)
+            const {email, token} = queryString.parse(location.search)
             setLoading(true)
             const {data} = await axios.post(`api/user/reset-password?email=${email}&token=${token}`, {password, confirmPassword});
             console.log("data: "+JSON.stringify(data))

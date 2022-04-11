@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev" :  "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" "
+    "dev": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\" "
   },
   "proxy": "http://localhost:4000",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "react-html-table-to-excel": "^2.0.0"
   }
 }

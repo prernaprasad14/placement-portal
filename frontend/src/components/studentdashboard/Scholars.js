@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react"
-import { CSVLink, CSVDownload } from "react-csv";
-import Table from "./Table"
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import ScholarTable from "./ScholarTable"
 import axios from "../../axiosConfig"
 
 const Scholars=()=>{
-    console.log("inside Scholars")
-    console.log("1 Scholar")
+    console.log("1 inside Scholars")
     const [scholars, setScholars]= useState('')
     console.log("2 Scholar")
     useEffect(()=>{
         getAllScholars()
     },[]);
-
-    const csvData=  [Object.entries(scholars).map((scholar)=>{
-        return JSON.stringify(scholar)})]
-
+    const date = Date.now()
     const getAllScholars=()=>{
         console.log("here here")
         axios.get('/scholars')
@@ -28,10 +24,11 @@ const Scholars=()=>{
         .catch(err=> console.log("Error getAllScholars : "+err))
     }
     return(
-        <>
-        <div  className="bg-emerald-500 inline-block rounded m-auto px-4 py-2 text-white font-300"><CSVLink data={csvData}>Export</CSVLink></div>
+        <><div  className="bg-emerald-600 hover:bg-green-500  inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="scholars-table"
+        filename={`${date}-scholars`} sheet="tablexls"  buttonText="Export"/>
+            </div>
         <div onLoad={getAllScholars} className="bg-yellow-300 p-9">hello
-            <Table scholars={scholars}/>
+            <ScholarTable scholars={scholars}/>
         </div>
         </>
     )

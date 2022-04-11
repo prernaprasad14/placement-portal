@@ -97,14 +97,14 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
                         <p className='font-bold'>Permanent Address</p>
                          <div>
                              <label>Address Line 1 <span className='text-pink-600'>*</span></label>
-                            <input type="text" name="perma_addr_1" placeholder="" onChange={handleChange('perma_addr1')} defaultValue={values.perma_addr1} 
+                            <input type="text" name="perma_addr1" placeholder="" onChange={handleChange('perma_addr1')} defaultValue={values.perma_addr1} 
                                 className="px-3 my-1 border-2 rounded-lg  border-violet-200" />
                             <p>This is a required field</p>
 
                          </div>
                          <div>
                              <label>Address Line 2 <span className='text-pink-600'>*</span></label>
-                            <input type="text"  name="perma_addr_2"placeholder="" onChange={handleChange('perma_addr2')} defaultValue={values.perma_addr2} 
+                            <input type="text"  name="perma_addr2"placeholder="" onChange={handleChange('perma_addr2')} defaultValue={values.perma_addr2} 
                                 className="px-3 my-1 border-2 rounded-lg  border-violet-200" />
                             <p>This is a required field</p>
 
