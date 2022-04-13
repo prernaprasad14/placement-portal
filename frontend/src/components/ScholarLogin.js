@@ -38,14 +38,14 @@ const ScholarLogin=()=>{
                 console.log("err")
             }
         }).catch((error) => {
-            console.log(error)
+            console.log("Error: "+error)
         });
     }
     return (
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
             <div className='text-bold bg-white drop-shadow-[0_0_3px_rgba(0,0,0,0.1)] mt-3 rounded-lg'>  
                 
-                <form onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
+                <form type="submit" onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
                     <h4 className='my-2 font-medium text-lg inline-block'>Scholar Login</h4> 
                     <Link to='../login'  className="font-bold  mt-1 underline ml-[160px] text-violet-400 hover:text-violet-800">Company Login</Link>
                     <div>

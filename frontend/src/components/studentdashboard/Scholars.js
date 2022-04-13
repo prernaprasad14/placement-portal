@@ -24,11 +24,14 @@ const Scholars=()=>{
         .catch(err=> console.log("Error getAllScholars : "+err))
     }
     return(
-        <><div  className="bg-emerald-600 hover:bg-green-500  inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="scholars-table"
-        filename={`${date}-scholars`} sheet="tablexls"  buttonText="Export"/>
+        <>
+        <div className="bg-blue-300">
+            <div  className="bg-emerald-600 hover:bg-green-500  inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="scholars-table"
+                filename={`${date}-scholars`} sheet="tablexls"  buttonText="Export"/>
+                </div>
+            <div onLoad={getAllScholars} className="p-9">Scholars
+                <ScholarTable scholars={scholars}/>
             </div>
-        <div onLoad={getAllScholars} className="bg-yellow-300 p-9">hello
-            <ScholarTable scholars={scholars}/>
         </div>
         </>
     )

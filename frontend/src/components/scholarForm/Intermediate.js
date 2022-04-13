@@ -29,7 +29,7 @@ const IntermediateDetails=({ prevStep, nextStep, handleChange, values }) => {
             <form id ="intermediate"  className='px-36 py-8 bg-white rounded-md'>
             <p className='text-sm'>Fields marked with <span className='text-pink-600'>*</span> are mandatory to fill</p>
               <div>
-                <label >Intermmediate board<span className='text-pink-600'>*</span></label>
+                <label >Intermmediate board (10+2 or Equivalent)<span className='text-pink-600'>*</span></label>
                 <input type="text" name="inter_board"placeholder="" onChange={handleChange('inter_board')} defaultValue={values.inter_board}
                   className="px-3 my-1 border-2 rounded-md  border-violet-200" />
                 <p>This is a required field</p>

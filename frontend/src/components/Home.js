@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from '../axiosConfig'
 
 function Home() {
@@ -8,9 +8,12 @@ function Home() {
         axios.get('/').then(res=>console.log(res)).catch(err=>console.log(err+"err"))
     }
 
+    useEffect(()=>{
+        onChange()
+    })
     return (
         <div className="homepage ">
-            <h1 className="" onLoad={onChange()}>HomePage</h1>
+            <h1 className="">HomePage</h1>
         </div>
     )
   }

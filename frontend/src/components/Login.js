@@ -43,7 +43,7 @@ const Login=()=>{
         return (
             <div className='z-10 text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
                 <div className='text-bold bg-white drop-shadow-[0_0_3px_rgba(0,0,0,0.1)] mt-3 rounded-lg'>  
-                    <form onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
+                    <form type="submit" onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
                             <h4 className='my-2 font-medium text-lg inline-block'>Company Login</h4> 
                             <Link to='../scholar-login' className="font-bold underline ml-[138px] text-violet-400 hover:text-violet-800">Login as scholar</Link>
                         <div>

@@ -17,7 +17,7 @@ import ScholarRegistration from './components/ScholarRegistration'
 import CompanyRegistration from './components/companyForm/CompanyRegistration';
 import Footer from "./components/Footer";
 import Logout from "./components/Logout";
-import ScholarProfile from './components/studentdashboard/ScholarProfile';
+import ScholarProfile from './components/studentdashboard/scholar-profile/ScholarProfile';
 import CreateUser from './components/studentdashboard/CreateUser';
 
 
