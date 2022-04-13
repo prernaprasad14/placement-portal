@@ -11,9 +11,9 @@ const scholarSchema = new mongoose.Schema({
     },
     placement_status:{
         type : String,
-        enum:['placed','unplaced'],
+        enum:['Placed','Unplaced'],
         required:true,
-        default: 'unplaced'
+        default: 'Unplaced'
     },
     loginDetails:{
         username:{
@@ -43,14 +43,14 @@ const scholarSchema = new mongoose.Schema({
             required : true
         },
         dob:{
-            type : Date,
+            type : String,
             required: true
         },
         gender: {
             type : String, 
-            enum: ['male', 'female', 'prefer not to say'] ,
+            enum: ['Male', 'Female', 'Prefer not to say'] ,
             required:true,
-            default : 'prefer not to say'
+            default : 'Prefer not to say'
         },
         phone:{
             type : String,
@@ -77,7 +77,7 @@ const scholarSchema = new mongoose.Schema({
                 required: true
             },
             perma_pin:{
-                type : Number,
+                type : String,
                 required: true
             }
         },
@@ -99,7 +99,7 @@ const scholarSchema = new mongoose.Schema({
                 required: true
             },
             corr_pin:{
-            type : Number,
+            type : String,
             required: true
             },
         }
@@ -224,10 +224,7 @@ const scholarSchema = new mongoose.Schema({
         type: String,
         required: true 
     }
-
-    
 });
-
 
 scholarSchema.methods.generateToken = async function (){
     try{
@@ -248,6 +245,5 @@ scholarSchema.methods.generateToken = async function (){
         console.log(`error ${err}`) 
     }
 }
-
 
 module.exports = mongoose.model('Scholar', scholarSchema);

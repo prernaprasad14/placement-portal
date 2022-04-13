@@ -201,7 +201,7 @@ router.get('/profile/:id', async(req,res)=>{
         }
         else{
             console.log( scholar);
-            return res.json({success:true ,message:"retrieved scholar ",scholar}) 
+            return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar}) 
         }})
     
 
