@@ -19,7 +19,7 @@ router.post('/forgot-password' , async (req, res)=>{
     console.log("Passed forgotPassword")
     const email = req.body.email
     console.log("email"+email)
-    if(!email) return res.status(400).send("Please enter the email");
+    if(!email) return res.status(400).json({success:false, message:"Please enter the email"});
     console.log(`email is not empty`)
 
     console.log(`1 Test console`)
@@ -35,12 +35,12 @@ router.post('/forgot-password' , async (req, res)=>{
     if(! user) {
         const scholar = await Scholar.findOne({"loginDetails.email":email})
         if(!scholar)
-            return res.status(400).json("Please make sure the email is valid") 
+            return res.status(400).json({message: "Please make sure the email is valid"}) 
         else{
             console.log(`Scholar Test console${scholar}`)
             const token = await ResetPassword.findOne({owner:scholar._id})
             console.log("token token ")
-            if(token) return res.status(400).json({success:false, message: "You can request for next token after 1hr"})
+            if(token) return res.status(400).json({success:false, message: "You can request for new token after 1hr"})
             console.log(`token doesnt exist, creating new reset token`)
 
             console.log(`An email will be sent to ${email} to reset your password`)
@@ -65,14 +65,14 @@ router.post('/forgot-password' , async (req, res)=>{
                 html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, scholar.loginDetails.username),
             });
 
-            return res.status(200).send("password link sent has been sent to your account")
+            return res.status(200).json({success:true, message:"Password link sent has been sent to your account"})
         }
     }
     else{
         console.log(`Company Test console${user}`)
         const token = await ResetPassword.findOne({owner:user._id})
         console.log("token token ")
-        if(token) return res.status(400).json({success:false, message: "You can request for next token after 1hr"})
+        if(token) return res.status(400).json({success:false, message: "You can request for new token after 1hr"})
         console.log(`token doesnt exist, creating new reset token`)
 
         console.log(`An email will be sent to ${email} to reset your password`)
@@ -97,7 +97,7 @@ router.post('/forgot-password' , async (req, res)=>{
             html: generatePasswordResetMail(`http://localhost:3000/reset-password?email=${email}&token=${resetTokenHashed}`, user.loginDetails.username),
         });
 
-    return res.status(200).send("password link sent has been sent to your account")
+    return res.status(200).json({success:true, message:"Password link sent has been sent to your account"})
     
     }
     
@@ -122,7 +122,7 @@ router.post('/reset-password',  async(req, res)=>{
     if(!user) {
         const scholar = await Scholar.findOne({"loginDetails.email":req.query.email})
         if(!scholar){
-            return res.json({succes:false , message: "user not found" }).send("User not found")
+            return res.json({succes:false , message: "user not found" })
         }
         else{
             console.log("::::::::user:::::::"+user)

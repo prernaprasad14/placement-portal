@@ -203,8 +203,6 @@ router.get('/profile/:id', async(req,res)=>{
             console.log( scholar);
             return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar}) 
         }})
-    
-
 });
 
 router.get('/dashboard/:id', async(req,res)=>{

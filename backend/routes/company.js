@@ -56,7 +56,6 @@ router.post('/create-user', validateCompanyCreate, async(req,res)=>{
     
 }); 
 
-
 router.post('/register', validateCompanyRegistration, validate , async (req, res)=>{
     try{
         console.log("hello")
@@ -163,11 +162,11 @@ router.post('/login',  async (req, res)=>{
    
     const user = await Company.findOne({"loginDetails.email":req.body.loginDetails.email})
    
-    if(!user) return res.status(400).send("Invalid credentials")
+    if(!user) return res.status(400).json({success:false, message:"Invalid credentials"})
    
     const validPass = await bcrypt.compare(req.body.loginDetails.password, user.loginDetails.password)
    
-    if(!validPass) return res.status(400).send("Invalid credentials")
+    if(!validPass) return res.status(400).json({success:false, message:"Invalid credentials"})
   
     const token =await user.generateToken()
  
@@ -188,11 +187,20 @@ router.get('/verify-email', async(req, res)=>{
     console.log("2 exists"+ exists)
     if(exists) return res.status(400).json({success: false, message:"already registered"})
     return res.status(200).json({success: true, message:"Not registered"})
-})
+});
 
-
-
-
+router.get('/profile/:username', async(req,res)=>{
+    console.log("/profile/:username   passed route")
+    const user = Company.findById({"loginDetails.username": req.params.username}, function (err, user) {
+        if(err){ 
+            console.log(err);
+            return res.send(error)
+        }
+        else{
+            console.log( user);
+            return res.json({success:true ,message:`Retrieved user ${user.loginDetails.username}`, user}) 
+        }})
+});
 
 
 module.exports = router;  
