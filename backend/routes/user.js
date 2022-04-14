@@ -104,7 +104,7 @@ router.post('/forgot-password' , async (req, res)=>{
     
 });
 
-router.post('/reset-password',  async(req, res)=>{
+router.post('/reset-password', async(req, res)=>{
 
     console.log("req.body.password"+req.body.password)
     console.log("req.body.confirmPassword"+req.body.confirmPassword)
@@ -122,7 +122,7 @@ router.post('/reset-password',  async(req, res)=>{
     if(!user) {
         const scholar = await Scholar.findOne({"loginDetails.email":req.query.email})
         if(!scholar){
-            return res.json({succes:false , message: "user not found" })
+            return res.json({succes:false , message: "User not found" })
         }
         else{
             console.log("::::::::user:::::::"+user)
@@ -189,7 +189,7 @@ router.post('/reset-password',  async(req, res)=>{
 
 router.get('/verify-token', isResetTokenValid, async(req,res)=>{
     console.log("verify-token")
-    res.json({success:true})
+    return res.json({success:true})
 }); 
 
 module.exports = router;  

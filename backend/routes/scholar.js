@@ -215,9 +215,5 @@ router.get('/dashboard/:id', async(req,res)=>{
     return res.json({success:true, data: scholar})
 })
 
-router.get('/verify-token', isResetTokenValid, async(req,res)=>{
-    console.log("verify-token")
-    res.json({succes:true})
-}); 
 
 module.exports = router;  

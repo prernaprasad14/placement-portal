@@ -35,12 +35,13 @@ const ForgotPassword = () =>{
     return (
         <>
             <div className='text-bold box-border flex justify-center bg-gray-200 h-[450px] p-8'>
-                <div className=' mt-24 text-bold'>
+                <div className=' mt-8 text-bold'>
                     <form id ="forgot-pass"  className='px-36 py-8 bg-white rounded-md' onSubmit={handleSubmit}>
+                    <h4 className='my-2 font-medium text-lg inline-block'>Forgot Password</h4>
                         <div>
                             <label>Email</label>
                             <input type="email" name="email" placeholder='Enter your email here'  onChange={handleChange} className="px-3 my-2 border-2 rounded-md  border-violet-200" /> 
-                            {success && <p className='mt-0 text-green-600 opacity-100 text-sm pl-2 pb-4'>{success}</p>}
+                            {success && <p className='mt-0 text-[#1BDA9C] opacity-100 text-sm pl-2 pb-4'>{success}</p>}
                             {error && <p className='mt-0 text-pink-600 opacity-100 text-sm pl-2 pb-4'>{error}</p>}
                         </div>
                         <div>

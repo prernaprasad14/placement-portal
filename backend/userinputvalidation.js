@@ -1,6 +1,7 @@
 const {check,validationResult} = require('express-validator')
-const User= require('./model/User')
+const Scholar= require('./model/Scholar')
 const ResetPassword = require('./model/resetPasswordSchema');
+const Company = require('./model/Company');
 
 exports.validateScholarCreate=[
     check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
@@ -66,16 +67,32 @@ exports.validate = (req, res, next)=>{
 }
 
 exports.isResetTokenValid=async (req, res, next)=>{
-    const user = await User.findOne({"loginDetails.email":req.query.email})
-    if(!user) return res.send("user not found")
-    console.log("::::::::user:::::::"+user)
+    const user = await Company.findOne({"loginDetails.email":req.query.email})
+    if(!user){
+        const scholar = await Scholar.findOne({"loginDetails.email":req.query.email})
+        if(!scholar)  return res.json({success: false ,  error:"Reset token not found"})
+        console.log("::::::::user:::::::"+scholar)
 
-    const tokenDetails = await ResetPassword.findOne({owner:user._id})
-    console.log(":::::::token:::::::::"+tokenDetails)
-    if(!tokenDetails) return res.status(400).json({success: false ,  error: "Reset token not found"})
+        const tokenDetails = await ResetPassword.findOne({owner:scholar._id})
+        console.log(":::::::token:::::::::"+tokenDetails)
+        if(!tokenDetails) return res.status(400).json({success: false ,  error:"Reset token not found"})
 
-    if(tokenDetails.token !== req.query.token) return res.status(400).json({success: false ,  error: "Reset token not found"})
-    req.user = user
-    next()
+        if(tokenDetails.token !== req.query.token) return res.status(400).json({success: false ,  error:"Reset token not found"})
+        req.scholar = scholar
+        next()
+
+    }else{
+        console.log("::::::::user:::::::"+user)
+
+        const tokenDetails = await ResetPassword.findOne({owner:user._id})
+        console.log(":::::::token:::::::::"+tokenDetails)
+        if(!tokenDetails) return res.status(400).json({success: false ,  error: "Reset token not found"})
+
+        if(tokenDetails.token !== req.query.token) return res.status(400).json({success: false ,  error: "Reset token not found"})
+        req.user = user
+        next()
+    }
+    
+    
 }
 
