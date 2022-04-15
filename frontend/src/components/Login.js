@@ -8,6 +8,9 @@ const Login=()=>{
     const navigate = useNavigate()
     const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
+    const [error, setError]= useState('')
+    const [id, setId]= useState('')
+
                 
     
     const handleEmail=(e) =>{
@@ -26,18 +29,34 @@ const Login=()=>{
         };
         console.log(":: userObject :: "+userObject)
         console.log(":: userObject :: "+JSON.stringify(userObject))
-        await axios.post('api/company/login', userObject)
-        .then((res) => {
-            console.log(res.data)
-            if(res.data.success){
-                navigate('/dashboard/company')
+        
+            await axios.post('api/company/login', userObject)
+            .then((res) => {
+                console.log(res.data)
+                setId(res.data.id)
+                if(res.data.success){
+                    // navigate(`/dashboard/company`)
+                    // navigate(`/dashboard/company/${id}`)
+                }
+                else{
+                   console.log("error")
+                }
+            }).catch((error) => {
+            if(error?.response?.data){
+                const {data} = error.response
+                console.log("catch catch")
+                if(!data.success) { 
+                    if(data.error){
+                        setError(data.error[0].msg)
+                    }else if (data.message){
+                        setError(data.message)
+                    }
+                }
             }
-            else{
-                console.log("err")
-            }
-        }).catch((error) => {
-            console.log(error)
+            
+            console.log("catch part: "+error)
         });
+        
     }
 
         return (
@@ -48,12 +67,13 @@ const Login=()=>{
                             <Link to='../scholar-login' className="font-bold underline ml-[138px] text-violet-400 hover:text-violet-800">Login as scholar</Link>
                         <div>
                             <label>Email</label>
-                            <input type="text" placeholder='Enter your email' value={email} onChange={handleEmail} className="my-3  border-2 rounded-md  border-violet-200" />
+                            <input type="email" placeholder='Enter your email' value={email} onChange={handleEmail} className="my-3  border-2 rounded-md  border-violet-200" />
                         </div>
                         <div>
                             <label>Password</label>
                             <input type="password" placeholder='********' value={password} onChange={handlePassword} className="my-3  border-2 rounded-md  border-violet-200" />
                         </div>
+                        {error && <p className='pb-2 text-pink-600'>{error}</p>}
                         <button className="bg-[#8751c4] hover:bg-violet-400 text-white  font-medium py-2 px-10 ml-32 rounded-md" type="submit" >Login</button>
                         <div className='mt-4 ml-[130px]'>
                             <Link to='../forgot-password'  className="font-bold underline ml-[138px] text-violet-400 hover:text-violet-800">ForgotPassword?</Link>

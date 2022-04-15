@@ -2,23 +2,24 @@ const {check,validationResult} = require('express-validator')
 const Scholar= require('./model/Scholar')
 const ResetPassword = require('./model/resetPasswordSchema');
 const Company = require('./model/Company');
+const res = require('express/lib/response');
 
 exports.validateScholarCreate=[
-    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
+    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().isEmail().bail().withMessage("Not valid email address").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
     check('username').not().isEmpty().withMessage("Username This field is required") 
 ]
 exports.validateCompanyCreate=[
-    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
-    check('username').not().isEmpty().withMessage("Username This field is required") 
+    check('.email').not().isEmpty().withMessage("Email cannot be empty").bail().isEmail().withMessage('Invalid email'),
+    check('username').not().isEmpty().withMessage("Username cannot be empty") 
 ]
 
 exports.validateScholarLogin=[
-    check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid email'),
-    check('loginDetails.password').not().isEmpty().withMessage("Password This field is required")  
+    check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().matches(/^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/).withMessage('Invalid Credentials'),
+    check('loginDetails.password').not().isEmpty().withMessage("Password cannot be empty")  
 ]
 exports.validateLogin=[
-    check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").bail().not().isEmail().bail().withMessage("Not valid email address"),
-    check('loginDetails.password').not().isEmpty().withMessage("Password This field is required") 
+    check('loginDetails.email').not().isEmpty().withMessage("Email cannot be empty").isEmail().withMessage('Invalid Credentials'),
+    check('loginDetails.password').not().isEmpty().withMessage("Password cannot be empty") 
 ]
 
 exports.validateCompanyRegistration=[

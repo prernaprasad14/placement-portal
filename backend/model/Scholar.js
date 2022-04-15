@@ -231,17 +231,14 @@ scholarSchema.methods.generateToken = async function (){
         console.log("1 here")
         const token = jwt.sign({_id: this._id}, process.env.TOKEN_SECRET)
         console.log("2 here")
-        // if(this.tokens.length == 0 ){
             this.token = token
             console.log("3 here "+token)
             await this.save();  
             console.log("4here ")
-        // }
     
         return token
 
     }catch(err){
-        res.status(400).send(`error ${err}`)
         console.log(`error ${err}`) 
     }
 }

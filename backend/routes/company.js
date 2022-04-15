@@ -4,9 +4,8 @@ const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
 const Company = require('../model/Company');
-const ResetPassword = require('../model/resetPasswordSchema');
 const jwt = require('jsonwebtoken');
-const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate, isResetTokenValid} = require('../userinputvalidation');
+const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
 const { generateCreateUserMail } = require('../mail');
 
@@ -158,7 +157,7 @@ router.post('/register', validateCompanyRegistration, validate , async (req, res
    
 });
 
-router.post('/login',  async (req, res)=>{
+router.post('/login', validateLogin, validate,  async (req, res)=>{
    
     const user = await Company.findOne({"loginDetails.email":req.body.loginDetails.email})
    
@@ -175,6 +174,7 @@ router.post('/login',  async (req, res)=>{
         // secure:true,
         httpOnly: true
     });
+    console.log("hereeeeeee")
     res.status(200).json({success: true, message:"Logged in", user, token})
     
     

@@ -164,13 +164,13 @@ router.post('/register', validateScholarRegistration, validate , async (req, res
 router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
     const user = await Scholar.findOne({"loginDetails.email":req.body.loginDetails.email})
     console.log("check1")
-    if(!user) return res.status(400).send("Invalid credentails");
+    if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
     console.log("check2")
     
     const validPass = await bcrypt.compare(req.body.loginDetails.password, user.loginDetails.password)
     console.log("check3")
 
-    if(!validPass) return res.status(400).send("Invalid credentails");
+    if(!validPass) return res.status(400).json({success:false, message:"Invalid credentails"});
     console.log("check4")
 
     const token =await user.generateToken()
@@ -183,7 +183,7 @@ router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
     });
     console.log(user._id)
 
-    res.status(200).json({success: true, message:"Logged in", user, token})
+    return res.status(200).json({success: true, message:"Logged in", user, token})
    
     
 });
