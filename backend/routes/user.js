@@ -8,6 +8,7 @@ const ResetPassword = require('../model/resetPasswordSchema');
 const {isResetTokenValid} = require('../userinputvalidation');
 const { createRandomBytes  } = require('../helper');
 const { generatePasswordResetMail, generateSuccessPasswordResetMail } = require('../mail');
+const { isLoggedIn } = require('../middleware/authenticate');
 
 router.get('/logout', async(req,res)=>{
     res.clearCookie('jwt',{ path :'/'})
@@ -192,4 +193,8 @@ router.get('/verify-token', isResetTokenValid, async(req,res)=>{
     return res.json({success:true})
 }); 
 
+router.get('/logged-in', isLoggedIn, async(req, res)=>{
+    console.log("req for logged-in")
+    return res.status(200).json({success:true, message:"user logged in"})
+})
 module.exports = router;  

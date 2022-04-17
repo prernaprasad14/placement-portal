@@ -2,7 +2,7 @@ const Scholar = require('../model/Scholar')
 const Company = require('../model/Company')
 const jwt = require('jsonwebtoken')
 
-exports.authenticateScholar= async(req, res, next)=>{
+exports.authenticateScholar = async(req, res, next)=>{
     try{
         console.log("authenticate scholar middleware")
         const token = req.cookies.jwt;
@@ -29,7 +29,7 @@ exports.authenticateScholar= async(req, res, next)=>{
 
     }
 }
-exports.authenticateCompany= async(req, res, next)=>{
+exports.authenticateCompany = async(req, res, next)=>{
     try{
         console.log("authenticate company middleware")
         const token = req.cookies.jwt;
@@ -52,7 +52,18 @@ exports.authenticateCompany= async(req, res, next)=>{
         next();
     }catch{
         console.log("scholar authentication error")
-        return res.status(401).json({success: false, message: "Unthorised access"})
+        return res.status(401).json({success: false, message: "Unauthorized access"})
 
     }
+}
+
+exports.isLoggedIn = async (req, res, next)=>{
+    const token = req.cookies.jwt
+    console.log("req for logged-in")
+    if(!token){
+        return res.status(401).json({success:false, message:"user not logged in"})
+    }
+    console.log("token"+token)
+    // res.status(200).json({success:true, message:"user already logged in"})
+    next();
 }

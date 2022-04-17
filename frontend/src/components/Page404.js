@@ -14,7 +14,7 @@ function Page404() {
                 <p className='px-2 text-3xl font-bold text-zinc-400/75'> Page not found</p>
                 <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>The resource you are trying to access doesn't exist</p>
                 <p className='mx-6  mt-3 text-lg'>
-                    <Link to="/"  className='text-zinc-600hover:text-white hover:bg-purple-300 hover:rounded-md hover:p-4'>
+                    <Link to="/"  className='text-zinc-600 hover:text-white hover:bg-purple-300 hover:rounded-md hover:p-4'>
                         <AiFillHome className='mx-1 mb-1 inline-block'/>Back to Home
                     </Link>
                 </p>

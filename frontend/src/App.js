@@ -20,13 +20,18 @@ import Footer from "./components/Footer";
 import Logout from "./components/Logout";
 import ScholarProfile from './components/studentdashboard/scholar-profile/ScholarProfile';
 import CreateUser from './components/studentdashboard/CreateUser';
+import { useReducer ,createContext} from 'react';
+import { initialState, reducer } from './reducer/UseReducer';
 
+const UserContext = createContext()
 
 function App(){
 
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return(    
     <>
+    <UserContext.Provider value={{state, dispatch}}>
       <Nav/>
       <Routes>
           <Route path="/scholar-registration" element={<ScholarRegistration />}/>
@@ -48,8 +53,10 @@ function App(){
           <Route path="*" element={<Page404/>} />     
       </Routes>
       <Footer/>
+      </UserContext.Provider>
     </>  
   )
 }
 
 export default App
+export {UserContext}

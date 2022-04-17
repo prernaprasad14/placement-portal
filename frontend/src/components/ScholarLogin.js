@@ -1,17 +1,36 @@
 import {useNavigate} from 'react-router-dom';
-import React, { useState} from 'react';
+import React, { useContext, useEffect, useState} from 'react';
 import axios from '../axiosConfig';
 import { Link } from 'react-router-dom'
+import { UserContext } from '../App';
+
 const ScholarLogin=()=>{
     document.title='Scholar Login | DUCS Placement Portal'
-    
+    const {state, dispatch}= useContext(UserContext)
     const navigate = useNavigate()
     const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
     const [error, setError]= useState('')
+    const [isLoggedIn, setIsLoggedIn]= useState(false)
     const [id, setId]= useState('')
-                
     
+    const checkLoggedIn=()=>{
+       axios.get('/api/user/logged-in')
+        .then((res)=>{
+            console.log(res.status)
+            if(res.status==200){
+                setIsLoggedIn(true)
+            }
+        }).catch((error)=>{
+            console.log("error checkLoggedIn"+error)
+        })
+    
+        
+    }
+    useEffect(()=>{
+        checkLoggedIn();
+    },[]);
+
     const handleEmail=(e) =>{
         setEmail(e.target.value)
     }
@@ -33,6 +52,8 @@ const ScholarLogin=()=>{
             console.log(res.data)
             setId(res.data.id)
             if(res.data.success){
+                dispatch({type:"user", payload:true})
+                setIsLoggedIn(true)
                 navigate(`/dashboard/companies`)
                 // navigate(`/dashboard/scholar/${id}`)
             }
@@ -55,6 +76,9 @@ const ScholarLogin=()=>{
             }
             console.log("catch part: "+error)
         });
+    }
+    if(isLoggedIn){
+        navigate('/dashboard/companies')
     }
     return (
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
