@@ -168,11 +168,14 @@ router.post('/login', validateLogin, validate,  async (req, res)=>{
     if(!validPass) return res.status(400).json({success:false, message:"Invalid credentials"})
   
     const token =await user.generateToken()
- 
+    const date = new Date();
+    
     res.cookie("jwt", token, {
-        expires:new Date(Date.now()+3000),
+        
+        expires:new Date( date + 30*24*60*60*1000),
+        maxAge:  30*24*60*60*1000,
         // secure:true,
-        httpOnly: true
+        // httpOnly: true
     });
     console.log("hereeeeeee")
     res.status(200).json({success: true, message:"Logged in", user, token})

@@ -2,11 +2,10 @@ import React from 'react'
 import logo from "../img/logo.png"
 import { Link } from 'react-router-dom'
 
-
 const Nav = () =>{
     return (
-        <div className="nav-container">
-            <ul className='navItems text-md'>
+        <div className="nav-container px-8 py-2">
+            <ul className='navItems text-md '>
                 <li className='item'>
                     <Link to="/">
                         <div className='home'>

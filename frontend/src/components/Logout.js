@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 const Logout=()=>{
     const navigate = useNavigate();
     useEffect(()=>{
-        axios.get('api/scholar/logout',{
+        axios.get('api/user/logout',{
             headers:{
                 Accept :"application/json",
                 "Content-Type":"application/json"

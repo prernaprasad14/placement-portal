@@ -7,7 +7,7 @@ const  Item= ({title,val}) => {
   return(  
     <>  
         <div className="flex px-3 my-1 border-2 rounder-sm bg-white w-78">
-              <div className=" justify-start px-3 my-1 border-2 bg-indigo-200 "><p>{title}</p></div>
+              <div className="justify-start px-3 my-1 border-2 bg-indigo-200 "><p>{title}</p></div>
               <div className="justify-end px-3 my-1 border-2 bg-rose-200"><p>{val}</p></div>
         </div>
      </>

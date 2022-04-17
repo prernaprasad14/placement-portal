@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from '../axiosConfig'
 
 function Home() {
+    document.title='Home | DUCS Placement Portal'
 
     const onChange=()=>{
         console.log("here")

@@ -1,9 +1,9 @@
-
 import {useNavigate} from 'react-router-dom';
 import React, { useState} from 'react';
 import axios from '../axiosConfig';
 import { Link } from 'react-router-dom'
 const ScholarLogin=()=>{
+    document.title='Scholar Login | DUCS Placement Portal'
     
     const navigate = useNavigate()
     const [email, setEmail]= useState('')
@@ -33,7 +33,7 @@ const ScholarLogin=()=>{
             console.log(res.data)
             setId(res.data.id)
             if(res.data.success){
-                // navigate(`/dashboard/scholar`)
+                navigate(`/dashboard/companies`)
                 // navigate(`/dashboard/scholar/${id}`)
             }
             else{

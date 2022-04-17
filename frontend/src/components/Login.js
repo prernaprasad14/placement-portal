@@ -4,6 +4,7 @@ import React, { useState} from 'react';
 import axios from '../axiosConfig';
 import { Link } from 'react-router-dom'
 const Login=()=>{
+    document.title='Login | DUCS Placement Portal'
     
     const navigate = useNavigate()
     const [email, setEmail]= useState('')

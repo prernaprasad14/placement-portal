@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router'
 import { Link } from 'react-router-dom'
 import axios from '../axiosConfig';
 import queryString from 'query-string'
-
+import {MdGeneratingTokens} from 'react-icons/md'
 
 const ResetPassword = () =>{
     const location = useLocation();
@@ -27,7 +27,6 @@ const ResetPassword = () =>{
                 setInvalidUser(true)
             }
             setIsLoading(false);  
-  
            
         }catch(error){
             if(error?.response?.data){
@@ -79,14 +78,17 @@ const ResetPassword = () =>{
     if(invalidUser) 
         return (
         <>
-        <div className="bg-zinc-100 bg-gradient-to-b h-full z-50 from-white via-zinc-100/25 to--100/30'"> 
+        <div className="bg-zinc-100 bg-gradient-to-b h-full from-white to-zinc-100/25"> 
             <div className=' flex flex-col py-40 items-center '>
                 <p className='px-2 text-6xl font-bold text-zinc-400/75'>404</p>
                 <p className='px-2 text-3xl font-bold text-zinc-400/75'> Page not found</p>
                 <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>Seems like your token has expired. Please request for another password reset token</p>
-                <p >
-                    <Link to='/forgot-password' className="items-center bg-[#8751c4] hover:bg-violet-400 text-white  font-medium py-2 px-10 rounded-md">Request Token</Link>
+                <p className="mx-6 mt-3 text-lg">
+                    <Link to='/forgot-password' className='text-zinc-600  hover:text-white hover:bg-purple-300 hover:rounded-md hover:p-4'>
+                        <MdGeneratingTokens className=' mx-1 mb-1 inline-block'/>Request Token
+                    </Link>
                 </p>
+                
             </div>  
          </div>
         
@@ -95,7 +97,7 @@ const ResetPassword = () =>{
     if(isLoading) 
         return (
             <>
-            <div className="bg-zinc-100 bg-gradient-to-b h-78 z-50 from-white to-zinc-100/25">
+            <div className="bg-zinc-100 bg-gradient-to-b h-78 from-white to-zinc-100/25">
             <div className=' flex flex-col py-40 items-center'>
                 <svg className="text-[#a375de] spinner" viewBox="0 0 50 50">
                     <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>

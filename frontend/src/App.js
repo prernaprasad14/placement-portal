@@ -11,6 +11,7 @@ import Brochure from './components/Brochure';
 import Login from './components/Login';
 import ScholarLogin from './components/ScholarLogin';
 import Page404 from './components/Page404';
+import Page403 from './components/Page403';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import ScholarRegistration from './components/ScholarRegistration'
@@ -43,6 +44,7 @@ function App(){
           <Route path="dashboard/create-user" element={<CreateUser/>} />
           <Route path="logout" element={<Logout />} />
           <Route path="/profile/:id" element={<ScholarProfile />} />
+          <Route path="/forbidden" element={<Page403/>} />     
           <Route path="*" element={<Page404/>} />     
       </Routes>
       <Footer/>

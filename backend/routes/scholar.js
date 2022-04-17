@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
-
+const{ authenticateScholar }= require('../middleware/authenticate')
 
 const {generateToken}= require('../model/Scholar');
 
@@ -161,7 +161,7 @@ router.post('/register', validateScholarRegistration, validate , async (req, res
         }catch{err => console.log(err);}
    
 });
-router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
+router.post('/login', validateScholarLogin, validate, async (req, res)=>{
     const user = await Scholar.findOne({"loginDetails.email":req.body.loginDetails.email})
     console.log("check1")
     if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
@@ -174,11 +174,13 @@ router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
     console.log("check4")
 
     const token =await user.generateToken()
-    console.log(`login:: token:: ${token}`)
-    
+    console.log(`login route    :: token:: ${token}`)
+    const date = new Date();
     res.cookie("jwt", token, {
-        expires:new Date(Date.now()+3000),
-         // secure:true,
+        
+        expires:new Date( date + 30*24*60*60*1000),
+        maxAge:  30*24*60*60*1000,
+        // secure:true,
         httpOnly: true
     });
     console.log(user._id)
@@ -188,27 +190,29 @@ router.post('/login', validateScholarLogin, validate,  async (req, res)=>{
     
 });
 
-router.get('/profile/:id', async(req,res)=>{
+router.get('/profile/:id', authenticateScholar, async(req,res)=>{
     console.log("/profile/:id   passed route")
     console.log("id:: " + req.params.id) 
     console.log(req.params) 
     const id  = req.params.id
-
+    
     const scholar = Scholar.findById({_id: req.params.id}, function (err, scholar) {
         if(err){
             console.log(err);
-            return res.send(error)
+            return res.status(401).json({success:false, message:"User deosnt exist"})
         }
         else{
-            console.log( scholar);
+            if(scholar.token!=req.cookies.jwt){
+                console.log("scholar.token!=req.cookies.jwt : Unauthorised")
+                return res.status(403).json({success:false ,message:`Unauthorised`})
+            }
             return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar}) 
+    
         }})
 });
 
 router.get('/dashboard/:id', async(req,res)=>{
     const id = req.params.id
-    
-    
     const scholar = await Scholar.findOne({_id:id})
     console.log("Scholar "+ scholar)
     if(!scholar) return res.json({success: false , message:"Invalid request"})
