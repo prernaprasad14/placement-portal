@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
+import logo from "../../img/logo.png"
 import { UserContext } from '../../App'
 import Dashboard from './ScholarDashboard'
 import MenuItem from './MenuItem'
-import { Link } from 'react-router-dom'
+import {Link } from 'react-router-dom'
 import {MdSpaceDashboard} from 'react-icons/md'
 import {BiNotification} from 'react-icons/bi'
 import {HiUserGroup,HiUserCircle} from 'react-icons/hi'
-import {FaUserGraduate} from 'react-icons/fa'
+import {FaUserGraduate,FaSignOutAlt} from 'react-icons/fa'
 
-const  Sidebar= ({menu}) => {
+const  Sidebar= ({menu,chosenItem}) => {
   console.log("2 insideSidebar")
   const menuItems = menu.map((item)=>{
     return item.toLowerCase()
@@ -30,31 +31,36 @@ const  Sidebar= ({menu}) => {
   return(  
 
     <>
-      <div className=' h-full py-10 px-2 flex-col justify-start text-white border-2 border-emerald-600'>
-          <div className=' text-lg my-8'>
-            <Link to='/dashboard/companies' className='sm:px-8' >
-              <MdSpaceDashboard className='inline-block mb-1'/><p className='hidden sm:inline-block'>Dashboard</p>
-            </Link>
+      <div className='mr-7 py-8 flex flex-col justify-start gap-y-2 text-white '>
+          <div className=' text-lg my-4 '>
+            <button href='#companies' className='sm:px-6 hover:text-purple-700' onClick={()=>chosenItem("0")}>
+              <MdSpaceDashboard className='inline-block mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Dashboard</p>
+            </button>
           </div>
 
-          <div className='text-lg my-8'>
-            <Link to='/dashboard/profile' className='sm:px-8 '>
-            <HiUserCircle  className='inline-block mb-1 text-xl'/><p className='hidden sm:inline-block'>Profile</p>
-            </Link>
+          <div className='text-lg my-4'>
+            <button className='sm:px-6 hover:text-purple-700'  onClick={()=>chosenItem("1")}>
+            <HiUserCircle  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-xl'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Profile</p>
+            </button>
           </div>
-          <div className='text-lg my-8'>
-            <Link to='/dashboard/companies' className='sm:px-8'>
-            <HiUserGroup  className='inline-block mb-1 text-xl'/><p className='hidden sm:inline-block'>Companies</p>
-            </Link>
+          <div className='text-lg my-4'>
+            <button  className='sm:px-6 hover:text-purple-700'  onClick={()=>chosenItem("2")}>
+            <HiUserGroup  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Companies</p>
+            </button>
           </div>
-          <div className='text-lg my-8'>
-            <Link to='/dashboard/scholars' className='sm:px-8'>
-            <FaUserGraduate  className='inline-block mb-1 text-xl'/><p className='hidden sm:inline-block'>Scholars</p>
-            </Link>
+          <div className='text-lg my-4'>
+            <button  className='sm:px-6 hover:text-purple-700'  onClick={()=>chosenItem("3")}>
+            <FaUserGraduate  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Scholars</p>
+            </button>
           </div>
-          <div className='text-lg my-8'>
-            <Link to='/dashboard/notification' className='sm:px-8'>
-            <BiNotification  className='inline-block mb-1 text-xl'/><p className='hidden sm:inline-block'>Notification</p>
+          <div className='text-lg my-4'>
+            <button className='sm:px-6 hover:text-purple-700'  onClick={()=>chosenItem("4")}>
+            <BiNotification  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
+            </button>
+          </div>
+          <div className='text-lg mt-auto'>
+            <Link to='/logout' className='sm:px-6 hover:text-purple-700'>
+            <FaSignOutAlt className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Logout</p>
             </Link>
           </div>
       </div>

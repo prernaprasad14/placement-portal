@@ -1,25 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { Profiler, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Item from './Item'
 import CreateUser from './CreateUser'
+import StudentProfile from '../studentdashboard/scholar-profile/ScholarProfile'
 import Sidebar from './Sidebar'
 import Scholars from './Scholars'
 import Companies from './Companies'
 const  WorkArea = ({companies, scholars}) => {
   console.log("3 inside workarea")
+  const [choice , setChoice] = useState('0')
+  console.log(choice+"choice")
   const sidemenu=()=>{
     console.log("inside side menu")
   }
+  const ChosenItem=({option})=>{
+    console.log(option+"option")
+   setChoice(option)
+   switch(option){
+    // case '0' :  component= <StudentProfile/>
+    // case '1' : component=  <><StudentProfile/>
+    case '2' : {console.log("companiesData"+companies)
+    return <Companies data={companies}/>
+    
+  }
+    case '3' :   return<Scholars  data={scholars}/>
+    // case '4' : return <><Notifications/></>
+    default:  return <Companies  data={companies}/>
+  }
+  }
+  useEffect(()=>{
+
+  },[])
+  
   return(  
     <>  
-        <div className='flex'>
-          {/* <button className='bg-emerald-600 hover:bg-green-400  inline-block rounded m-auto px-4 py-2 text-white font-300'><Link to ='dashboard/create-user'>CreateUser</Link></button> */}
-          <div className='hidden w-0 md:flex sm:w-1/6  bg-purple-200'>
-            <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} />
-            {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} />
-            <Sidebar menu={['Profile', 'Scholars', 'Notifications']} /> */}
+        <div className='relative flex'>
+          <div className='h-screen sticky sm:relative hidden sm:flex  sm:bg-sky-500 ' >
+            <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} chosenItem={setChoice} />
+            {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} /> */}
+            {/* <Sidebar menu={['Profile', 'Scholars', 'Notifications']} /> */}
           </div>
-          
           <div className='inline-block sm:hidden' onClick={sidemenu}>
               <button className="outline-none ">
               <svg className=" w-6 h-6 text-gray-500 hover:text-green-500 "
@@ -44,10 +64,12 @@ const  WorkArea = ({companies, scholars}) => {
             </div>
      
             </div>
-          <div className='w-full sm:w-5/6'>
-            <CreateUser/>
+          <div className='w-full sm:w-5/6 border-5 bg-slate-500'>
+            {/* {(option)=>chosenItem(option)} */}
+            <ChosenItem option={choice}/>
+            {/* <CreateUser/>
             <Scholars data={scholars}/>
-            <Companies data={companies}/>
+            <Companies data={companies}/> */}
           </div>
         </div>
      </>
@@ -55,5 +77,6 @@ const  WorkArea = ({companies, scholars}) => {
  }
 
 export default WorkArea
+
 
 

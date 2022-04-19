@@ -67,6 +67,7 @@ exports.isLoggedIn = async (req, res, next)=>{
     if(!token){
         return res.status(401).json({success:false, message:"user not logged in"})
     }
+    const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
     console.log("token"+token)
     // res.status(200).json({success:true, message:"user already logged in"})
     next();

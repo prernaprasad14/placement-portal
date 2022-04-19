@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
-const{ authenticateScholar }= require('../middleware/authenticate')
+const{ authenticateScholar, isLoggedIn }= require('../middleware/authenticate')
 
 const {generateToken}= require('../model/Scholar');
 
@@ -190,7 +190,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
     
 });
 
-router.get('/profile/:id', authenticateScholar, async(req,res)=>{
+router.get('/profile/:id', isLoggedIn, authenticateScholar, async(req,res)=>{
     console.log("/profile/:id   passed route")
     console.log("id:: " + req.params.id) 
     console.log(req.params) 

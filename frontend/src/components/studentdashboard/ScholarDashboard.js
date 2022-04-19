@@ -19,34 +19,33 @@ const  ScholarDashboard = () => {
   const [scholar, setScholar]= useState('')
   const [username , setUsername] = useState('')
 
-    const checkLoggedIn=()=>{
-      axios.get('/api/user/logged-in')
-       .then((res)=>{
-         console.log("1",res)
-        console.log("1")
-        console.log(res.status)
-        if(res.status==200){
-          dispatch({type:"USER", payload:true})
-          setIsLoggedIn(true)
-          setIsLoading(false)
-        }   
-  
-       }).catch((error)=>{
-           console.log("error checkLoggedIn"+error)
-           console.log("error res"+error.response)
-          //  if(error.response.status=='401'){
-          //   console.log("2")
-          //   dispatch({type:"USER", payload:false})
-          //    navigate('/login')
-          //  }
-          //  if(error.response.status=='403'){
-          //   console.log("3")
-          //   dispatch({type:"USER", payload:false})
-          //    navigate('/forbidden')
-          //  }
-       })
-  
-   }
+  const checkLoggedIn=()=>{
+    axios.get('/api/user/logged-in')
+      .then((res)=>{
+        console.log("1",res)
+      console.log("1")
+      console.log(res.status)
+      if(res.status==200){
+        dispatch({type:"USER", payload:true})
+        setIsLoggedIn(true)
+        setIsLoading(false)
+      }   
+
+      }).catch((error)=>{
+          console.log("error checkLoggedIn"+error)
+          console.log("error res"+error.response)
+        //  if(error.response.status=='401'){
+        //   console.log("2")
+        //   dispatch({type:"USER", payload:false})
+        //    navigate('/login')
+        //  }
+        //  if(error.response.status=='403'){
+        //   console.log("3")
+        //   dispatch({type:"USER", payload:false})
+        //    navigate('/forbidden')
+        //  }
+      })
+  }
     const getAllCompanies=()=>{
       console.log("here here")
       axios.get('/companies')
@@ -119,7 +118,7 @@ const  ScholarDashboard = () => {
         </ul> */}
 
           
-        <div className='w-screen h-screen bg-yellow-200'>
+        <div className='w-screen h-screen'>
             <WorkArea companies={companies} scholars={scholars}  />        
         </div>
   

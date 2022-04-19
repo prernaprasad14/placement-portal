@@ -7,7 +7,7 @@ const CompanyTable=(props)=>{
     const [loading, setLoading]= useState(true)
     const {companies}= props
     const date = Date.now()
-    var length = Object.keys(companies).length;
+    // var length = Object.keys(companies).length;
     // if(length>0){
     //     setLoading(false)
     // }else{
@@ -15,7 +15,7 @@ const CompanyTable=(props)=>{
     // }
     useEffect(()=>{
 
-    },[length])
+    },[])
     return(
     <>
     <div className="bg-white p-4 flex  rounded-md  text-gray-700">

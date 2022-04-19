@@ -1,5 +1,5 @@
 import { useParams ,useNavigate} from "react-router";
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "../../../axiosConfig"
 import PersonalDetails from "./PersonalDetails";
 import PostGraduationDetails from "./PostGraduationDetails";
@@ -7,15 +7,20 @@ import GraduationDetails from "./GraduationDetails";
 import IntermediateDetails from "./IntermediateDetails";
 import HighSchoolDetails from "./HighSchoolDetails";
 import Loading from "../../Loading";
+import { UserContext } from "../../../App";
+
 const ScholarProfile=()=>{
     document.title='Profile | DUCS Placement Portal'
     console.log("inside scholarProfile")
+    const {state, dispatch}= useContext(UserContext)
     const navigate = useNavigate();
     const {id} = useParams();
     console.log("1here")
     const [scholar, setScholar]= useState('')
     const [isLoading, setIsLoading]= useState(true)
     const [username , setUsername] = useState('')
+    const [isLoggedIn , setIsLoggedIn] = useState(false)
+
     const getScholar=()=>{
     //    setTimeout(()=>{
         console.log("here here")
@@ -28,10 +33,15 @@ const ScholarProfile=()=>{
           }).catch(error=> {
               console.log("Error getScholar : "+error)
               console.log(error.response.status)
-              if(error.response.status=='401')
+              if(error.response.status=='401'){
+                dispatch({type:"USER", payload:false})
                 navigate('/login')
-              if(error.response.status=='403'){}
+              }
+              if(error.response.status=='403'){
+                dispatch({type:"USER", payload:true})
                 navigate('/forbidden')
+                
+              }
             }) 
         // },90000) 
     }

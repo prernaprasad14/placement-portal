@@ -10,32 +10,38 @@ const Nav = () =>{
     const {state, dispatch}= useContext(UserContext)
     
     const RenderNav=()=>{
-        const navigate = useNavigate()
         console.log("RenderNav : state "+state)
 
-        if(state){
+        if(state)
+        {
             console.log("RenderNav : state "+state)
             return(
                 <>
-                    <li className='border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                        <Link to="login">Login</Link>
+                    <li className='border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
+                        <Link to="logout">Logout</Link>
                     </li>
-                    <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                        <Link to="company-registration">Company Register</Link>
-                    </li>    
-                    <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                        <Link to="scholar-registration">Scholar register</Link>
-                    </li>    
+                    <li className='border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
+                        <Link to="/dashboard">Dashboard</Link>
+                    </li>
                 </>
             )
         }
         console.log("RenderNav : state "+state)
         return(
         <>
-            <li className='border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="logout">Logout</Link>
-                </li>
             
+            <li className=' ml-auto  border-transparent  border-b-4 hover:border-purple-500 box-content'>
+                <Link to="brochure">Brochure</Link>
+            </li>
+            <li className='border-transparent  border-b-4 hover:border-purple-500 box-content'>
+                <Link to="login">Login</Link>
+            </li>
+            <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
+                <Link to="company-registration">Company Register</Link>
+            </li>
+            <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
+                <Link to="scholar-registration">Scholar register</Link>
+            </li>
         </>
         )
     }  
@@ -58,11 +64,8 @@ const Nav = () =>{
                     </div>
                 </Link>
             </li> 
-            <li className=' ml-auto  border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="brochure">Brochure</Link>
-            </li>
                 <RenderNav/>
-                </ul> 
+            </ul> 
             </div>
 
     </>
