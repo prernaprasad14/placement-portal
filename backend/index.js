@@ -6,12 +6,15 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const Scholar = require('./model/Scholar')
 const Company = require('./model/Company')
+const Admin = require('./model/Admin')
 //Import routes
+const adminRoute = require('./routes/admin/admin');
 const companyRoute = require('./routes/company');
 const scholarRoute = require('./routes/scholar');
 const userRoute = require('./routes/user');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const User = require('./model/User');
+const {isAdmin, isScholar}= require('./middleware/authenticate')
 
 dotenv.config();
 
@@ -45,13 +48,14 @@ app.use('/scholars', async (req, res)=>{
     console.log(date)
     res.json({success: true, message:"retrieved scholars", scholars})
 });
+// app.use('/api/admin', adminRoute);
 app.use('/api/user', userRoute);
 app.use('/api/scholar', scholarRoute);
 app.use('/api/company', companyRoute);
 
 
 
-app.use('/companies', async (req, res)=>{
+app.use('/companies', (isScholar||isAdmin) , async (req, res)=>{
     console.log("companies route passed !")
     const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
     console.log("companies route passed !"+companies)

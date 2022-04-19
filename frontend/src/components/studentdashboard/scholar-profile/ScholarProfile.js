@@ -6,8 +6,10 @@ import PostGraduationDetails from "./PostGraduationDetails";
 import GraduationDetails from "./GraduationDetails";
 import IntermediateDetails from "./IntermediateDetails";
 import HighSchoolDetails from "./HighSchoolDetails";
+import Loading from "../../Loading";
 const ScholarProfile=()=>{
     document.title='Profile | DUCS Placement Portal'
+    console.log("inside scholarProfile")
     const navigate = useNavigate();
     const {id} = useParams();
     console.log("1here")
@@ -44,16 +46,7 @@ const ScholarProfile=()=>{
         return(
             < >
             {isLoading && 
-                <div className='bg-zinc-100 bg-gradient-to-b h-68 from-white to-zinc-100/25 '>
-                    <div className=' flex flex-col py-52 items-center '>
-                        
-                            <svg className="spinner" viewBox="0 0 50 50">
-                                <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                            </svg>
-                        
-                        <p className='px-2 text-xl text-zinc-400'>Fetching data</p>
-                    </div>
-                </div>
+                <Loading message={`Fetching Data`}/>
             }
             { scholar && 
                 <div className="flex-col bg-lime-200">

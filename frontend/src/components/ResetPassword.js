@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from '../axiosConfig';
 import queryString from 'query-string'
 import {MdGeneratingTokens} from 'react-icons/md'
+import Loading from './Loading';
 
 const ResetPassword = () =>{
     const location = useLocation();
@@ -97,14 +98,7 @@ const ResetPassword = () =>{
     if(isLoading) 
         return (
             <>
-            <div className="bg-zinc-100 bg-gradient-to-b h-78 from-white to-zinc-100/25">
-            <div className=' flex flex-col py-40 items-center'>
-                <svg className="text-[#a375de] spinner" viewBox="0 0 50 50">
-                    <circle className="path" cx="25" cy="25" r="20" fill="none" strokeWidth="5"></circle>
-                </svg>
-                <p className="px-2 block text-zinc-500">Please wait for a moment</p>
-                </div>
-            </div>
+            <Loading message={`Please wait for a moment`}/>
             </>
         )
 

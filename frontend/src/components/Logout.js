@@ -2,13 +2,15 @@ import axios from '../axiosConfig'
 import React, { useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router';
 import {UserContext} from '../App';
+import Loading from './Loading';
 
 
 const Logout=()=>{
     const {state, dispatch} = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(()=>{
-        axios.get('api/user/logout',{
+      
+            axios.get('api/user/logout',{
             headers:{
                 Accept :"application/json",
                 "Content-Type":"application/json"
@@ -16,14 +18,14 @@ const Logout=()=>{
             credentials: "include"
         }).then((res)=>{
             console.log(res)
-            dispatch({type:"user", payload:false})
+            dispatch({type:"USER", payload:false})
             navigate('/')
         }).catch(err=> console.log("error"+err))
-    });
+    },[]);
 
     return(
         <>
-            <div>logout page</div>
+            <Loading message={`Logging out`}/>
         </>
     )
 }

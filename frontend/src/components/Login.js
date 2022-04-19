@@ -20,6 +20,7 @@ const Login=()=>{
          .then((res)=>{
              console.log(res.status)
              if(res.status==200){
+                dispatch({type:"USER",payload:true})
                 setIsLoggedIn(true)
              }
          }).catch((error)=>{
@@ -52,8 +53,8 @@ const Login=()=>{
                 console.log(res.data)
                 setId(res.data.id)
                 if(res.data.success){
-                    dispatch({type:"user", payload:true})
-                    // navigate(`/dashboard/company`)
+                    dispatch({type:"user",payload:true})
+                    navigate(`/dashboard/companies`)
                     // navigate(`/dashboard/company/${id}`)
                 }
                 else{

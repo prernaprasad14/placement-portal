@@ -2,9 +2,9 @@
 
 import './App.css';
 import "tailwindcss/tailwind.css"
-// import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Route , Routes} from 'react-router-dom';
-import Dashboard from './components/studentdashboard/Dashboard';
+import ScholarDashboard from './components/studentdashboard/ScholarDashboard';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import Brochure from './components/Brochure';
@@ -43,9 +43,10 @@ function App(){
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="scholar-registration" element={<ScholarRegistration />} />
           <Route path="company-registration" element={<CompanyRegistration />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           {/* <Route path="dashboard/scholar" element={<Dashboard/>} /> */}
-          <Route path="dashboard/companies" element={<Dashboard/>} />
+          <Route path="dashboard/companies" element={<ScholarDashboard/>} />
+          <Route path="dashboard/scholars" element={<ScholarDashboard/>} />
           <Route path="dashboard/create-user" element={<CreateUser/>} />
           <Route path="logout" element={<Logout />} />
           <Route path="/profile/:id" element={<ScholarProfile />} />

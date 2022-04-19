@@ -7,7 +7,7 @@ const ScholarTable=(props)=>{
     const [loading, setLoading]= useState(true)
     const {scholars}= props
 
-    var length = Object.keys(scholars).length;
+    // var length = Object.keys(scholars).length;
     // if(length>0){
     //     setLoading(false)
     // }else{
