@@ -17,11 +17,11 @@ const Nav = () =>{
             console.log("RenderNav : state "+state)
             return(
                 <>
-                    <li className='border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
-                        <Link to="logout">Logout</Link>
+                    <li className='ml-auto border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
+                        <Link to="/dashboard">Dashboard</Link>
                     </li>
                     <li className='border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
-                        <Link to="/dashboard">Dashboard</Link>
+                        <Link to="logout">Logout</Link>
                     </li>
                 </>
             )
@@ -29,7 +29,6 @@ const Nav = () =>{
         console.log("RenderNav : state "+state)
         return(
         <>
-            
             <li className=' ml-auto  border-transparent  border-b-4 hover:border-purple-500 box-content'>
                 <Link to="brochure">Brochure</Link>
             </li>

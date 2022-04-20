@@ -18,7 +18,7 @@ const CompanyTable=(props)=>{
     },[])
     return(
     <>
-    <div className="bg-white p-4 flex  rounded-md  text-gray-700">
+    <div className="scrollbar bg-white p-4 flex overflow-x-scroll rounded-md  border-white border-8 text-gray-700">
             <table id="company-table" className="rounded-md overflow-scroll">
                 <thead  className="bg-slate-100/25 border-b-2 drop-shadow-sm rounded overflow-scroll border-gray-700/25 w-10  p-2">
                     <tr>
@@ -26,6 +26,7 @@ const CompanyTable=(props)=>{
                         <td className=" px-8 w-10">Company&nbsp;name</td>
                         <td className=" px-8">Username</td>   
                         <td className=" px-8">Email</td>
+                        <td className=' px-8'>Website</td>
                         <td className=' pl-2 pr-8'></td>
                     </tr>
                 </thead>
