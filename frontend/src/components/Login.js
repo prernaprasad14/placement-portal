@@ -54,8 +54,8 @@ const Login=()=>{
                 setId(res.data.id)
                 if(res.data.success){
                     dispatch({type:"user",payload:true})
-                    navigate(`/dashboard/companies`)
-                    // navigate(`/dashboard/company/${id}`)
+                    navigate(`/dashboard`)
+                    // navigate(`/dashboard}`)
                 }
                 else{
                    console.log("error")
@@ -78,7 +78,7 @@ const Login=()=>{
         
     }
     if(isLoggedIn){
-        navigate('/dashboard/companies')
+        navigate('/dashboard/')
     }
     return (
         <div className='z-10 text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>

@@ -45,11 +45,11 @@ function App(){
           <Route path="company-registration" element={<CompanyRegistration />} />
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           {/* <Route path="dashboard/scholar" element={<Dashboard/>} /> */}
-          <Route path="dashboard/companies" element={<ScholarDashboard/>} />
+          <Route path="dashboard" element={<ScholarDashboard/>} />
           <Route path="dashboard/scholars" element={<ScholarDashboard/>} />
           <Route path="dashboard/create-user" element={<CreateUser/>} />
           <Route path="logout" element={<Logout />} />
-          <Route path="/profile/:id" element={<ScholarProfile />} />
+          <Route path="/profile" element={<ScholarProfile />} />
           <Route path="/forbidden" element={<Page403/>} />     
           <Route path="*" element={<Page404/>} />     
       </Routes>

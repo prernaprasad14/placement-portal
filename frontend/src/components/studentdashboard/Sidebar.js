@@ -21,49 +21,46 @@ const  Sidebar= ({menu,chosenItem}) => {
 
     <>
       <div id="side-menu" >
-          <div className=' hover:text-white text-lg my-4 '>
-            <Link to='#' className=' hover:text-white'>
-              <button  onClick={()=>chosenItem("0")}>
-                <MdSpaceDashboard className='inline-block mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Dashboard</p>
-              </button>
-            </Link>
-          </div>
+          <Link to='#' onClick={()=>chosenItem("0")} className='side-menu-links'>
+            <div className='text-lg  '>
+                <MdSpaceDashboard className='inline-block mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Dashboard</p>
+            </div>
+          </Link>
 
-          <div className='text-lg my-4'>
-            <Link to='#profile' className=' hover:text-white'>
-              <button   onClick={()=>chosenItem("1")}>
-              <HiUserCircle  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-xl'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Profile</p>
-              </button>
-            </Link>
+          <Link to='#profile' onClick={()=>chosenItem("1")} className='side-menu-links'>
+            <div className='text-lg '>
+              <HiUserCircle  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-xl'/>
+              <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Profile</p>
+            </div>
+          </Link>
+
+          <Link to="#companies"  onClick={()=>chosenItem("2")} className='side-menu-links'>
+            <div className='text-lg '>              
+                <HiUserGroup  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Companies</p>
+            </div>
+          </Link>
+          
+          <Link to='#scholars'onClick={()=>chosenItem("3")} className='side-menu-links'>
+              <div className='text-lg '>
+                <FaUserGraduate  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Scholars</p>
+               </div>
+          </Link>
+           
+          <Link to='#notifications' onClick={()=>chosenItem("4")} className='side-menu-links'>
+            <div className='text-lg '>              
+                <BiNotification  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
+            </div>
+          </Link>
+          <Link to='/logout' className=' mt-auto' >
+            <div className='text-lg mt-auto'>
+                <FaSignOutAlt className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Logout</p>
           </div>
-          <div className='text-lg my-4'>
-            <Link to="#companies" className=' hover:text-white'>
-              <button onClick={()=>chosenItem("2")}>
-                <HiUserGroup  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Companies</p>
-              </button>
-            </Link>
-          </div>
-          <div className='text-lg my-4'>
-            <Link to='#scholars' className=' hover:text-white'>
-              <button onClick={()=>chosenItem("3")}>
-                <FaUserGraduate  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Scholars</p>
-              </button>
-            </Link>
-          </div>
-          <div className='text-lg my-4'>
-            <Link to='#notifications' className=' hover:text-white'>
-              <button onClick={()=>chosenItem("4")}>
-                <BiNotification  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
-              </button>
-            </Link>
-          </div>
-          <div className='text-lg mt-auto'>
-            <Link to='/logout' className='hover:text-white mt-auto' >
-              <button >
-                <FaSignOutAlt className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/><p className='hidden sm:inline-block sm:text-sm md:text-lg'>Logout</p>
-              </button>
-            </Link>
-          </div>
+          </Link>
       </div>
 
 

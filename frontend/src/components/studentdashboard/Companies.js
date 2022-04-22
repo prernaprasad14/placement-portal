@@ -29,13 +29,16 @@ const Companies=({data})=>{
     if(data!=null){
         console.log("6666666666 data"+data)
         return(<>
-        <div className="bg-red-300">
-            <div className="bg-emerald-600 hover:bg-green-500  inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="company-table"
-            filename={`companies`+date} sheet="tablexls"  buttonText="Export"/></div>
-            <div className=" p-9">Companies
+        <div className="w-90% rounded  h-screen m-3 bg-white">
+            <div className="flex">
+                    <div className="text-lg m-12">Companies</div>
+                    <div className="download-xls-btn inline-block rounded m-auto px-4 py-2 text-white font-300">
+                        <ReactHTMLTableToExcel id="test-table-xls-button"  target="_blank" table="scholars-table"
+                        filename={`${date}-companies`} sheet="tablexls"  buttonText="Export"/>
+                    </div>
+                </div>
                 <CompanyTable companies={data}/>
             </div>
-        </div>
         </>)
     }
     return(

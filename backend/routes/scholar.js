@@ -190,25 +190,23 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
     
 });
 
-router.get('/profile/:id', isLoggedIn, authenticateScholar, async(req,res)=>{
-    console.log("/profile/:id   passed route")
-    console.log("id:: " + req.params.id) 
-    console.log(req.params) 
-    const id  = req.params.id
-    
-    const scholar = Scholar.findById({_id: req.params.id}, function (err, scholar) {
-        if(err){
-            console.log(err);
-            return res.status(401).json({success:false, message:"User deosnt exist"})
-        }
-        else{
-            if(scholar.token!=req.cookies.jwt){
-                console.log("scholar.token!=req.cookies.jwt : Unauthorised")
-                return res.status(403).json({success:false ,message:`Unauthorised`})
-            }
-            return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar}) 
-    
-        }})
+router.get('/profile', authenticateScholar ,  async(req,res)=>{
+    console.log("/profile  passed route")
+    return res.status(200).json({success:true , scholar:req.user})
+    // console.log("id:: " + req.params.id) 
+    // const id  = req.params.id
+    // const scholar = Scholar.findById({_id: req.params.id}, function (err, scholar) {
+    //     if(err){
+    //         console.log(err);
+    //         return res.status(401).json({success:false, message:"User deosnt exist"})
+    //     }
+    //     else{
+    //         if(scholar.token!=req.cookies.jwt){
+    //             console.log("scholar.token!=req.cookies.jwt : Unauthorised")
+    //             return res.status(403).json({success:false ,message:`Unauthorised`})
+    //         }
+    //          return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar})
+    //     }})
 });
 
 router.get('/dashboard/:id', async(req,res)=>{

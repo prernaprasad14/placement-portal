@@ -30,10 +30,10 @@ const ScholarTable=(props)=>{
     },[length])
     return(
     <>
-    <div className="scrollbar bg-white p-4 flex overflow-x-scroll rounded-md  border-white border-8 text-gray-700">
+    <div className="scrollbar p-4 flex overflow-x-scroll rounded-md  border-slate-100 border-2 mx-8 text-gray-700">
     
             <table id="scholars-table" className="rounded-md ">
-                <thead className="bg-slate-100/25 border-b-2 drop-shadow-sm rounded border-gray-700/25 w-10  p-2">
+                <thead className=" w-10">
                     <tr>
                         <td><input type="checkbox" className=' rounded-sm focus:bg-transparent my-2 border-purple-300 ml-8 p-2 focus:ring-offset-0'></input></td>
                         <td className=" px-8 w-10" onClick={()=>setSortedField('fname')}>First&nbsp;name</td>

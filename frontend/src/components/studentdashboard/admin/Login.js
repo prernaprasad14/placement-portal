@@ -51,7 +51,7 @@ const Login=()=>{
                 dispatch({type:"user", role:"admin"})
                 console.log("state"+state)
                 
-                navigate(`/dashboard/companies`)
+                navigate(`/dashboard`)
             }
             await axios.post('api/company/login', userObject)
             .then((res) => {
@@ -60,8 +60,8 @@ const Login=()=>{
                 if(res.data.success){
                     dispatch({type:"user", role:"company"})
                     console.log("state"+state)
-                    navigate(`/dashboard/companies`)
-                    // navigate(`/dashboard/company/${id}`)
+                    navigate(`/dashboard`)
+                    // navigate(`/dashboard`)
                 }
                 else{
                    console.log("error")
@@ -87,8 +87,8 @@ const Login=()=>{
         
     }
     if(isLoggedIn){
-        dispatch({type:"user", role:"company"})
-        navigate('/dashboard/companies')
+        dispatch({type:"user", payload:"true"})
+        navigate('/dashboard')
     }
     return (
         <div className='z-10 text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>

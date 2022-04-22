@@ -17,11 +17,11 @@ const Nav = () =>{
             console.log("RenderNav : state "+state)
             return(
                 <>
-                    <li className='ml-auto border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
-                        <Link to="/dashboard">Dashboard</Link>
+                    <li className='ml-auto  nav-hover box-content mr-5'>
+                        <Link className="hover:text-black" to="/dashboard">Dashboard</Link>
                     </li>
-                    <li className='border-transparent  border-b-4 hover:border-purple-500 box-content mr-5'>
-                        <Link to="logout">Logout</Link>
+                    <li className=' nav-hover box-content mr-5'>
+                        <Link className="hover:text-black" to="logout">Logout</Link>
                     </li>
                 </>
             )
@@ -29,17 +29,17 @@ const Nav = () =>{
         console.log("RenderNav : state "+state)
         return(
         <>
-            <li className=' ml-auto  border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="brochure">Brochure</Link>
+            <li className=' ml-auto   nav-hover box-content'>
+                <Link className="hover:text-black" to="brochure">Brochure</Link>
             </li>
-            <li className='border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="login">Login</Link>
+            <li className=' nav-hover box-content'>
+                <Link className="hover:text-black" to="login">Login</Link>
             </li>
-            <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="company-registration">Company Register</Link>
+            <li className='item  nav-hover box-content'>
+                <Link className="hover:text-black" to="company-registration">Company Register</Link>
             </li>
-            <li className='item border-transparent  border-b-4 hover:border-purple-500 box-content'>
-                <Link to="scholar-registration">Scholar register</Link>
+            <li className='item  nav-hover box-content'>
+                <Link className="hover:text-black" to="scholar-registration">Scholar register</Link>
             </li>
         </>
         )
@@ -50,7 +50,7 @@ const Nav = () =>{
     <div className="nav-container">
             <ul className='navItems text-md '> 
             <li className='item'>
-                <Link to="/">
+                <Link className="hover:text-black" to="/">
                     <div className='home'>
                         <div>
                             <img src={logo} width="90px" height="90px" alt="du-logo" id="logo"/>

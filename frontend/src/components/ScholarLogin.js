@@ -54,7 +54,7 @@ const ScholarLogin=()=>{
             if(res.data.success){
                 dispatch({type:"USER", payload:true})
                 setIsLoggedIn(true)
-                navigate(`/dashboard/companies`)
+                navigate(`/dashboard`)
                 // navigate(`/dashboard/scholar/${id}`)
             }
             else{
@@ -78,7 +78,7 @@ const ScholarLogin=()=>{
         });
     }
     if(isLoggedIn){
-        navigate('/dashboard/companies')
+        navigate('/dashboard')
     }
     return (
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>

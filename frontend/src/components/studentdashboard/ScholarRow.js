@@ -13,18 +13,18 @@ const ScholarRow =(scholar)=>{
     const {fname,lname, phone} =scholar.scholar[1].personalDetails
     const {email, username} =scholar.scholar[1].loginDetails
     const onClick=()=>{
-       navigate(`/profile/${_id}`)
+       navigate(`/profile`)
     }
     return(
         <>
-            <tr className="border-b-2 border-box border-gray-700/15 bg-rose-500/25 cursor-pointer" key={id} onClick={onClick}>
+            <tr key={id} onClick={onClick}>
                 <td className=" py-3 px-8"><input type="checkbox" className='rounded-sm focus:bg-transparent border-purple-300 p-2'></input></td>
                 <td className=' py-3 px-8'>{fname}</td>
                 <td className=' py-3 px-8'>{lname}</td>
                 <td className=' py-3 px-8'>{email}</td>
                 <td className=' py-3 px-8'>{phone}</td>
                 <td className=' py-3 px-8'>{placement_status}</td>        
-                <td className=' py-3 px-2' ><button type="to"><BsThreeDotsVertical /></button></td>        
+                <td className=' py-3 px-2' ><button><BsThreeDotsVertical /></button></td>        
             </tr>
 
         </>

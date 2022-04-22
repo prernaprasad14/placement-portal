@@ -13,7 +13,7 @@ import {FaUserGraduate,FaSignOutAlt} from 'react-icons/fa'
 
 
 
-const  WorkArea = ({companies, scholars}) => {
+const  WorkArea = ({companies, scholars, scholar}) => {
   console.log("3 inside workarea")
   const [choice , setChoice] = useState('0')
   const responsive= useRef()
@@ -33,11 +33,14 @@ const  WorkArea = ({companies, scholars}) => {
    setChoice(option)
    switch(option){
     // case '0' :  component= <StudentProfile/>
-    // case '1' : component=  <><StudentProfile/>
-    case '2' : {console.log("companiesData"+companies)
-    return <Companies data={companies}/>
-    
-  }
+    case '1' : {
+                console.log(scholar)
+                return(<><StudentProfile data={scholar}/></>)
+              }
+    case '2' : {
+                  console.log("companiesData"+companies)
+                  return <Companies data={companies}/>
+                }
     case '3' :  {console.log("companiesData"+companies)
      return<Scholars  data={scholars}/>}
     // case '4' : return <><Notifications/></>
@@ -51,7 +54,7 @@ const  WorkArea = ({companies, scholars}) => {
   return(  
     <>  
         <div className='relative sm:flex'>
-          <div className='h-screen sticky sm:relative hidden sm:flex  sm:bg-sky-500 ' >
+          <div className='h-screen sticky sm:relative hidden sm:flex ' >
             <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} chosenItem={setChoice} />
             {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} /> */}
             {/* <Sidebar menu={['Profile', 'Scholars', 'Notifications']} /> */}
@@ -110,7 +113,7 @@ const  WorkArea = ({companies, scholars}) => {
                 </ul>
               </div>
             </div>
-            <div className='block sm:inline-block w-full sm:w-5/6 border-5 bg-slate-500'>
+            <div className='block sm:inline-block w-full sm:w-5/6 bg-slate-100'>
               {/* {(option)=>chosenItem(option)} */}
               <ChosenItem option={choice}/>
               {/* <CreateUser/>

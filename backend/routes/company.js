@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
 const { generateCreateUserMail } = require('../mail');
+const { authenticateCompany } = require('../middleware/authenticate');
 
 router.post('/create-user', validateCompanyCreate, async(req,res)=>{
 
@@ -192,17 +193,20 @@ router.get('/verify-email', async(req, res)=>{
     return res.status(200).json({success: true, message:"Not registered"})
 });
 
-router.get('/profile/:username', async(req,res)=>{
-    console.log("/profile/:username   passed route")
-    const user = Company.findById({"loginDetails.username": req.params.username}, function (err, user) {
-        if(err){ 
-            console.log(err);
-            return res.send(error)
-        }
-        else{
-            console.log( user);
-            return res.json({success:true ,message:`Retrieved user ${user.loginDetails.username}`, user}) 
-        }})
+router.get('/profile', authenticateCompany, async(req,res)=>{
+    console.log("company /profile   passed route")
+    // const user = Company.findById({"loginDetails.username": req.params.username}, function (err, user) {
+    //     if(err){ 
+    //         console.log(err);
+    //         return res.send(error)
+    //     }
+    //     else{
+    //         console.log( user);
+    //         return res.json({success:true ,message:`Retrieved user ${user.loginDetails.username}`, user}) 
+    //     }})
+  
+        console.log(req.user)
+      
 });
 
 

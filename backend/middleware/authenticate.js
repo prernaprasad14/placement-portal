@@ -19,14 +19,17 @@ exports.authenticateScholar = async(req, res, next)=>{
             return res.status(403).json({success: false, message:"Forbidden"})
         }
         const admin = await Admin.findOne({_id:verifyToken._id, token});
-        if(!admin)
-        {const user = await Scholar.findOne({_id:verifyToken._id, token});
-        if(!user) {throw new Error("User not found")}}
-        req.token = token;
-        req.user = user;
-        req.userId = user._id;
+        if(!admin){
+            const user = await Scholar.findOne({_id:verifyToken._id, token});
+            if(!user){
+                throw new Error("User not found")
+            }
+            req.token = token;
+            req.user = user;
+            req.userId = user._id;
 
-        next();
+            next();
+        }
     }catch{
         console.log("scholar authentication error")
         return res.status(401).json({success: false, message: "Unauthorized access"})
@@ -55,7 +58,7 @@ exports.authenticateCompany = async(req, res, next)=>{
 
         next();
     }catch{
-        console.log("scholar authentication error")
+        console.log("Company authentication error")
         return res.status(401).json({success: false, message: "Unauthorized access"})
 
     }

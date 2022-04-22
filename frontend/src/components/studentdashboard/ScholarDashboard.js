@@ -58,25 +58,25 @@ const  ScholarDashboard = () => {
       })
       .catch(err=> console.log("Error getAllCompanies : "+err))
   }
-    // const getScholar=()=>{
-    // //    setTimeout(()=>{
-    //     console.log("here here")
-    //     axios.get(`api/scholar/profile/${id}`)
-    //     .then((res)=>{
-    //         const scholar = res.data.scholar;
-    //         setScholar(scholar);
-    //         setIsLoading(false)
-    //         setUsername(scholar.loginDetails.username)
-    //       }).catch(error=> {
-    //           console.log("Error getScholar : "+error)
-    //           console.log(error.response.status)
-    //           // if(error.response.status=='401')
-    //           //   navigate('/login')
-    //           if(error.response.status=='403'){}
-    //             navigate('/forbidden')
-    //         }) 
-    //     // },90000) 
-    // }
+    const getScholar=()=>{
+    //    setTimeout(()=>{
+        console.log("here here")
+        axios.get(`api/scholar/profile`)
+        .then((res)=>{
+            const scholar = res.data.scholar;
+            setScholar(scholar);
+            setIsLoading(false)
+            setUsername(scholar.loginDetails.username)
+          }).catch(error=> {
+              console.log("Error getScholar : "+error)
+              console.log(error.response.status)
+              // if(error.response.status=='401')
+              //   navigate('/login')
+              if(error.response.status=='403'){}
+                navigate('/forbidden')
+            }) 
+        // },90000) 
+    }
     const getAllScholars=()=>{
       console.log("here here")
       axios.get('/scholars')
@@ -90,22 +90,22 @@ const  ScholarDashboard = () => {
       .catch(err=> console.log("Error getAllScholars : "+err))
   }
 
-
-  
   useEffect(()=>{
+    // setTimeout(()=>{
     checkLoggedIn();
-    // getScholar();
+    getScholar();
     getAllCompanies();
     getAllScholars();
+    // },80000000)
+   
   },[]);
 
   if(isLoading){
     return(
       <>
         <Loading message={`Fetching Data`}/>
-      </>
-    )
-  }
+        </>)
+    }
   return(  
     <>
     
@@ -119,7 +119,7 @@ const  ScholarDashboard = () => {
 
           
         <div className='w-screen h-screen'>
-            <WorkArea companies={companies} scholars={scholars}  />        
+            <WorkArea companies={companies} scholars={scholars}  scholar={scholar}/>        
         </div>
   
  

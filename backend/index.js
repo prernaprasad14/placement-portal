@@ -55,7 +55,7 @@ app.use('/api/company', companyRoute);
 
 
 
-app.use('/companies', (isScholar||isAdmin) , async (req, res)=>{
+app.use('/companies',  async (req, res)=>{
     console.log("companies route passed !")
     const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
     console.log("companies route passed !"+companies)

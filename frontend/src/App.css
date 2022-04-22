@@ -1,20 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap');
-body{
-	/* position: absolute; */
-	font-family: 'Open Sans', sans-serif;
-	background-repeat: no-repeat;	
-	height:100vh;
-	background-position: center;
-	background-size: cover;
-}
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP&display=swap'); */
 
 body, *{
   margin: 0;
   padding: 0;
 }
+body{
+	/* position: absolute; */
+	font-family: 'Lato', sans-serif;	
+	height:100vh;
+	background-position: center;
+	background-size: cover;
+	overflow-x: hidden;
+}
+
 .spinner {
 	-webkit-animation: rotate 2s linear infinite;
-			animation: rotate 2s linear infinite;
+	animation: rotate 2s linear infinite;
 	z-index: 2;
 	width: 30px;
 	height: 30px;
@@ -91,7 +93,14 @@ a{
 	box-sizing: border-box;
 	margin-left:auto;
 }
-
+.nav-hover{
+	box-sizing: border-box;
+	border: 3px solid rgba(167, 139, 250, 0);
+}
+.nav-hover:hover{
+	color:black;
+	border-bottom: 3px solid #a78bfa;
+}
 input, textarea{	
 	background-color: white;
 	margin: auto;
@@ -200,55 +209,68 @@ border-radius: 10px;
 background: #E5E8E8 ; 
 border-radius: 10px;
 }
-
 .scrollbar::-webkit-scrollbar-thumb:hover {
 background: #E8DAEF; 
 }
+thead{
+	user-select: none;
+	border: 5px solid #734b95;
+	/* background-color: rgb(192 132 252); */
+	background-color: rgb(167 139 250);
+		border-radius: 5px;
+	color: white;
+	box-shadow:1px 0 3px rgba(0, 0,0, 0.2);
+	/* padding: 3px 0 ; */
+}
 
+thead tr{
+	margin: 10px 0;
+	font-weight: 600
+}
+tbody tr{
+	cursor: pointer;
+	border-bottom: 2px;
+	box-sizing: border-box;
+	font-weight: 400;
+}
 tbody tr:nth-child(odd){
-	background-color: #F8F9F9;
+	/* background-color: #f9f9f8; */
+	background-color: #f9f9f8;
 }
 tbody tr:nth-child(even){
-	background-color: #F2F4F4;
+	background-color: #fefefe;
+}
+tbody tr:hover{
+	background-color: #f2eaff;
 }
 #responsive-menu ul{
 	background-color: #f6f6f6;
 	margin : 2px 8px;
-
 	border-radius: 15px;
 }
-/* className='mr-7 py-8 flex flex-col justify-start gap-y-2 text-white ' */
 #side-menu{
-	padding: 0 12px;
-	min-height: 600px;
-	max-height: 800px;
+	box-sizing: border-box;
+	display: flex ;
+	flex-direction: column;
 	width:240px;
-	border-radius: 0 5px 0;
 	color: #2f2f2f;
-	border-left: 8px solid #661bc9;
-	background-color:rgb(250, 248, 252);
-	
+	border-left: 8px solid  rgb(167 139 250);
+
+	background-color:#ffffff;
+	user-select: none;
 }
-#side-menu div{
-	margin: 0 12px;
-	min-width: 130px;
-	padding: 4px 3px;
+.side-menu-links{
+	margin: 10px 12px;	
+	padding: 5px 15px;
 }
-#side-menu div:hover{
+.side-menu-links:hover{
 	border-radius: 2px;
-	margin: 0 12px;
-	padding: 1px 3px;
+	margin: 10px 12px;
+	padding: 5px 15px;
 	color: #ffffff;
-	padding: 4px 3px;
-
 	border-radius: 3px;
-	background-color: #661bc9;
-
+	background-color:#a78bfa;
 }
-#side-menu div button{	
-	padding: 2px auto;
-}
-
 #responsive-menu ul li{
 	padding: 2px 40px;
 	border-radius: 5px;
@@ -263,8 +285,66 @@ tbody tr:nth-child(even){
 	color:#fff;
 }
 
-/* footer{
-	bottom : 0px;
-	width: 100vw;
-	position: relative;
-} */
+::-moz-selection, ::-webkit-selection ,::selection {
+	color: white;
+	background: #803ae2;
+  }
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #BA68C8
+}
+
+.profile-button {
+    background: rgb(99, 39, 120);
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: #682773
+}
+
+.profile-button:focus {
+    background: #682773;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: #682773;
+    box-shadow: none
+}
+
+.back:hover {
+    color: #682773;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: #BA68C8;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px #BA68C8
+}
+
+.download-xls-btn{
+	background-color:#2dd4bf;
+	color: #2f2f2f;
+}
+.download-xls-btn:hover{
+	background-color: #14b8a5;
+}
+input[type="checkbox"]::selection{
+	background-color: white;
+}
+input[type="checkbox"]:hover{
+	cursor: pointer;
+}
+input[type="checkbox"]:active,
+input[type="checkbox"]:focus {
+	background-color: #ffffff;
+}
