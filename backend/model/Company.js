@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken') 
 const companySchema = new mongoose.Schema({
-    isCompany:{
-        type:Boolean,
-        required: true,
-        default:true
-    },
+    // isCompany:{
+    //     type:Boolean,
+    //     required: true,
+    //     default:true
+    // },
     loginDetails:{
         username:{
             type :String,

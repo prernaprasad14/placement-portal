@@ -66,7 +66,7 @@ const  ScholarDashboard = () => {
             const scholar = res.data.scholar;
             setScholar(scholar);
             setIsLoading(false)
-            setUsername(scholar.loginDetails.username)
+            setUsername(scholar.username)
           }).catch(error=> {
               console.log("Error getScholar : "+error)
               console.log(error.response.status)

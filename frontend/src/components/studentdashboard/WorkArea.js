@@ -10,6 +10,7 @@ import {MdSpaceDashboard} from 'react-icons/md'
 import {BiNotification} from 'react-icons/bi'
 import {HiUserGroup,HiUserCircle} from 'react-icons/hi'
 import {FaUserGraduate,FaSignOutAlt} from 'react-icons/fa'
+import {TiThMenu} from 'react-icons/ti'
 
 
 
@@ -34,17 +35,18 @@ const  WorkArea = ({companies, scholars, scholar}) => {
    switch(option){
     // case '0' :  component= <StudentProfile/>
     case '1' : {
-                console.log(scholar)
-                return(<><StudentProfile data={scholar}/></>)
+                  console.log(scholar)
+                  return(<><StudentProfile data={scholar}/></>)
               }
     case '2' : {
                   console.log("companiesData"+companies)
                   return <Companies data={companies}/>
                 }
-    case '3' :  {console.log("companiesData"+companies)
-     return<Scholars  data={scholars}/>}
+    case '3' :  { console.log("companiesData"+companies)
+                  return<Scholars  data={scholars}/>}
     // case '4' : return <><Notifications/></>
-    default:  return <Companies  data={companies}/>
+
+    default:  return <StudentProfile data={scholar}/>
   }
   }
   useEffect(()=>{
@@ -53,28 +55,18 @@ const  WorkArea = ({companies, scholars, scholar}) => {
   
   return(  
     <>  
-        <div className='relative sm:flex'>
-          <div className='h-screen sticky sm:relative hidden sm:flex ' >
+        <div className='flex-col sm:flex-row sm:flex'>
+          <div className=' hidden sm:flex top-left sm:h-screen' >
             <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} chosenItem={setChoice} />
             {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} /> */}
             {/* <Sidebar menu={['Profile', 'Scholars', 'Notifications']} /> */}
           </div>
-          <div className='sm:hidden flex' >
+          <div className='sm:hidden block bg-violet-900' >
+              <button className=" outline-none "  onClick={sidemenu}>
               
-              <button className="  outline-none flex-col sm:flex-row"  onClick={sidemenu}>
-              <svg className=" w-6 h-6 text-gray-500 hover:text-green-500 "
-                x-show="!showMenu"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
+              <TiThMenu  className="p-1 m-1 w-10 h-10 active:border-2 active:border-white active:rounded-md text-indigo-200  active:text-white "/>
               </button>
-              <div ref={responsive} id='responsive-menu' className={isActive ? 'block mt-4 ml-[-30px] ': 'hidden'}>
+              <div ref={responsive} id='responsive-menu' className={isActive ? 'block  ml-[-30px] ': 'hidden'}>
                 <ul className='w-screen'>
                   <Link to="#">
                     <button onClick={()=>setChoice('0')}>
@@ -113,7 +105,7 @@ const  WorkArea = ({companies, scholars, scholar}) => {
                 </ul>
               </div>
             </div>
-            <div className='block sm:inline-block w-full sm:w-5/6 bg-slate-100'>
+            <div className='flex flex-col w-full sm:w-5/6 bg-slate-100'>
               {/* {(option)=>chosenItem(option)} */}
               <ChosenItem option={choice}/>
               {/* <CreateUser/>

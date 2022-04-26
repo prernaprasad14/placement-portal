@@ -55,8 +55,8 @@ const  Sidebar= ({menu,chosenItem}) => {
                 <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
             </div>
           </Link>
-          <Link to='/logout' className=' mt-auto' >
-            <div className='text-lg mt-auto'>
+          <Link to='/logout' className=' mt-auto side-menu-links' >
+            <div className='text-lg'>
                 <FaSignOutAlt className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
                 <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Logout</p>
           </div>
@@ -78,16 +78,6 @@ const  Sidebar= ({menu,chosenItem}) => {
 					
 				</div>
 			</div>
-	
-			<div className="hidden mobile-menu">
-				<ul className="">
-					<li className="active"><a href="index.html" className="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
-					<li><a href="#services" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Services</a></li>
-					<li><a href="#about" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a></li>
-					<li><a href="#contact" className="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact Us</a></li>
-				</ul>
-			</div>
-		
     
         </div>
     

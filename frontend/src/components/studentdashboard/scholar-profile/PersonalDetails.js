@@ -3,8 +3,8 @@ import Item from "../Item"
 const PersonalDetails=({personal})=>{
 
     const {fname,lname, dob,gender, phone,alternative_phone} =personal
-    const {perma_addr1,perma_addr2,perma_state, perma_city, perma_pin} = personal.permanent_addr
-    const {corr_addr1,corr_addr2, corr_state, corr_city, corr_pin} =personal.correspondence_addr
+    const {perma_addr1,perma_addr2,perma_state, perma_city, perma_pin} = personal
+    const {corr_addr1,corr_addr2, corr_state, corr_city, corr_pin} =personal
     const [altPhone,setAltPhone] =useState('NA')    
     useEffect(()=>{
         if(alternative_phone){

@@ -6,14 +6,34 @@ body, *{
   padding: 0;
 }
 body{
-	/* position: absolute; */
+	box-sizing: border-box;
+	display:flex;
+	flex-direction: column;
 	font-family: 'Lato', sans-serif;	
-	height:100vh;
+	min-height: 100vh;
 	background-position: center;
 	background-size: cover;
 	overflow-x: hidden;
 }
-
+/* body *{
+	border : 1px solid rgb(255, 0, 136);
+} */
+.profile h3{
+	background-color: #b52dc1;
+	border-radius: 5px;
+	padding: 10px 10px;
+	font-weight: 700;
+	font-size: 15px;
+	color: #ffffff;
+	text-shadow: 1px 5px solid #000;
+}
+.profile p{
+	font-size: 14px;
+}
+.profile label{
+	font-weight: 500;
+	font-size: 16px;
+}
 .spinner {
 	-webkit-animation: rotate 2s linear infinite;
 	animation: rotate 2s linear infinite;
@@ -71,9 +91,6 @@ a{
   text-decoration: none;
   color:black ;
 }
-.homepage, .dashboard,.login, .brochure{
-  background-color: #317ac2;
-}
 .nav-container ul{
   align-items: center;
   display: flex;
@@ -110,6 +127,10 @@ input, textarea{
 	padding: 12px;
 	display: block;
 	border-radius:5px; 
+}
+.container{
+	flex: auto;
+	flex-direction: column;
 }
 /* Change the white to any color */
 input:-webkit-autofill,
@@ -220,17 +241,33 @@ thead{
 		border-radius: 5px;
 	color: white;
 	box-shadow:1px 0 3px rgba(0, 0,0, 0.2);
-	/* padding: 3px 0 ; */
 }
-
-thead tr{
+thead th{
 	margin: 10px 0;
 	font-weight: 600
+}
+td{
+	/* padding: 0 20px 0 10px; */
+	margin:0 12px;
+}
+th{
+	padding: 4px 10px;
+}
+tr th p span{
+	display:inline-block;
+	visibility: hidden;
+	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
+}
+tr th p:hover > span{
+	display: inline-block;
+	visibility: visible;
+	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
 }
 tbody tr{
 	cursor: pointer;
 	border-bottom: 2px;
 	box-sizing: border-box;
+	font-size: 14px;
 	font-weight: 400;
 }
 tbody tr:nth-child(odd){
@@ -245,8 +282,7 @@ tbody tr:hover{
 }
 #responsive-menu ul{
 	background-color: #f6f6f6;
-	margin : 2px 8px;
-	border-radius: 15px;
+	margin : 2px 30px;
 }
 #side-menu{
 	box-sizing: border-box;

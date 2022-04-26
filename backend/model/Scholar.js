@@ -4,18 +4,18 @@ const crypto = require("crypto")
 const jwt = require('jsonwebtoken') 
 
 const scholarSchema = new mongoose.Schema({
-    isStudent:{
-        type:Boolean,
-        default:true,
-        required:true
-    },
+    // isStudent:{
+    //     type:Boolean,
+    //     default:true,
+    //     required:true
+    // },
     placement_status:{
         type : String,
         enum:['Placed','Unplaced'],
         required:true,
         default: 'Unplaced'
     },
-    loginDetails:{
+    // loginDetails:{
         username:{
             type: String,
             required: true
@@ -27,9 +27,9 @@ const scholarSchema = new mongoose.Schema({
         password:{
             type: String,
             required: true
-        }
+        // }
     },
-    personalDetails:{
+    // personalDetails:{
         fname:{
             type: String,
             min: 3,
@@ -59,7 +59,7 @@ const scholarSchema = new mongoose.Schema({
         alternative_phone :{
             type : String,
         },
-        permanent_addr: {
+        // permanent_addr: {
             perma_addr1:{
                 type : String,
                 required: true
@@ -79,9 +79,9 @@ const scholarSchema = new mongoose.Schema({
             perma_pin:{
                 type : String,
                 required: true
-            }
-        },
-        correspondence_addr :{
+            },
+        // }
+        // correspondence_addr :{
             corr_addr1:{
                 type : String,
                 required: true
@@ -102,9 +102,9 @@ const scholarSchema = new mongoose.Schema({
             type : String,
             required: true
             },
-        }
-    },
-    postGraduationDetails : {
+        // }
+
+    // postGraduationDetails : {
         pg_course: {
             type: String,
             required : true
@@ -128,9 +128,9 @@ const scholarSchema = new mongoose.Schema({
         pg_backlog_details:{
             type: String,
             required : true
-        }
+        // }
     },
-    graduationDetails :{
+    // graduationDetails :{
         grad_college:{
             type: String,
             required : true
@@ -162,9 +162,9 @@ const scholarSchema = new mongoose.Schema({
         grad_year_of_passing:{
             type: Number,
             required : true
-        }
+        // }
     },
-    intermediateDetails: {
+    // intermediateDetails: {
         inter_board:{
             type: String,
             required : true
@@ -188,9 +188,9 @@ const scholarSchema = new mongoose.Schema({
         inter_year_of_passing:{
             type: Number,
             required : true
-        }
+        // }
     },
-    highSchoolDetails : {
+    // highSchoolDetails : {
         high_board:{
             type: String,
             required : true
@@ -214,7 +214,7 @@ const scholarSchema = new mongoose.Schema({
         high_year_of_passing:{
             type: Number,
             required : true
-        }
+        // }
     },
     createdAt:{
         type: Date,

@@ -8,9 +8,13 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
 
    
     const [error, setError] = useState(false);
+    console.log("1values")
+    console.log(values)
     // const [disable, setDisable] = useState(false)
     const Continue = e =>{
         e.preventDefault()  
+        console.log("2values")
+        console.log(values)
         // const isValid=e.target.classList.contains('invalid')
         // if(!isValid)
         // {
@@ -67,15 +71,15 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
                     <div onChange={handleChange('gender')} name="gender" defaultValue={values.gender} className=" my-1 inline-block ">
                         <p className='font-semibold'>Gender<span className='text-pink-600'>*</span></p>
                         <div className='mr-2  inline-block'>
-                            <input type="radio" name="group1" value="male" className=" hover:cursor-pointer p-2  text-lg  my-3 border-2  border-violet-200"/>
+                            <input required type="radio" name="group1" value="Male" className=" hover:cursor-pointer p-2  text-lg  my-3 border-2  border-violet-200"/>
                             <label className="px-4" htmlFor="male" >Male</label>
                         </div>
                         <div className='mr-2  inline-block'>
-                            <input type="radio" name="group1" value="female" className="  hover:cursor-pointer p-2  text-lg  my-3 border-2  border-violet-200"/>
+                            <input type="radio" name="group1" value="Female" className="  hover:cursor-pointer p-2  text-lg  my-3 border-2  border-violet-200"/>
                             <label className="px-4" htmlFor="female">Female</label>
                         </div>
                         <div className='mr-2  inline-block'>
-                            <input type="radio" name="group1" value="preferNotToSay"className="  hover:cursor-pointer p-2   text-lg  my-3 border-2  border-violet-200"/>
+                            <input type="radio" name="group1" value="Prefer not to say"className="  hover:cursor-pointer p-2   text-lg  my-3 border-2  border-violet-200"/>
                             <label className="px-4" htmlFor="preferNotToSay">Prefer not to say</label>
                         </div> 
                         <p className='text-md text-gray-500 ml-[20px]'>Please select an option</p>

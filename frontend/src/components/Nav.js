@@ -47,7 +47,7 @@ const Nav = () =>{
 
     return (
     <>
-    <div className="nav-container">
+    <div className="user-select-none nav-container">
             <ul className='navItems text-md '> 
             <li className='item'>
                 <Link className="hover:text-black" to="/">

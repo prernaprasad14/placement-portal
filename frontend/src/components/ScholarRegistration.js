@@ -11,13 +11,13 @@ export default class ScholarRegistration extends Component {
 
     state = {
       step: 1,
-      loginDetails:{
+      // loginDetails:{
         email:'',
         password:'',
         confirmPassword:'',
-        username:''
-      },
-      personalDetails:{
+        username:'',
+      // },
+      // personalDetails:{
           fname:'',
           lname:'',
           dob:'',
@@ -25,30 +25,30 @@ export default class ScholarRegistration extends Component {
           placement_status:'',
           phone:'',
           alternative_phone :'',
-          permanent_addr: {
+          // permanent_addr: {
               perma_addr1:'',
               perma_addr2:'',
               perma_state:'',
               perma_city:'',
-              perma_pin:''
-          },
-          correspondence_addr :{
+              perma_pin:'',
+          // },
+          // correspondence_addr :{
               corr_addr1:'',
               corr_addr2:'',
               corr_state:'',
               corr_city:'',
               corr_pin:'',
-          }
-      },
-      postGraduationDetails : {
+          // }
+      // },
+      // postGraduationDetails : {
           pg_course:'',
           pg_exam_roll:'',
           pg_class_roll:'',
           pg_aggr_percentage:'',
           pg_backlogs:'',
-          pg_backlog_details:''
-      },
-      graduationDetails :{
+          pg_backlog_details:'',
+      // },
+      // graduationDetails :{
           grad_college:'',
           grad_university:'',
           grad_course:'',
@@ -56,24 +56,23 @@ export default class ScholarRegistration extends Component {
           grad_marks_obtained:'',
           grad_max_marks:'',
           grad_aggr_percentage:'',
-          grad_year_of_passing:''
-      },
-      intermediateDetails: {
+          grad_year_of_passing:'',
+      // },
+      // intermediateDetails: {
           inter_board:'',
           inter_roll_no:'',
           inter_marks_obtained:'',
           inter_max_marks:'',
           inter_aggr_percentage:'',
-          inter_year_of_passing:''
-      },
-      highSchoolDetails : {
+          inter_year_of_passing:'',
+      // },
+      // highSchoolDetails : {
           high_board:'',
           high_roll_no:'',
           high_marks_obtained:'',
           high_max_marks:'',
           high_aggr_percentage:'',
           high_year_of_passing:''
-      }
     } 
 
   // go back to previous step
@@ -92,7 +91,14 @@ export default class ScholarRegistration extends Component {
   handleChange = input => e => {
 
     const obj= { [input]: e.target.value }
-    this.setState({ [input]: e.target.value });
+
+    if(input==='fname'|| input ==="lname"){
+      const val = e.target.value.toUpperCase()
+      this.setState({ [input]: val });
+    } 
+    else{
+      this.setState({ [input]: e.target.value });
+    }
     console.log(`1 inside handleChange: `+{[input]:e.target.value});
     console.log(`2 inside handleChange: `+JSON.stringify(obj));
    
@@ -115,7 +121,7 @@ export default class ScholarRegistration extends Component {
 
       pg_course:/^$/,
       pg_exam_roll:/^\d{8,20}$/,
-      pg_class_roll:/^\d{1,2}$/,
+      pg_class_roll:/^\w+$/,
       pg_aggr_percentage:/^\d{2}$/,
       pg_backlogs:/^\d{0,2}$/,
       pg_backlog_details:/^\w+\.?$/,
@@ -123,21 +129,21 @@ export default class ScholarRegistration extends Component {
       grad_college:/^$/,
       grad_university:/^$/,
       grad_course:/^\w+\.$/,
-      grad_roll_no:/^\d{4,20}$/,
+      grad_roll_no:/^\w+$/,
       grad_marks_obtained:/^[0-9]+\.?[0-9]*$/,
       grad_max_marks:/^\d{3,5}$/,
       grad_aggr_percentage:/^\d{2}$/,
       grad_year_of_passing:/^\d{4}$/,
 
       inter_board:/^$/,
-      inter_roll_no:/^d{1,10}$/,
+      inter_roll_no:/^\w+$/,
       inter_marks_obtained:/^[0-9]+\.?[0-9]*$/,
       inter_max_marks:/^$/,
       inter_aggr_percentage:/^$/,
       inter_year_of_passing:/^\d{4}$/,
 
       high_board:/^$/,
-      high_roll_no:/^\d{8,20}$/,
+      high_roll_no:/^\w+$/,
       high_marks_obtained:/^\d{2}$/,
       high_max_marks:/^[0-9]+\.?[0-9]*$/,
       high_aggr_percentage:/^\d{2}$/,

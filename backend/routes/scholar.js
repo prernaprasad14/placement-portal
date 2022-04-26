@@ -20,7 +20,7 @@ router.post('/create-user', validateScholarCreate, async(req,res)=>{
     try{ 
         console.log("1 here")
         console.log("2 req.body.email  "+req.body.email)
-        const scholarExists= await Scholar.findOne({"loginDetails.email":req.body.email  })
+        const scholarExists= await Scholar.findOne({"email":req.body.email  })
         console.log("3 scholarExists  "+scholarExists)
         if(scholarExists) return res.json({success: false, message:"Already registered"})
         console.log("4 here")
@@ -68,7 +68,7 @@ router.post('/verify-email', async(req, res)=>{
     const email = req.body.email
     console.log("0 req.body"+JSON.stringify(req.body))
     console.log("1 email"+ email)
-    const exists = await Scholar.findOne({"loginDetails.email": email})
+    const exists = await Scholar.findOne({"email": email})
     console.log("2 exists"+ exists)
     if(exists) return res.status(200).json({success: true, message:"already registered"})
     return res.status(400).json({success: false, message:"Notregistered"})
@@ -77,67 +77,65 @@ router.post('/register', validateScholarRegistration, validate , async (req, res
     try{
         console.log("hello")
         
-        const user = await Scholar.findOne({"loginDetails.email":req.body.loginDetails.email})
+        const user = await Scholar.findOne({"email":req.body.email})
         if(user) return res.status(400).json({success:false, message:"You already have an account"}).send("You already have an account")
-        console.log(req.body.loginDetails.password )
-        console.log(req.body.loginDetails.username)
-        console.log(req.body.loginDetails.confirmPassword)
-        if(req.body.loginDetails.password !== req.body.loginDetails.confirmPassword)  return res.status(401).send("passwords do not match")
+        console.log(req.body.password )
+        console.log(req.body.username)
+        console.log(req.body.confirmPassword)
+        if(req.body.password !== req.body.confirmPassword)  return res.status(401).send("passwords do not match")
 
         
         console.log("1 reached here")
         var c=0
         console.log(c+" here")
         c++
-        const {username, email } = req.body.loginDetails
+        const {username, email } = req.body
         
         console.log(c+" here")
         c++
-        const {fname,lname,dob,gender,phone,alternative_phone}= req.body.personalDetails
+        const {fname,lname,dob,gender,phone,alternative_phone}= req.body
         
         console.log(c+" here")
         c++
-        const {perma_addr1,perma_addr2,perma_state,perma_city,perma_pin}= req.body.personalDetails.permanent_addr
+        const {perma_addr1,perma_addr2,perma_state,perma_city,perma_pin}= req.body
         
         console.log(c+" here")
         c++
-        const {corr_addr1,corr_addr2,corr_state,corr_city,corr_pin}= req.body.personalDetails.correspondence_addr
+        const {corr_addr1,corr_addr2,corr_state,corr_city,corr_pin}= req.body
         
         console.log(c+" here")
         c++
-        const {pg_course,pg_exam_roll,pg_class_roll,pg_aggr_percentage,pg_backlogs,pg_backlog_details}= req.body.postGraduationDetails 
+        const {pg_course,pg_exam_roll,pg_class_roll,pg_aggr_percentage,pg_backlogs,pg_backlog_details}= req.body
         
         console.log(c+" here")
         c++
-        const {grad_college,grad_university,grad_course,grad_roll_no,grad_marks_obtained,grad_max_marks,grad_aggr_percentage,grad_year_of_passing}= req.body.graduationDetails 
+        const {grad_college,grad_university,grad_course,grad_roll_no,grad_marks_obtained,grad_max_marks,grad_aggr_percentage,grad_year_of_passing}= req.body
+    
+        console.log(c+" here")
+        c++
+        const {inter_board, inter_roll_no, inter_marks_obtained, inter_max_marks, inter_aggr_percentage, inter_year_of_passing}= req.body     
         
         console.log(c+" here")
         c++
-        const {inter_board, inter_roll_no, inter_marks_obtained, inter_max_marks, inter_aggr_percentage, inter_year_of_passing}= req.body.intermediateDetails       
-        
-        console.log(c+" here")
-        c++
-        const { high_board, high_roll_no, high_marks_obtained, high_max_marks, high_aggr_percentage, high_year_of_passing}= req.body.highSchoolDetails 
+        const { high_board, high_roll_no, high_marks_obtained, high_max_marks, high_aggr_percentage, high_year_of_passing}= req.body
         
         console.log("8reached here")
         //hashing password
-        const password = await bcrypt.hash(req.body.loginDetails.password, 8)
+        const password = await bcrypt.hash(req.body.password, 8)
         console.log("9 hashed password"+password)
         const newScholar = new Scholar({
-            loginDetails:{
+        
                 email,
                 password,
-                username 
-            },
-            personalDetails:{
+                username ,
+      
                 fname, lname,dob,gender,phone,alternative_phone,
-                permanent_addr:{perma_addr1,perma_addr2,perma_state,perma_city,perma_pin},
-                correspondence_addr:{corr_addr1,corr_addr2,corr_state,corr_city,corr_pin} 
-            },
-            postGraduationDetails : {pg_course,pg_exam_roll,pg_class_roll,pg_aggr_percentage,pg_backlogs,pg_backlog_details},
-            graduationDetails :{grad_college,grad_university,grad_course,grad_roll_no,grad_marks_obtained,grad_max_marks,grad_aggr_percentage,grad_year_of_passing},
-            intermediateDetails: {inter_board, inter_roll_no, inter_marks_obtained, inter_max_marks, inter_aggr_percentage, inter_year_of_passing},        
-            highSchoolDetails : { high_board, high_roll_no, high_marks_obtained, high_max_marks, high_aggr_percentage, high_year_of_passing}
+                perma_addr1,perma_addr2,perma_state,perma_city,perma_pin,
+                corr_addr1,corr_addr2,corr_state,corr_city,corr_pin ,
+            pg_course,pg_exam_roll,pg_class_roll,pg_aggr_percentage,pg_backlogs,pg_backlog_details,
+            grad_college,grad_university,grad_course,grad_roll_no,grad_marks_obtained,grad_max_marks,grad_aggr_percentage,grad_year_of_passing
+            ,inter_board, inter_roll_no, inter_marks_obtained, inter_max_marks, inter_aggr_percentage, inter_year_of_passing,        
+             high_board, high_roll_no, high_marks_obtained, high_max_marks, high_aggr_percentage, high_year_of_passing
         });
             console.log("newScholar:: "+newScholar);
             
@@ -162,12 +160,12 @@ router.post('/register', validateScholarRegistration, validate , async (req, res
    
 });
 router.post('/login', validateScholarLogin, validate, async (req, res)=>{
-    const user = await Scholar.findOne({"loginDetails.email":req.body.loginDetails.email})
+    const user = await Scholar.findOne({"email":req.body.email})
     console.log("check1")
     if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
     console.log("check2")
     
-    const validPass = await bcrypt.compare(req.body.loginDetails.password, user.loginDetails.password)
+    const validPass = await bcrypt.compare(req.body.password, user.password)
     console.log("check3")
 
     if(!validPass) return res.status(400).json({success:false, message:"Invalid credentails"});
@@ -205,7 +203,7 @@ router.get('/profile', authenticateScholar ,  async(req,res)=>{
     //             console.log("scholar.token!=req.cookies.jwt : Unauthorised")
     //             return res.status(403).json({success:false ,message:`Unauthorised`})
     //         }
-    //          return res.json({success:true ,message:`Retrieved scholar ${scholar.loginDetails.username}`, scholar})
+    //          return res.json({success:true ,message:`Retrieved scholar ${scholar.username}`, scholar})
     //     }})
 });
 

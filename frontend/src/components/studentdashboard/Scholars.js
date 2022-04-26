@@ -27,30 +27,31 @@ const Scholars=({data})=>{
     if(data!=''){
         return(
             <>
-            <div className="w-90% rounded  h-screen m-3 bg-white">
+            <div className="w-90% rounded h-auto flex flex-col m-3 bg-white">
             <div className="flex">
-                <div className="text-lg m-12">Scholars
-                </div>
-                <div className="download-xls-btn inline-block rounded m-auto px-4 py-2 text-white font-300">
+                <div className="text-lg mx-12 my-3 w-4/6">Scholars</div>
+                <div className="download-xls-btn inline-block rounded m-auto px-4 py-2 1/6 text-white font-300">
                     <ReactHTMLTableToExcel id="test-table-xls-button"  target="_blank" table="scholars-table"
                     filename={`${date}-scholars`} sheet="tablexls" buttonText="Export"/>
-                    </div>
+                </div>
             </div>
                     <ScholarTable scholars={data}/>
             </div>
             </>
         )
     }
+
     return(
         <>
-        <div className="bg-blue-300">
-            <div  className="inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="scholars-table"
-                filename={`${date}-scholars`} sheet="tablexls"  buttonText="Export"/>
+    
+            <div  className="inline-block rounded m-auto px-4 py-2 h-inherit text-white font-300">
+                <ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="scholars-table"
+                    filename={`${date}-scholars`} sheet="tablexls"  buttonText="Export"/>
                 </div>
             <div onLoad={getAllScholars} className="p-9">Scholars
                 <ScholarTable scholars={scholars}/>
             </div>
-        </div>
+       
         </>
     )
 }
