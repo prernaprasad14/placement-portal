@@ -86,7 +86,7 @@ const ScholarProfile=({data})=>{
                             <div className="col-md-6"><label className="font-normal">Alternative phone no.</label><p className="border-2 p-1 rounded-md" >{data.alternative_phone}</p></div>
                         </div>
                         <div className="row mt-4 py-2 sm:ml-8">
-                            <h2 className=" font-semibold ">Permanent Address</h2>
+                            <h4 className=" font-semibold ">Permanent Address</h4>
                             <div className="col-md-12"><label className="font-normal">Address Line 1</label><p className="border-2 p-1 rounded-md">{data.perma_addr1}</p></div>
                             <div className="col-md-12"><label className="font-normal">Address Line 2</label><p className="border-2 p-1 rounded-md">{data.perma_addr2}</p></div>
                             <div className="col-md-4"><label className="font-normal">City</label><p className="border-2 p-1 rounded-md">{data.perma_city}</p></div>
@@ -94,7 +94,7 @@ const ScholarProfile=({data})=>{
                             <div className="col-md-4"><label className="font-normal">PIN</label><p className="border-2 p-1 rounded-md">{data.perma_pin}</p></div>
                         </div>
                         <div className="row mt-4 py-2 sm:ml-8">
-                            <h2 className="font-semibold ">Correspondance Address</h2>
+                            <h4 className="font-semibold ">Correspondance Address</h4>
                             <div className="col-md-12"><label className="font-normal">Address Line 1</label><p className="border-2 p-1 rounded-md">{data.corr_addr1}</p></div>
                             <div className="col-md-12"><label className="font-normal">Address Line 2</label><p className="border-2 p-1 rounded-md">{data.corr_addr2}</p></div>
                             <div className="col-md-4"><label className="font-normal">City</label><p className="border-2 p-1 rounded-md">{data.corr_city}</p></div>          

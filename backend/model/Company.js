@@ -6,7 +6,7 @@ const companySchema = new mongoose.Schema({
     //     required: true,
     //     default:true
     // },
-    loginDetails:{
+    // loginDetails:{
         username:{
             type :String,
             required: true
@@ -20,8 +20,8 @@ const companySchema = new mongoose.Schema({
             min:8,
             max:20,
             required: true
-        }
-    },
+        },
+    // },
     cname:{
         type :String,
         required: true
@@ -34,8 +34,8 @@ const companySchema = new mongoose.Schema({
         type :String,
         required: true
     },
-    contactDetails:{
-        head_hr:{
+    // contactDetails:{
+        // head_hr:{
             head_name:{ 
                 type : String,
                 required: true
@@ -47,9 +47,9 @@ const companySchema = new mongoose.Schema({
             head_mobile:{
                 type : String,
                 required: true
-            }
-        },
-        second_contact:{
+            },
+        // },
+        // second_contact:{
             second_name:{ 
                 type : String,
                 required: true
@@ -61,11 +61,11 @@ const companySchema = new mongoose.Schema({
             second_mobile:{
                 type :  String,
                 required: true
-            }
-        }
-    },
+            },
+        // }
+    // },
     
-    jobDetails:{
+    // jobDetails:{
         job_profile:{
             type : String,
             required: true
@@ -84,10 +84,10 @@ const companySchema = new mongoose.Schema({
         },
         recruitment_type:{
             type:String,
-            enum:['internship','fulltime','both'],
+            enum:['Internship','Fulltime','Internship and Fulltime'],
             required: true
         },
-        salary_details:{
+        // salary_details:{
             annual_package: {
                 type : String,
                 required: true
@@ -95,13 +95,13 @@ const companySchema = new mongoose.Schema({
             breakage_ctc: {
                 type : String,
                 required: true
-            }
-        }
-    },    
-    selectionDetails:{
+            },
+        // }
+    // },    
+    // selectionDetails:{
         courses_allowed:{
             type:String,
-            enum:['mca','msc','both'],
+            enum:['MCA','Msc','both'],
             required: true
         },    
         aptitude_test:{
@@ -128,9 +128,9 @@ const companySchema = new mongoose.Schema({
             type : String,
             required : true
         },
-    },
+    // },
    
-    placement_timeline:{
+    // placement_timeline:{
         pre_placement_talk:{
             type : String,
             required : true
@@ -146,8 +146,8 @@ const companySchema = new mongoose.Schema({
         notes:{
             type:String,
             required:true
-        }
-    },
+        },
+    // },
     createdAt:{
         type: Date,
         default: Date.now
@@ -173,7 +173,7 @@ companySchema.methods.generateToken = async function (){
     
         return token
     }catch(err){
-        res.status(400).send(`error ${err}`)
+        
         console.log(`error ${err}`) 
     }
 }

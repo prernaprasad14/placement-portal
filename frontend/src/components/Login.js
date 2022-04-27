@@ -40,10 +40,10 @@ const Login=()=>{
     const onSubmit = async(e) =>{
         e.preventDefault()
         const userObject = {
-            "loginDetails":{
+            // "loginDetails":{
                 email: email,
                 password: password
-            } 
+            // } 
         };
         console.log(":: userObject :: "+userObject)
         console.log(":: userObject :: "+JSON.stringify(userObject))

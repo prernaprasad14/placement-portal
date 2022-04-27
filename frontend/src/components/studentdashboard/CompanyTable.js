@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
 import Row from "./CompanyRow"
 
-const CompanyTable=(props)=>{
-    console.log(props.companies)
+const CompanyTable=( {companies})=>{
+
     console.log("4 -insideTable ")
+    console.log(companies)
     const [loading, setLoading]= useState(true)
-    const {companies}= props
+    const [data, setData] = useState(companies)
     const date = Date.now()
     // var length = Object.keys(companies).length;
     // if(length>0){
@@ -13,9 +14,16 @@ const CompanyTable=(props)=>{
     // }else{
     //     console.log("j")
     // }
+    const sortByDate= (companies)=>{
+        const sortedByDate = [...data].sort((a,b)=>
+                a[companies.createdAt] > b[companies.createdAt]? 1 : -1
+        );
+        setData(sortedByDate)
+    }
     useEffect(()=>{
-
+        sortByDate(companies)
     },[])
+
     return(
     <>
     <div className="scrollbar p-4 flex overflow-x-scroll rounded-md  border-slate-100 border-2 mx-8 text-gray-700">
@@ -32,9 +40,21 @@ const CompanyTable=(props)=>{
                     </tr>
                 </thead>
                 <tbody className=" px-2 py-4">
-                {   Object.entries(companies).map((company)=>{
-                        return (<Row company={company} />)
-                    })
+                {  data && data.map((company)=>{
+                    return (
+                        <>
+                         <tr >
+                            <td><input type="checkbox" className='rounded-sm focus:bg-transparent border-purple-300 ml-8 my-4 p-2'></input></td>
+                            <td className=' py-3 px-8'>{company.cname}</td>
+                            <td className=' py-3 px-8'>{company.username}</td>
+                            <td className=' py-3 px-8'>{company.email}</td>    
+                            <td className=' py-3 px-8'>{company.website}</td>    
+                            <td className=' py-3 px-8'>{company.phone}</td>    
+                            {/* <td className=' py-3 px-2' ><button type="to"><BsThreeDotsVertical /></button></td>         */}
+                        </tr>
+                        </>
+                    )
+                })
                 }
                 </tbody>   
             </table>

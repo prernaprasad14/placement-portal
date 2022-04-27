@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 
-const CompanyRow =(company)=>{
-    const {_id, username, email} =company.company[1].loginDetails
-    const {website, phone} =company.company[1]
-    const id = JSON.stringify(_id)
-    const {cname} =company.company[1]
+const CompanyRow =({company})=>{
+    // const {username, email} =company.company[1].loginDetails
+    // const {website, phone} =company.company[1]
+    // const id = JSON.stringify(_id)
+    // const {cname} =company.company[1]
+    console.log("company")
+    console.log(company)
     const onClick=()=>{
         navigate(`/profile`)
      }
@@ -16,11 +18,11 @@ const CompanyRow =(company)=>{
         <>
             <tr onClick={onClick}>
                 <td><input type="checkbox" className='rounded-sm focus:bg-transparent border-purple-300 ml-8 my-4 p-2'></input></td>
-                <td className=' py-3 px-8'>{cname}</td>
-                <td className=' py-3 px-8'>{username}</td>
-                <td className=' py-3 px-8'>{email}</td>    
-                <td className=' py-3 px-8'>{website}</td>    
-                <td className=' py-3 px-8'>{phone}</td>    
+                <td className=' py-3 px-8'>{company.cname}</td>
+                <td className=' py-3 px-8'>{company.username}</td>
+                <td className=' py-3 px-8'>{company.email}</td>    
+                <td className=' py-3 px-8'>{company.website}</td>    
+                <td className=' py-3 px-8'>{company.phone}</td>    
                 <td className=' py-3 px-2' ><button type="to"><BsThreeDotsVertical /></button></td>        
             </tr>
         </>

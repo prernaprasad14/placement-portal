@@ -14,12 +14,12 @@ export default class CompanyRegistration extends Component {
     super(props)
     this.state = {
       step: 1,
-      "loginDetails":{
+      // "loginDetails":{
         email:'',
         password:'',
         confirmPassword:'',
-        username:''
-      },
+        username:'',
+      // },
        cname:'',
        phone:'',
        website:'',

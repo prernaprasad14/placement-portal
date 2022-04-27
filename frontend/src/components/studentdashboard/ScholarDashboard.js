@@ -15,9 +15,9 @@ const  ScholarDashboard = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [companies, setCompanies]= useState('')
+  const [company, setCompany]= useState('')
   const [scholars, setScholars]= useState('')
   const [scholar, setScholar]= useState('')
-  const [username , setUsername] = useState('')
 
   const checkLoggedIn=()=>{
     axios.get('/api/user/logged-in')
@@ -58,24 +58,39 @@ const  ScholarDashboard = () => {
       })
       .catch(err=> console.log("Error getAllCompanies : "+err))
   }
-    const getScholar=()=>{
-    //    setTimeout(()=>{
+    // const getScholar=()=>{
+    // //    setTimeout(()=>{
+    //     console.log("here here")
+    //     axios.get(`api/scholar/profile`)
+    //     .then((res)=>{
+    //         const scholar = res.data.scholar;
+    //         setScholar(scholar);
+    //         setIsLoading(false)
+    //       }).catch(error=> {
+    //           console.log("Error getScholar : "+error)
+    //           console.log(error.response.status)
+    //           // if(error.response.status=='401')
+    //           //   navigate('/login')
+    //           if(error.response.status=='403'){}
+    //             navigate('/forbidden')
+    //         }) 
+    //     // },90000) 
+    // }
+    const getCompany=()=>{
         console.log("here here")
-        axios.get(`api/scholar/profile`)
+        axios.get(`api/company/profile`)
         .then((res)=>{
-            const scholar = res.data.scholar;
-            setScholar(scholar);
-            setIsLoading(false)
-            setUsername(scholar.username)
+            const company = res.data.company;
+            console.log(company)
+            setCompany(company);
           }).catch(error=> {
-              console.log("Error getScholar : "+error)
-              console.log(error.response.status)
+              console.log("Error getcompany : "+error)
+              // console.log(error.response.status)
               // if(error.response.status=='401')
               //   navigate('/login')
-              if(error.response.status=='403'){}
-                navigate('/forbidden')
+            //   if(error.response.status=='403'){}
+            //     navigate('/forbidden')
             }) 
-        // },90000) 
     }
     const getAllScholars=()=>{
       console.log("here here")
@@ -93,7 +108,8 @@ const  ScholarDashboard = () => {
   useEffect(()=>{
     // setTimeout(()=>{
     checkLoggedIn();
-    getScholar();
+    // getScholar();
+    getCompany();
     getAllCompanies();
     getAllScholars();
     // },80000000)
@@ -119,7 +135,7 @@ const  ScholarDashboard = () => {
 
           
         <div className='w-screen h-screen'>
-            <WorkArea companies={companies} scholars={scholars}  scholar={scholar}/>        
+            <WorkArea companies={companies} scholars={scholars}  scholar={scholar} company={company}/>        
         </div>
   
  

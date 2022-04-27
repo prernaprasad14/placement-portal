@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Item from './Item'
 import CreateUser from './CreateUser'
 import StudentProfile from '../studentdashboard/scholar-profile/ScholarProfile'
+import CompanyProfile from '../companyDashboard/CompanyProfile'
 import Sidebar from './Sidebar'
 import Scholars from './Scholars'
 import Companies from './Companies'
@@ -14,8 +15,9 @@ import {TiThMenu} from 'react-icons/ti'
 
 
 
-const  WorkArea = ({companies, scholars, scholar}) => {
+const  WorkArea = ({companies, scholars, scholar, company}) => {
   console.log("3 inside workarea")
+  console.log(company)
   const [choice , setChoice] = useState('0')
   const responsive= useRef()
   console.log(choice+"choice")
@@ -33,7 +35,7 @@ const  WorkArea = ({companies, scholars, scholar}) => {
     console.log(option+"option")
    setChoice(option)
    switch(option){
-    // case '0' :  component= <StudentProfile/>
+    case '0' :  return(<><CompanyProfile data={company}/></>)
     case '1' : {
                   console.log(scholar)
                   return(<><StudentProfile data={scholar}/></>)
@@ -45,6 +47,7 @@ const  WorkArea = ({companies, scholars, scholar}) => {
     case '3' :  { console.log("companiesData"+companies)
                   return<Scholars  data={scholars}/>}
     // case '4' : return <><Notifications/></>
+    case '5' : return <><CompanyProfile data={company}/></>
 
     default:  return <StudentProfile data={scholar}/>
   }
@@ -57,7 +60,7 @@ const  WorkArea = ({companies, scholars, scholar}) => {
     <>  
         <div className='flex-col sm:flex-row sm:flex'>
           <div className=' hidden sm:flex top-left sm:h-screen' >
-            <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} chosenItem={setChoice} />
+            <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications','CompanyProfile']} chosenItem={setChoice} />
             {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} /> */}
             {/* <Sidebar menu={['Profile', 'Scholars', 'Notifications']} /> */}
           </div>
@@ -72,6 +75,13 @@ const  WorkArea = ({companies, scholars, scholar}) => {
                     <button onClick={()=>setChoice('0')}>
                       <li className='px-6 py-2 font-semibold '>
                         <MdSpaceDashboard className='inline-block mr-2'/>Dashboard
+                      </li>
+                    </button>
+                  </Link>
+                  <Link to="#">
+                    <button onClick={()=>setChoice('5')}>
+                      <li className='px-6 py-2 font-semibold '>
+                        <MdSpaceDashboard className='inline-block mr-2'/>CompanyProfile
                       </li>
                     </button>
                   </Link>

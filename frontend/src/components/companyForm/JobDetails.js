@@ -49,15 +49,15 @@ const JobDetails = ({ prevStep, nextStep, handleChange, values}) => {
               <div onChange={handleChange('recruitment_type')} defaultValue={values.recruitment_type} className=" my-1 ">
                   <p className='font-semibold'>Recruitment type<span className='text-pink-600'>*</span></p>
                   <div className="inline-block ">
-                      <input type="radio" name="group1" value="internship" className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
+                      <input type="radio" name="group1" value="Internship" className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
                       <label className="px-4" >Internship </label>
                   </div>
                   <div className="inline-block ">
-                      <input type="radio" name="group1" value="fulltime" className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
+                      <input type="radio" name="group1" value="Fulltime" className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
                       <label className="px-4">Fulltime</label>
                   </div>
                   <div className="inline-block ">
-                      <input type="radio" name="group1" value="both"className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
+                      <input type="radio" name="group1" value="Internship and Fulltime"className="hover:cursor-pointer p-2 inline-block text-lg  my-3 border-2  border-violet-200"/>
                       <label className="px-4">Internship + Fulltime</label>
                   </div> 
               </div>

@@ -160,14 +160,14 @@ router.post('/register', validateCompanyRegistration, validate , async (req, res
 
 router.post('/login', validateLogin, validate,  async (req, res)=>{
    
-    const user = await Company.findOne({"loginDetails.email":req.body.loginDetails.email})
+    const user = await Company.findOne({email:req.body.email})
    
     if(!user) return res.status(400).json({success:false, message:"Invalid credentials"})
    
-    const validPass = await bcrypt.compare(req.body.loginDetails.password, user.loginDetails.password)
+    const validPass = await bcrypt.compare(req.body.password, user.password)
    
     if(!validPass) return res.status(400).json({success:false, message:"Invalid credentials"})
-  
+
     const token =await user.generateToken()
     const date = new Date();
     
@@ -204,7 +204,10 @@ router.get('/profile', authenticateCompany, async(req,res)=>{
     //         console.log( user);
     //         return res.json({success:true ,message:`Retrieved user ${user.loginDetails.username}`, user}) 
     //     }})
-  
+            console.log( "company::profile");
+            console.log( req.user);
+            console.log( "company::profile");
+    res.status(200).json({success: true, message:"retrieved company profile", company:req.user})
         console.log(req.user)
       
 });

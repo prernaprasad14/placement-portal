@@ -219,20 +219,22 @@ input.invalid + p{
 /*scrolbar*/
 .scrollbar::-webkit-scrollbar {
 	width: 20px;
+	/* height: 20px; */
 }
 
 .scrollbar::-webkit-scrollbar-track {
-box-shadow: inset 0 0 1px #F8F9F9; 
-border-radius: 10px;
+	box-shadow: inset 0 0 1px #F8F9F9; 
+	border-radius: 10px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-background: #E5E8E8 ; 
-border-radius: 10px;
+	background: #cca9f0 ; 
+	border-radius: 10px;
 }
 .scrollbar::-webkit-scrollbar-thumb:hover {
-background: #E8DAEF; 
+	background: #8d4fde; 
 }
+
 thead{
 	user-select: none;
 	border: 5px solid #734b95;

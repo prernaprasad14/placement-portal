@@ -6,7 +6,7 @@ const res = require('express/lib/response');
 //schema to create user
 const adminSchema = new mongoose.Schema( { 
         
-    loginDetails: {
+    // loginDetails: {
         email:{
             type:String,
             required:true
@@ -18,8 +18,8 @@ const adminSchema = new mongoose.Schema( {
         username:{
             type:String,
             required:true
-        }
-      },
+        },
+    //   },
         createdAt :{
             type: Date,
             default: Date.now

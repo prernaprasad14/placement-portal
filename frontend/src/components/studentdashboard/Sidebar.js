@@ -55,6 +55,12 @@ const  Sidebar= ({menu,chosenItem}) => {
                 <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
             </div>
           </Link>
+          <Link to='#notifications' onClick={()=>chosenItem("5")} className='side-menu-links'>
+            <div className='text-lg '>              
+                <BiNotification  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>CompanyProfile</p>
+            </div>
+          </Link>
           <Link to='/logout' className=' mt-auto side-menu-links' >
             <div className='text-lg'>
                 <FaSignOutAlt className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>

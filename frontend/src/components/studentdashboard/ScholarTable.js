@@ -14,6 +14,20 @@ const ScholarTable=({scholars})=>{
         fname:false
     })
     const [rowCount, setRowCount]= useState(scholars.length)
+    
+
+
+    const [checkedState, setCheckedState] = useState(new Array(rowCount).fill(false));
+
+    const handleOnChange = (position) => {
+        console.log("position")
+        console.log(position)
+        const updatedCheckedState = checkedState.map((item, index) =>
+          index === position ? !item : item
+        );
+        setCheckedState(updatedCheckedState);
+    }
+    
 
     const sort=(col)=>{
         if(order=="ASC"){
@@ -37,6 +51,12 @@ const ScholarTable=({scholars})=>{
         }
         return sortConfig.key === name ? sortConfig.direction : undefined;
       };
+      const selectAllRows=()=>{
+        console.log("inside select all rows")
+      }
+
+
+
     const selectAllFields=(e)=>{
         console.log(e.target)
         setCheckedAll(true)
@@ -66,7 +86,7 @@ const ScholarTable=({scholars})=>{
     return(
     <>
     <div className="flex flex-col">
-    {/* <div className=" p-4 mx-3 flex border-slate-100 text-gray-700">
+    <div className=" p-4 mx-3 flex border-slate-100 text-gray-700">
         <input type="checkbox" onClick={selectAllFields} name="selectAll" className="mt-2 rounded-sm  border-purple-300 p-2 "/>
         <label for ="selectAll" className="px-2 mr-5">All</label>
         <input type="checkbox" onClick={selectPostGrad} name="selectAll" className="mt-2 rounded-sm  border-purple-300 p-2 "/>
@@ -77,9 +97,8 @@ const ScholarTable=({scholars})=>{
         <label for ="selectAll" className="px-2 mr-5">Intermediate Details</label>
         <input type="checkbox" onClick={selectHighschool} name="selectAll" className="mt-2 rounded-sm  border-purple-300 p-2 "/>
         <label for ="selectAll" className="px-2 mr-5">HighSchool Details</label>
-    </div> */}
-    <div className="scrollbar flex-1 flex-col h-auto p-4 overflow-scroll sm:overflow-x-scroll rounded-md  border-slate-100 border-2 mx-8 text-gray-700">
-    
+    </div>
+    <div className="scrollbar flex-1 flex-col h-32 p-4 overflow-scroll sm:overflow-scroll rounded-md  border-slate-100 border-2 mx-8 text-gray-700">
             <table id="scholars-table" className=" flex-1 rounded-md ">
                 <thead className="">
                     <tr>
@@ -99,7 +118,7 @@ const ScholarTable=({scholars})=>{
                         <th rowSpan="2" key="alt_phone" className=' px-8  py-2'>Alternative Phone no.</th>
                         <th rowSpan="2" key="status" onClick={()=>sort('status')} className="px-1 ">Status</th>
                         <th rowSpan="2" key="gender" className="px-1 mr-10">Gender</th>                   
-                        <th colSpan="3" key="gender" className="px-1 mr-10"><td className="px-32">Post-Graduation Details</td>
+                        <th colSpan="3" key="pg" className="px-1 mr-10"><td className="px-32">Post-Graduation Details</td>
                             <th onClick={()=>sort('pg_course')}><p>Course<span className={order==="ASC" ? " rotate-180":""}></span></p></th>
                             <th onClick={()=>sort('pg_backlogs')}><p>Backlogs<span className={order==="ASC" ? " rotate-180":""}></span></p></th>
                             <th onClick={()=>sort('pg_backlog_details')}><p>Backlog details<span className={order==="ASC" ? " rotate-180":""}></span></p></th>
@@ -107,17 +126,16 @@ const ScholarTable=({scholars})=>{
                             <th onClick={()=>sort('pg_backlog_details')}><p>Backlog details<span className={order==="ASC" ? " rotate-180":""}></span></p></th>
                             <th onClick={()=>sort('pg_backlog_details')}><p>Backlog details<span className={order==="ASC" ? " rotate-180":""}></span></p></th>
                         </th>                   
-                        
                         <th className=' pl-2 pr-8'></th>
                     </tr>
                 </thead>
                 <tbody className="px-2 py-4">
                 {  
-                    data.map((scholar)=>{
+                    data.map((scholar,index)=>{
                         return (<>
                             {
                             <tr key={count++} > 
-                                <td className=" py-3 px-8 border-1  border-gray-100 "><input type="checkbox" className='rounded-sm border-purple-300 p-2'></input></td>
+                                <td className=" py-3 px-8 border-1  border-gray-100 "><input onClick={()=>handleOnChange(index)} type="checkbox" className='rounded-sm border-purple-300 p-2'></input></td>
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-12'>{scholar.fname}</td>
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-12'>{scholar.lname}</td>
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-12'>{scholar.email}</td>
@@ -125,10 +143,9 @@ const ScholarTable=({scholars})=>{
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-12'>{scholar.alternative_phone}</td>
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-12'>{scholar.placement_status}</td>        
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.gender}</td>    
-                               
-                                {/* <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_backlogs}</td>      
+                                <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_backlogs}</td>      
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_backlog_details}</td>      
-                                <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_class_roll}</td>        */}
+                                <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_class_roll}</td>       
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_course}</td>      
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_backlogs}</td>      
                                 <td className=' py-3 pl-2  border-1  border-gray-100 pr-20 w-5'>{scholar.pg_backlog_details}</td>       
