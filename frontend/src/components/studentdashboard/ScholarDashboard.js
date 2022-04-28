@@ -134,7 +134,7 @@ const  ScholarDashboard = () => {
         </ul> */}
 
           
-        <div className='w-screen h-screen'>
+        <div className=''>
             <WorkArea companies={companies} scholars={scholars}  scholar={scholar} company={company}/>        
         </div>
   

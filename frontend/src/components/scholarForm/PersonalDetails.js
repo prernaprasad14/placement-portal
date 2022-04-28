@@ -124,7 +124,7 @@ const PersonalDetails = ({ nextStep, handleChange, values }) => {
                              <label>City <span className='text-pink-600'>*</span></label>
                             <input type="text"  name="perma_city" placeholder="" onChange={handleChange('perma_city')} defaultValue={values.perma_city} 
                                 className="px-3 my-1 border-2 rounded-lg  border-violet-200" />
-                            <p>This is a required field</p>
+                            <p>This is a required field<span></span></p>
 
                          </div>
                          <div>

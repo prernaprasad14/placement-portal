@@ -58,7 +58,7 @@ const  WorkArea = ({companies, scholars, scholar, company}) => {
   
   return(  
     <>  
-        <div className='flex-col sm:flex-row sm:flex'>
+        <div className='flex-col sm:flex-row flex sm:flex'>
           <div className=' hidden sm:flex top-left sm:h-screen' >
             <Sidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications','CompanyProfile']} chosenItem={setChoice} />
             {/* <Sidebar menu={['Profile', 'Companies', 'Notifications']} /> */}
@@ -115,7 +115,7 @@ const  WorkArea = ({companies, scholars, scholar, company}) => {
                 </ul>
               </div>
             </div>
-            <div className='flex flex-col w-full sm:w-5/6 bg-slate-100'>
+            <div className='relative flex flex-col w-full sm:w-5/6 bg-slate-100'>
               {/* {(option)=>chosenItem(option)} */}
               <ChosenItem option={choice}/>
               {/* <CreateUser/>

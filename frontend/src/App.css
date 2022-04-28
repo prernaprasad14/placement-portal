@@ -234,43 +234,88 @@ input.invalid + p{
 .scrollbar::-webkit-scrollbar-thumb:hover {
 	background: #8d4fde; 
 }
-
+table{
+	color: #464646;
+	text-align: left;
+	width: 100%;
+	table-layout: auto;
+}
 thead{
 	user-select: none;
 	border: 5px solid #734b95;
+	font-size: 14px;
 	/* background-color: rgb(192 132 252); */
 	background-color: rgb(167 139 250);
-		border-radius: 5px;
+	border-radius: 5px;
 	color: white;
 	box-shadow:1px 0 3px rgba(0, 0,0, 0.2);
 }
+thead th:not(:nth-child(-n+2)){
+	font-weight: 400;
+	min-width: 120px;
+	max-width: auto;
+}
 thead th{
-	margin: 10px 0;
-	font-weight: 600
+	padding:0 5px;
+	border-left:2px solid #63636315;
+	border-right:2px solid #63636315;
 }
-td{
-	/* padding: 0 20px 0 10px; */
-	margin:0 12px;
+thead th:nth-last-child(-n+5){
+	padding: 3px;
+	font-weight: 400;
+	text-align: center;
+	border-left:2px solid #30303062;
+	border-right:2px solid #30303062;
+	background-color: rgb(134, 103, 225);
 }
-th{
-	padding: 4px 10px;
+thead tr:last-child td{
+	padding: 0px 5px;
+	min-width: 125px;
+	font-weight: 400;
+	border-left:2px solid #30303062;
+	border-right:2px solid #30303062;
 }
-tr th p span{
+thead tr:last-child td:nth-child(5){
+	padding: 0px 5px;
+	min-width: 120px;
+	max-width: 230px;
+	font-weight: 400;
+}
+thead tr th span::after{
+	padding : 0px 2px;
 	display:inline-block;
 	visibility: hidden;
 	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
 }
-tr th p:hover > span{
+thead tr th:hover > span{
+	padding : 0px 4px ;
+	display: inline-block;
+	visibility: visible;
+	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
+}
+thead tr td span::after{
+	padding : 0px 2px;
+	display:inline-block;
+	visibility: hidden;
+	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
+}
+thead tr td:hover > span{
+	padding : 0px 4px ;
 	display: inline-block;
 	visibility: visible;
 	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
 }
 tbody tr{
+	padding: 2px 12px;
 	cursor: pointer;
 	border-bottom: 2px;
 	box-sizing: border-box;
 	font-size: 14px;
 	font-weight: 400;
+}
+tbody tr td{
+	padding: 9px 5px;
+	border:1px solid #26262615;
 }
 tbody tr:nth-child(odd){
 	/* background-color: #f9f9f8; */
@@ -293,7 +338,6 @@ tbody tr:hover{
 	width:240px;
 	color: #2f2f2f;
 	border-left: 8px solid  rgb(167 139 250);
-
 	background-color:#ffffff;
 	user-select: none;
 }

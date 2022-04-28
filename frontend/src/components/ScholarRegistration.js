@@ -185,16 +185,6 @@ export default class ScholarRegistration extends Component {
    
     console.log("this.state"+this.state)
     console.log("this.state"+JSON.stringify(this.state))
-    // const values = { email, password, confirmPassword, username,
-    //     fname,lname,dob,gender,phone,alternative_phone,
-    //     perma_addr1,perma_addr2,perma_state,perma_city,perma_pin,
-    //     corr_addr1,corr_addr2,corr_state,corr_city,corr_pin,
-    //     pg_course,pg_exam_roll, pg_class_roll,pg_aggr_percentage,pg_backlogs,pg_backlog_details,
-    //     grad_college,grad_university,grad_course,grad_roll_no,grad_marks_obtained,grad_max_marks,grad_aggr_percentage,grad_year_of_passing,
-    //     inter_board,inter_roll_no,inter_marks_obtained,inter_max_marks,inter_aggr_percentage,inter_year_of_passing,
-    //     high_board, high_roll_no, high_marks_obtained,high_max_marks,high_aggr_percentage,high_year_of_passing
-    // }
-    
     switch(step) {
       case 1: 
         return (<>
