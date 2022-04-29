@@ -3,6 +3,7 @@ import { UserContext } from '../App'
 import axios from '../axiosConfig'
 import Card from './Card'
 import {mcaPcData, mcsPcData, hodData, advisorData } from './homeData'
+
 function Home() {
     document.name='Home | DUCS Placement Portal'
    const {state, dispatch}= useContext(UserContext)
@@ -32,38 +33,38 @@ function Home() {
                     //   dispatch({type:"USER", payload:false})
                     //    navigate('/forbidden')
                     //  }
-                })
-            }
-            
-            useEffect(()=>{
-                checkLoggedIn();
             })
+        }
+        
+    useEffect(()=>{
+        checkLoggedIn();
+    })
             
-            return (
-                <>
-                <div className="homepage items-center flex flex-col ">
-            <div className='bg-sky-100 m-3 p-3 '>
-                <h1 className="">HomePage</h1>
-                <div>Carousel</div>
-            </div>
-            <div className='flex flex-col items-center w-[700px] m-3  p-3 '>
-                <h1 className='m-1 text-xl'>Head of Department</h1>
-                <div className='flex-col align-center'>
-                    <img className="m-2 rounded-md" width="150px" height="150px" src={hodData.src}/>
-                    <h1>{hodData.name}</h1>
-                </div>            
-                <p>{hodData.message}</p>
-            </div>
-            <div className='flex flex-wrap flex-col items-center w-[700px] m-3  p-3 '>
-                <h1 className='m-1 text-xl'>Placement Advisor</h1>
-                <div className='flex-col align-center '>             
-                    <div><img className="m-2 rounded-md" width="150px" height="150px" src={advisorData.src}/>
-                    <h1>{advisorData.name}</h1>
+    return (
+        <>
+        <div className="homepage items-center flex flex-col ">
+            <div  className=' m-3 p-3' >
+                <div className=' p-3 mx-3 flex'>
+                    <div className='bg-slate-600'>Carousel</div>
+                    <div className='w-2/6 h-auto mx-3 flex flex-col bg-green-300'>
+                        <div className=' '>PlacementStats</div>
                     </div>
                 </div>
-                <p>{advisorData.message}</p>
             </div>
-
+            <div className='flex justify-center m-3'>
+                <div className='m-3 p-3 justify-center bg-white border-2 rounded-md drop-shadow items-center flex flex-col w-2/6'>
+                    <h1 className='m-2 text-xl'>Head of Department</h1>
+                    <img className="m-2 rounded-md" width="120px" src={hodData.src}/>
+                    <h1>{hodData.name}</h1>
+                    <p>{hodData.message}</p>
+                </div>
+                <div className='m-3 p-3 justify-center bg-white border-2 rounded-md drop-shadow items-center flex flex-col w-2/6'>
+                    <h1 className='m-2 text-xl'>Placement Advisor</h1>
+                    <img className="m-2 rounded-md" width="120px" src={advisorData.src}/>
+                    <h1>{advisorData.name}</h1>
+                    <p>{advisorData.message}</p>
+                </div>
+            </div>
             <div className='flex flex-col my-3 items-center px-10 py-3' >
                 <h1 className='m-1 text-xl'>Placement Coordinators 2022</h1>
                 <div className='flex flex-col sm:flex-row justify-center m-3 '>
