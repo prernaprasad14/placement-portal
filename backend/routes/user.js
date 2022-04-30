@@ -4,17 +4,25 @@ const crypto = require('crypto');
 var nodemailer = require('nodemailer');
 const Scholar = require('../model/Scholar')
 const Company = require('../model/Company')
+const Home = require('../model/Home')
 const ResetPassword = require('../model/resetPasswordSchema');
 const {isResetTokenValid} = require('../userinputvalidation');
 const { createRandomBytes  } = require('../helper');
 const { generatePasswordResetMail, generateSuccessPasswordResetMail } = require('../mail');
 const { isLoggedIn } = require('../middleware/authenticate');
 
+router.get('/home', async(req, res)=>{
+    const homeData = await Home.findOne({})
+    if(!homeData)
+        return res.status(404).json({success:false, message:"failed to complete the request, pls try again"})
+    return res.status(200).json({success:true, homeData})
+});
+
 router.get('/logout', async(req,res)=>{
     res.clearCookie('jwt',{ path :'/'})
     res.status(200).json({success:true})
 
-})
+});
 
 router.post('/forgot-password' , async (req, res)=>{
     console.log("Passed forgotPassword")

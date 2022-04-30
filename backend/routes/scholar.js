@@ -182,10 +182,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
         httpOnly: true
     });
     console.log(user._id)
-
-    return res.status(200).json({success: true, message:"Logged in", user, token})
-   
-    
+    return res.status(200).json({success: true, message:"Logged in", user, token})    
 });
 
 router.get('/profile', authenticateScholar ,  async(req,res)=>{
