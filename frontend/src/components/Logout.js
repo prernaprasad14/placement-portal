@@ -6,6 +6,7 @@ import Loading from './Loading';
 
 
 const Logout=()=>{
+    document.title='Logging out | DUCS Placement Portal'
     const {state, dispatch} = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(()=>{

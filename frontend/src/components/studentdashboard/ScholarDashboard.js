@@ -8,6 +8,7 @@ import CreateUser from './CreateUser'
 import Loading from '../Loading'
 
 const  ScholarDashboard = () => {
+  document.title='Dashboard | DUCS Placement Portal'
   const id="62530ab146c921a4807c7607"
   const navigate = useNavigate()
   console.log("1 inside ScholarDashboard")
