@@ -4,6 +4,7 @@ import Item from './Item'
 import CreateUser from './CreateUser'
 import StudentProfile from '../studentdashboard/scholar-profile/ScholarProfile'
 import CompanyProfile from '../companyDashboard/CompanyProfile'
+import AdminProfile from '../admin-dashboard/AdminProfile'
 import Sidebar from './Sidebar'
 import Scholars from './Scholars'
 import Companies from './Companies'
@@ -48,6 +49,7 @@ const  WorkArea = ({companies, scholars, scholar, company}) => {
                   return<Scholars  data={scholars}/>}
     // case '4' : return <><Notifications/></>
     case '5' : return <><CompanyProfile data={company}/></>
+    case '6' : return <><AdminProfile/></>
 
     default:  return <StudentProfile data={scholar}/>
   }

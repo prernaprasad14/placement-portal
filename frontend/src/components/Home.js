@@ -44,8 +44,7 @@ function Home() {
             })
         }
         
-    useEffect(()=>{
-        checkLoggedIn();
+    const getHomeData=()=>{
         axios('/api/user/home')
         .then((res)=>{
             console.log(res.data)
@@ -59,7 +58,12 @@ function Home() {
             setError(true)
             setIsLoading(false)
 
-        })       
+        })  
+    }
+    useEffect(()=>{
+        checkLoggedIn();
+        getHomeData()
+             
     }
     ,[])
   if(isLoading)
