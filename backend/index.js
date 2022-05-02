@@ -37,9 +37,12 @@ app.use(cookieParser());
 app.get('/' ,(req, res)=>{
     console.log("request for homepage"+req)
 });
+
 //Route middleware
-
-
+app.use('/api/admin', adminRoute);
+app.use('/api/user', userRoute);
+app.use('/api/scholar', scholarRoute);
+app.use('/api/company', companyRoute);
 
 app.use('/scholars', async (req, res)=>{
     console.log("scholars route passed !")
@@ -48,12 +51,6 @@ app.use('/scholars', async (req, res)=>{
     console.log(date)
     res.json({success: true, message:"retrieved scholars", scholars})
 });
-// app.use('/api/admin', adminRoute);
-app.use('/api/user', userRoute);
-app.use('/api/scholar', scholarRoute);
-app.use('/api/company', companyRoute);
-
-
 
 app.use('/companies',  async (req, res)=>{
     console.log("companies route passed !")

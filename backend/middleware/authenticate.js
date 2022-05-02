@@ -86,11 +86,12 @@ exports.isAdmin=async(req,res,next)=>{
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
         }
-        const user = await Company.findOne({_id:verifyToken._id, token});
+        const user = await Admin.findOne({_id:verifyToken._id, token:0});
         if(!user) {throw new Error("User not found")}
-        req.token = token;
+        // req.token = token;
         req.user = user;
         req.userId = user._id;
+        next();
     }catch(error){
         console.log("isAdmin error"+error)
     }

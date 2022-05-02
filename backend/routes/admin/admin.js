@@ -1,10 +1,11 @@
-// const router = require('express').Router();
-// const bcrypt = require('bcrypt');
-// const crypto = require('crypto');
-// const {validateScholar, validate}= require('../../middleware/authenticate')
-// const Admin = require('../../model/Admin');
+const router = require('express').Router();
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const {isAdmin}= require('../../middleware/authenticate')
+const Admin = require('../../model/Admin');
+const Home = require('../../model/Home');
 
-// router.post('/login', validateScholar, validate, async (req, res)=>{
+// router.post('/login', isAdmin, async (req, res)=>{
 //     const user = await Admin.findOne({"loginDetails.email":req.body.loginDetails.email})
 //     console.log("check1")
 //     if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
@@ -33,4 +34,16 @@
     
 // });
 
-// module.exports = router;  
+// router.get('/profile',isAdmin, async(req, res)=>{
+//     const pc = Home.findOne({pc:1})
+//     return res.status(200).json({success: true, message: "Retrieved admin profile" , admin: req.user, pc: pc})
+// })
+router.get('/profile', async(req, res)=>{
+    const admin = await Admin.findOne({})
+    console.log(admin)
+    if(!admin)
+        return res.status(404).json({success:false, message: "Admin profile not found"})
+    return res.status(200).json({success: true, message: "Retrieved admin profile" , admin: admin})
+});
+
+module.exports = router;
