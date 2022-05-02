@@ -70,7 +70,7 @@ const JobDetails = ({ prevStep, nextStep, handleChange, values}) => {
                 </div>
                 <div className='my-5'>
                   <label  className='m-0 p-0'>Breakage of ctc<span className='text-pink-600'>*</span></label>
-                  <textarea type="text" name="pg_backlog_details" maxLength="100"  placeholder={`description of backlogs (if applicable)\nfor example: 1. Maths, otherwise NA`} onChange={handleChange('pg_backlog_details')} defaultValue={values.pg_backlog_details}
+                  <textarea type="text" name="breakage_ctc" maxLength="100"  placeholder={`description of CTC\n`} onChange={handleChange('breakage_ctc')} defaultValue={values.pg_backlog_details}
                     className="px-3 my-5 min-h-[90px] max-h-[160px]  border-2 rounded-md  border-violet-200 placeholder:italic"></textarea>
                 </div>
               </div>

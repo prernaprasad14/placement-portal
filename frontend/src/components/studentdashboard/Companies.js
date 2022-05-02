@@ -30,10 +30,12 @@ const Companies=({data})=>{
         console.log("6666666666 data"+data)
         return(<>
         <div className="w-90% rounded h-auto flex flex-col m-3 bg-white">
-            <div className="flex justify-start my-3">
+            <div className="flex space-between my-3">
                 <div className="text-lg mx-12  w-4/6">Companies</div>
             </div>
-            <CompanyCard companies={data}/>
+            <div className="rounded-md border-slate-100  m-8 p-4 border-2 text-gray-700">
+                <CompanyCard companies={data}/>
+            </div>
         </div>
         </>)
     }

@@ -28,52 +28,52 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
        
         console.log(`2.  LoginDetails try-block, inside onsubmit: hello`);
          const companyData = {
-          "loginDetails":{
+          // "loginDetails":{
              email:values.email,
              password:values.password,
              confirmPassword:values.confirmPassword,
-             username:values.username
-           },
+             username:values.username,
+          //  },
             cname:values.cname,
             phone:values.phone,
             website:values.website,
-            "contactDetails":{
-              "head_hr":{
+            // "contactDetails":{
+            //   "head_hr":{
                 head_name:values.head_name,
                 head_email:values.head_email,
                 head_mobile:values.head_mobile,
-              },
-              "second_contact":{
+              // },
+              // "second_contact":{
                 second_name:values.second_name,
                 second_email:values.second_email,
-                second_mobile:values.second_mobile
-              },
-            },
-            "jobDetails":{
+                second_mobile:values.second_mobile,
+            //   },
+            // },
+            // "jobDetails":{
               job_profile:values.job_profile,
               designation:values.designation,
               place_of_posting:values.place_of_posting,
               job_desc:values.job_desc,
               recruitment_type:values.recruitment_type,
-             "salary_details":{
+            //  "salary_details":{
                   annual_package:values.annual_package,
-                  breakage_ctc:values.breakage_ctc
-              }
-          },    
-          "selectionDetails":{
+                  breakage_ctc:values.breakage_ctc,
+              // }
+          // // },    
+          // // "selectionDetails":{
               courses_allowed:values.courses_allowed,  
               aptitude_test:values.aptitude_test,
               coding_test:values.coding_test,
               interview:values.interview,
               hr_round:values.hr_round,
-              any_other_rounds:values.any_other_rounds
-          },
-          "placement_timeline":{
+              any_other_rounds:values.any_other_rounds,
+          // },
+          // "placement_timeline":{
               pre_placement_talk:values.pre_placement_talk,
               coding_test_date:values.coding_test_date,
               interview_date:values.interview_date,
               notes:values.notes
-          }
+          // }
         };
      
         console.log("3. :: companyData  :: "+companyData )
@@ -113,6 +113,11 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
             <form id ="intermediate"  className='px-40 py-8 bg-white rounded-md'>
               <p>Required <span className='text-pink-600'>*</span></p>
               
+              {/* <div className="my-5">
+                <label className='m-0 p-0'>Username</label>
+                <input type="text"  onChange={handleChange('username')} defaultValue={values.username}
+                   className="px-3 my-2 border-2 rounded-md  border-violet-200" />
+              </div> */}
               <div className="my-5">
                 <label className='m-0 p-0'>Username</label>
                 <input type="text"  onChange={handleChange('username')} defaultValue={values.username}

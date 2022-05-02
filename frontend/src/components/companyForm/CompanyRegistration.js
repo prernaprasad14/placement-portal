@@ -23,43 +23,43 @@ export default class CompanyRegistration extends Component {
        cname:'',
        phone:'',
        website:'',
-       "contactDetails":{
-         "head_hr":{
+      //  "contactDetails":{
+        //  "head_hr":{
           head_name:'',
           head_email: '',
           head_mobile:'',
-         },
-         "second_contact":{
+        //  },
+        //  "second_contact":{
            second_name:'',
            second_email:'',
-           second_mobile:''
-         },
-       },
-       "jobDetails":{
+           second_mobile:'',
+      //    },
+      //  },
+      //  "jobDetails":{
          job_profile:'',
          designation:'',
          place_of_posting:'',
          job_desc:'',
          recruitment_type:'',
-         "salary_details":{
+        //  "salary_details":{
              annual_package:'',
-             breakage_ctc:''
-         }
-     },    
-    "selectionDetails":{
+             breakage_ctc:'',
+    //      }
+    //  },    
+    // "selectionDetails":{
          courses_allowed:'',  
          aptitude_test : '',
          coding_test: '',
          interview:'',
          hr_round:'',
          any_other_rounds:'',
-     },
-     "placement_timeline":{
+    //  },
+    //  "placement_timeline":{
          pre_placement_talk:'',
          coding_test_date:'',
          interview_date:'',
-         notes:''
-      }
+         notes:'',
+      // }
     } 
     this.handleChange = this.handleChange.bind(this)
   }

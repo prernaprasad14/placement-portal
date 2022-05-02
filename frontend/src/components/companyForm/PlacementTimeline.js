@@ -35,7 +35,7 @@ const PlacementTimeline=({ prevStep, nextStep, handleChange, values }) => {
               </div>
               <div className="my-5">
                 <label className='m-0 p-0'>Coding test<span className='text-pink-600'>*</span></label>
-                <input type="date" placeholder=""onChange={handleChange('coding_test_date')} defaultValue={values._coding_test_date}
+                <input type="date" placeholder="" onChange={handleChange('coding_test_date')} defaultValue={values._coding_test_date}
                   className="px-3 my-2 border-2 rounded-md  border-violet-200" />
               </div>
               <div className="my-5">
