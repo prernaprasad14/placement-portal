@@ -132,15 +132,15 @@ const companySchema = new mongoose.Schema({
    
     // placement_timeline:{
         pre_placement_talk:{
-            type : String,
+            type : Date,
             required : true
         },
         coding_test_date:{
-            type: String,
+            type: Date,
             required: true
         },
         interview_date: {
-            type: String,
+            type: Date,
             required: true
         },
         notes:{
