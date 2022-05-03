@@ -13,7 +13,6 @@ const Companies=({data})=>{
         getAllCompanies()
     },[]);
 
-
     const getAllCompanies=()=>{
         console.log("here here")
         axios.get('/companies')
@@ -31,12 +30,11 @@ const Companies=({data})=>{
         return(<>
         <div className="w-90% rounded h-auto flex flex-col m-3 bg-white">
             <div className="flex space-between my-3">
-                <div className="text-lg mx-12  w-4/6">Companies</div>
+                <div className="text-lg mx-12 font-semibold w-4/6"><p>Companies</p></div>
             </div>
-            <div className="rounded-md border-slate-100  m-8 p-4 border-2 text-gray-700">
                 <CompanyCard companies={data}/>
             </div>
-        </div>
+
         </>)
     }
     return(

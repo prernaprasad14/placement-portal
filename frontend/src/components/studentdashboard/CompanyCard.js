@@ -1,52 +1,80 @@
 import { useEffect, useState } from "react"
 import Row from "./CompanyRow"
 
-const CompanyCard=( {companies})=>{
+const CompanyCard = ({companies}) =>{
 
     console.log("4 -insideTable ")
     console.log(companies)
     const [loading, setLoading]= useState(true)
     const [data, setData] = useState(companies)
-    const [dataSorted, setDataSorted] = useState({})
-    const date = Date.now()
-    // var length = Object.keys(companies).length;
-    // if(length>0){
-    //     setLoading(false)
-    // }else{
-    //     console.log("j")
-    // }
-    const sortByPPT= (data)=>{
-        console.log(data)
+    const [choice, setChoice] = useState('Sort by PPT')
+
+    const sortByPPT= (data, choice)=>{
+        console.log("sortByPPT")
         const sortedByPPT = [...data].sort((a,b) => {
                 return new Date(a.pre_placement_talk).getTime() - new Date(b.pre_placement_talk).getTime()
             })
         
         console.log(sortedByPPT)
         setData(sortedByPPT)
+        setChoice(choice)
     }
-    useEffect(()=>{
-        sortByPPT(companies)
+  
+    const sortByName= (data, choice)=>{
+        console.log("sortByName")
         console.log(data)
-        console.log(dataSorted)
-    },[])
+        console.log(choice)
+        const sortedByName = [...data].sort((a,b) => {
+               return a.cname  > b.cname ? 1 : -1
+            })
+        setData(sortedByName)
+        setChoice(choice)
+    }
+    
+    const sortCompanies=(choice)=>{
+        console.log("inside sortCompanies")
+        switch(choice){
+            case 'Sort by PPT': {
+                    sortByPPT(data, choice)
+                    break;  
+            }
+            case 'Sort by Name': {
+                    sortByName(data, choice)
+                    break;
+            }
+            default : {
+                sortByPPT(data, choice)
+            }
+        }
+    }
+  
+    useEffect(()=>{
+        sortCompanies(choice)
+    },[choice])
     const handleCompany=()=>{
 
     }
     function getParsedDate(rawdate){
         rawdate = new Date(rawdate)
         var splitDate = String(rawdate).split(' ');
-        console.log(date)
         var day = String(splitDate[0])+', '
         var month = String(splitDate[1])+' '
         var date = String(splitDate[2])+', '
         var year= rawdate.getFullYear()
-        console.log(year)
-
         return [day, month, date, year];
       }
+
+
     return(
     <>
-    <div className="flex flex-unwrap items-center flex-col sm:flex-row sm:flex-wrap">
+    <div className="text-lg flex ">
+        <select className="ml-auto mr-[100px] w-44 px-2 rounded-[5px] border-2 border-slate-300 text-slate-600"
+                defaultValue={choice} onChange={(e)=>sortCompanies(e.target.value)} >
+            <option >Sort by PPT</option>
+            <option >Sort by Name</option>
+        </select>
+    </div>
+    <div className="flex flex-unwrap items-center flex-col sm:flex-row sm:flex-wrap rounded-md border-slate-100  mx-8 my-6 p-4 border-2 text-gray-700">
         {data && data.map((company)=>{
             return(<>
                 <div onClick={handleCompany} className="hover:cursor-pointer bg-[#fff] hover:bg-slate-600 hover:scale-105  duration-75 drop-shadow-lg border-b-8 border-b-slate-600 flex flex-col items-center rounded-lg w-[280px] px-3 m-4 h-[370px]">
@@ -69,13 +97,11 @@ const CompanyCard=( {companies})=>{
                             })}
                         </span>
                     </p>
-                   
                 </div>
             </>)
             })
         }
-    </div>
-        
+    </div>   
     </>
     )
 }

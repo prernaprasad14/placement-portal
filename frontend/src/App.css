@@ -244,6 +244,7 @@ thead{
 	user-select: none;
 	border: 5px solid #734b95;
 	font-size: 14px;
+	height: 50px;
 	/* background-color: rgb(192 132 252); */
 	background-color: rgb(167 139 250);
 	border-radius: 5px;
@@ -255,19 +256,34 @@ thead th:not(:nth-child(-n+2)){
 	min-width: 120px;
 	max-width: auto;
 }
+thead tr:first-child th:nth-last-child(2){
+	font-weight: 400;
+	min-width: 100px;
+	padding: 0px 5px;
+	max-width: auto;
+}
+thead tr:first-child th:nth-last-child(1){
+	font-weight: 400;
+	min-width: 30px;
+	padding: 0px 5px;
+}
+thead tr th:nth-last-child(-n+2){
+	background-color: rgb(167 139 250);
+}
 thead th{
 	padding:0 5px;
 	border-left:2px solid #63636315;
 	border-right:2px solid #63636315;
 }
-thead th:nth-last-child(-n+5){
-	padding: 3px;
+thead th:nth-last-child(-n+6){
+	padding:  3px;
 	font-weight: 400;
 	text-align: center;
 	border-left:2px solid #30303062;
 	border-right:2px solid #30303062;
 	background-color: rgb(134, 103, 225);
 }
+
 thead tr:last-child td{
 	padding: 0px 5px;
 	min-width: 125px;
@@ -305,6 +321,7 @@ thead tr td:hover > span{
 	visibility: visible;
 	content: url('https://img.icons8.com/ios-glyphs/12/ffffff/sort-up.png');
 }
+
 tbody tr{
 	padding: 2px 12px;
 	cursor: pointer;
