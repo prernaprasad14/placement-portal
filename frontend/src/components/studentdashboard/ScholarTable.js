@@ -1,23 +1,25 @@
 import { useEffect, useState, createElement} from "react"
-
+import  ReactDOM  from "react-dom";
 import { BsThreeDotsVertical,BsArrowLeftSquareFill,BsArrowRightSquareFill } from 'react-icons/bs';
 import { RiArrowUpSFill} from 'react-icons/ri';
 import Row from "./ScholarRow"
 
 const ScholarTable=({scholars})=>{
     console.log("4 -insideTable ")
+    let count=1;
     const [data, setData] = useState(scholars)
     const [order, setOrder]= useState("ASC")
     const [rowCount, setRowCount]= useState(scholars.length)
-    const [checkedAll, setCheckedAll] = useState(false);
+    const [checkedAllRow, setCheckedAllRow] = useState(true);
+    const [checkedRow, setCheckedRow] = useState(new Array(rowCount).fill(true));
+    const [checkedAll, setCheckedAll] = useState(true);
     const [checked, setChecked] = useState({
-        pg : false,
-        grad : false,
-        inter :false,
-        high :false,
+        pg : true,
+        grad : true,
+        inter :true,
+        high :true,
     })
-    // const [checkedRow, setCheckedRow] = useState(new Array(rowCount).fill(false));
-
+    
     //column sorting
     const sort=(col)=>{
         if(order=="ASC"){
@@ -35,50 +37,73 @@ const ScholarTable=({scholars})=>{
             setOrder("ASC")
         }
     }
-
-    const selectAllRows=()=>{
-        console.log("inside select all rows")
-    }
-
-    const selectGroup =(e) =>{
-            const {name} = e.target
-            setChecked({...checked,[name]: e.target.checked})
-            console.log(checked)
-    }
-
     const selectAllFields = (e) => {
-        setCheckedAll(e.target.checked);
-        setChecked((prevState) => {
-          const newState = { ...prevState };
-          for (const name in newState) {
-            newState[name] = e.target.checked;
-          }
-          return newState;
-        });
-      };
-  
+          setCheckedAll(e.target.checked);
+          setChecked((prevState) => {
+            const newState = { ...prevState };
+            for (const name in newState) {
+              newState[name] = e.target.checked;
+            }
+            return newState;
+          });
+    }
+    
+    const selectGroup =(e) =>{
+      const {name} = e.target
+      setChecked({...checked,[name]: e.target.checked})
+    }
+    
+    const selectAllRows=(e)=>{
+      setCheckedAllRow(e.target.checked);
+      setCheckedRow((prevState) => {
+        const newState = { ...prevState };
+        for (const name in newState) {
+          newState[name] = e.target.checked;
+        }
+
+        return newState;
+      });
+    }
+    
+    const selectRow=(e)=>{
+      const {name} = e.target
+      setCheckedRow({...checkedRow,[name]: e.target.checked})
+    }
+
     const totalRowCount=()=>{
             const len= scholars.length
             setRowCount(len)
     }
       
     useEffect(() => {
-        let allChecked = true;
-        for (const inputName in checked) {
-          if (checked[inputName] === false) {
-            allChecked = false;
-          }
+      let allChecked = true;
+      for (const inputName in checked) {
+        if (checked[inputName] === false) {
+          allChecked = false;
         }
-        if (allChecked) {
-          setCheckedAll(true);
-        } else {
-          setCheckedAll(false);
+      }
+      if (allChecked) {
+        setCheckedAll(true);
+      } else {
+        setCheckedAll(false);
+      }
+      
+      let allRowChecked = true;
+      for (const inputName in checkedRow) {
+        if (checkedRow[inputName] === false) {
+          allRowChecked = false;
         }
-        
-        totalRowCount()
-      }, [rowCount, checked]);
+      }
+      if (allRowChecked) {
+        setCheckedAllRow(true);
+      } else {
+        setCheckedAllRow(false);
+      }
+      
+      totalRowCount()
+    }, [rowCount, checked, checkedRow]);
     
-    let count=1;
+    
     return(
     <>
     <div className="flex flex-col">
@@ -98,7 +123,7 @@ const ScholarTable=({scholars})=>{
                 <table id="scholars-table" className="rounded-md auto ">
                     <thead className="">
                         <tr>
-                            <th rowSpan="2" key="check"><input type="checkbox" onClick={()=>selectAllRows()} className=' rounded-sm mx-2 border-purple-300'></input></th>
+                            <th rowSpan="2" key="check"><input  checked={checkedAllRow} type="checkbox" onChange={(e)=>selectAllRows(e)} className=' rounded-sm mx-2 border-purple-300'></input></th>
                             <th rowSpan="2" key="srno" >Sr&nbsp;no.</th>
                             <th rowSpan="2" key="fname" onClick={(e)=>sort('fname')} className=" cursor-pointer">
                                 First&nbsp;name<span className={order==="ASC" ? "rotate-180 ":""}></span>
@@ -176,7 +201,7 @@ const ScholarTable=({scholars})=>{
                             return (<>
                                 {
                                 <tr key={count++} > 
-                                    <td className=''><input onClick={()=>handleOnChange(index)} type="checkbox" className='rounded-sm mx-2 border-purple-300'></input></td>
+                                    <td className=''><input checked={checkedRow[index]} type="checkbox" onChange={(e)=>selectRow(e)} name={index} className='rounded-sm mx-2 border-purple-300'></input></td>
                                     <td className=''>{++index}</td>
                                     <td className=''>{scholar.fname}</td>
                                     <td className=''>{scholar.lname}</td>
