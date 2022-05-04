@@ -1,10 +1,10 @@
 import React, { useEffect,useState, useContext} from 'react'
 import { UserContext } from '../App'
 import axios from '../axiosConfig'
-import Card from './Card'
 import {Carousel} from 'react-responsive-carousel'
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import {mcaPcData, mcsPcData, hodData, advisorData } from './homeData'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {BsFillArrowUpCircleFill} from 'react-icons/bs'
+import Card from './Card'
 
 import Loading from './Loading'
 function Home() {
@@ -41,8 +41,8 @@ function Home() {
                     //   dispatch({type:"USER", payload:false})
                     //    navigate('/forbidden')
                     //  }
-            })
-        }
+        })
+    }
         
     const getHomeData=()=>{
         axios('/api/user/home')
@@ -63,9 +63,9 @@ function Home() {
     useEffect(()=>{
         checkLoggedIn();
         getHomeData()
-             
     }
     ,[])
+
   if(isLoading)
     return(<>
         <Loading message={"Loading home"}/>
@@ -73,7 +73,6 @@ function Home() {
 
     return (
         <>
-         
         {error && 
             <div className='flex justify-center bg-pink-600 py-3 text-white'>
                 <p>Failed to fetch all resources, please try again"</p>
@@ -97,41 +96,48 @@ function Home() {
                             <p className="legend">MCA Batch 2022-25</p>
                         </div>
                     </Carousel >
-                    <div className='w-2/6 h-auto mx-3 flex flex-col bg-green-300'>
-                        <div className=' '>PlacementStats</div>
+                    <div className='w-2/6 h-auto mx-3 flex flex-col bg-slate-50 rounded-md '>
+                        <div className='rounded'>
+                            <h1 className='flex justify-center text-white bg-slate-400 text-lg font-normal py-2  rounded-md border-b-4 drop-shadow-sm  border-b-slate-200 '>Placement Statistics</h1>
+                            <div className='h-3'></div>
+                        </div> 
                     </div>
                 </div>
             </div>
             <div className='flex justify-center m-3'>
-                <div className='m-3 p-3 justify-center bg-white border-2 rounded-md drop-shadow-lg items-center flex flex-col w-2/6'>
+                <div className='m-3 p-3 justify-center bg-white border-2 rounded-lg drop-shadow-sm items-center flex flex-col w-2/6'>
                     <h1 className='m-2 text-xl'>Head of Department</h1>
                     <img className="m-2 rounded-md" width="120px" src={hodData.avatar}/>
                     <h1>{hodData.name}</h1>
                     <p>{hodData.msg}</p>
                 </div>
-                <div className='m-3 p-3 justify-center bg-white border-2 rounded-md drop-shadow-lg items-center flex flex-col w-2/6'>
+                <div className='m-3 p-3 justify-center bg-white border-2 rounded-lg drop-shadow-sm items-center flex flex-col w-2/6'>
                     <h1 className='m-2 text-xl'>Placement Advisor</h1>
                     <img className="m-2 rounded-md" width="120px" src={advisorData.avatar}/>
                     <h1>{advisorData.name}</h1>
                     <p>{advisorData.msg}</p>
                 </div>
             </div>
-            
-            <div className='flex flex-col my-3 items-center px-10 py-3' >
+
+            <div className='flex flex-col my-3 mb-1 items-center px-10 py-3' >
                 <h1 className='m-1 my-3 text-xl'>Placement Coordinators 2022</h1>
         
                 <div className='flex flex-wrap w-[720px]'>
                 {Object.entries(pcData).map((data, index)=>{
                     
-                    console.log(data[1].pcname)
                     return (<>
                             <Card src={data[1].avatar} content={data[1].course} name={data[1].pcname}/>
                     </>)
                 })}
                 </div>
-
             </div>
         </div>
+        <div className='flex justify-end py-1 mb-2 px-5 cursor-pointer' onClick={()=>window.scrollTo(0,0)}>
+            <div className='text-center'>
+               <BsFillArrowUpCircleFill className='text-violet-300 hover:text-violet-500  drop-shadow-sm text-6xl'/>
+            </div>
+        </div>
+
     </>
     )
   }
