@@ -5,12 +5,15 @@ import "tailwindcss/tailwind.css"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { Route , Routes} from 'react-router-dom';
 import ScholarDashboard from './components/studentdashboard/ScholarDashboard';
+import AdminDashboard from './components/admin-dashboard/AdminDashboard';
+// import CompanyDashboard from './components/companydashboard/CompanyDashboard';
 import Home from './components/Home';
 import Nav from './components/Nav';
 import Brochure from './components/Brochure';
 import Login from './components/Login';
 import ScholarLogin from './components/ScholarLogin';
 import Page404 from './components/Page404';
+import Dashboard from './components/Dashboard';
 import Page403 from './components/Page403';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
@@ -19,16 +22,16 @@ import CompanyRegistration from './components/companyForm/CompanyRegistration';
 import Footer from "./components/Footer";
 import Logout from "./components/Logout";
 import ScholarProfile from './components/studentdashboard/scholar-profile/ScholarProfile';
-import CreateUser from './components/studentdashboard/CreateUser';
+import CompanyProfile from './components/companydashboard/CompanyProfile';
+import JobDesc from './components/studentdashboard/JobDesc';
+// import CreateUser from './components/studentdashboard/CreateUser';
 import { useReducer ,createContext} from 'react';
-import { initialState, reducer } from './reducer/UseReducer';
+import { reducer , initialState} from './reducer/UseReducer';
 
 const UserContext = createContext()
-
 function App(){
 
   const [state, dispatch] = useReducer(reducer, initialState)
-
   return(    
     <>
     <UserContext.Provider value={{state, dispatch}}>
@@ -43,13 +46,17 @@ function App(){
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="scholar-registration" element={<ScholarRegistration />} />
           <Route path="company-registration" element={<CompanyRegistration />} />
-          {/* <Route path="dashboard" element={<Dashboard />} /> */}
-          {/* <Route path="dashboard/scholar" element={<Dashboard/>} /> */}
-          <Route path="dashboard" element={<ScholarDashboard/>} />
-          <Route path="dashboard/scholars" element={<ScholarDashboard/>} />
-          <Route path="dashboard/create-user" element={<CreateUser/>} />
-          <Route path="logout" element={<Logout />} />
-          <Route path="/profile" element={<ScholarProfile />} />
+          {/* <RoleContext.Provider value={{userState, userDispatch}}> */}
+            <Route path="dashboard" element={<Dashboard />} />
+            {/* <Route path="dashboard/company" element={<CompanyDashboard/>} /> */}
+            <Route path="dashboard/admin" element={<AdminDashboard/>} />
+            <Route path="dashboard/scholar" element={<ScholarDashboard/>} />
+            {/* <Route path="dashboard/create-user" element={<CreateUser/>} /> */}
+            <Route path="logout" element={<Logout />} />
+            <Route path="job-desc/:username" element={<JobDesc />} />
+            <Route path="/dashboard/profile/" element={<CompanyProfile />} />
+            <Route path="dashboard/profile" element={<ScholarProfile />} />
+          {/* </RoleContext.Provider> */}
           <Route path="/forbidden" element={<Page403/>} />     
           <Route path="*" element={<Page404/>} />     
       </Routes>

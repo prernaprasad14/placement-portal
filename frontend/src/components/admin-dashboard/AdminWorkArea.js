@@ -1,11 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import Item from './Item'
-import CreateUser from './CreateUser'
-import StudentProfile from '../studentdashboard/scholar-profile/ScholarProfile'
-import CompanyProfile from '../companydashboard/CompanyProfile'
-// import AdminProfile from '../admin-dashboard/AdminProfile'
-import ScholarSidebar from './ScholarSidebar'
+// import CreateUser from './CreateUser'
+import AdminProfile from './AdminProfile'
+import AdminSidebar from './AdminSidebar'
+import Scholars from '../dashboard-partials/Scholars'
 import Companies from '../dashboard-partials/Companies'
 import {MdSpaceDashboard} from 'react-icons/md'
 import {BiNotification} from 'react-icons/bi'
@@ -15,34 +13,33 @@ import {TiThMenu} from 'react-icons/ti'
 
 
 
-const  WorkArea = ({companies, scholar}) => {
+const  AdminWorkArea = ({companies, scholars, scholar, company}) => {
   console.log("3 inside workarea")
-
+  console.log(company)
   const [choice , setChoice] = useState('0')
   const responsive= useRef()
   console.log(choice+"choice")
   var c=0;
   const [isActive, setActive] = useState(false);
   const sidemenu=()=>{
-    // responsive.current.style.transitionProperty='all 2s'
-    // responsive.current.style.transitionDurataion='75s'
-    // responsive.current.style.transitionTimingFunction='ease-in-out'
     setActive(!isActive);
   };
  
 
   const ChosenItem=({option})=>{
-    console.log(option+"option")
+   console.log(option+"option")
    setChoice(option)
    switch(option){
-    case '0' :   return(<><StudentProfile data={scholar}/></>)
-    case '1' : {
-                  console.log("companiesData"+companies)
-                  return <Companies data={companies}/>
-              }
-    // case '2' : return <><Notifications/></>
-
-    default:  return <StudentProfile data={scholar}/>
+      case '0' : return( <><AdminProfile/></>)
+      
+      case '1' : return( <><AdminProfile/></>)
+      
+      case '2' : return <Companies data={companies}/>
+      
+      case '3' : return<Scholars  data={scholars}/>
+    // case '4' : return <><Notifications/></>
+  
+    default :  return <><AdminProfile/></>
   }
   }
   useEffect(()=>{
@@ -53,7 +50,7 @@ const  WorkArea = ({companies, scholar}) => {
     <>  
         <div className='flex-col sm:flex-row flex sm:flex'>
           <div className=' hidden sm:flex top-left sm:h-screen' >
-            <ScholarSidebar menu={['Profile', 'Companies', 'Notifications']} chosenItem={setChoice}/>
+            <AdminSidebar menu={['Profile', 'Scholars', 'Companies', 'Notifications']} chosenItem={setChoice} />
           </div>
           <div className='sm:hidden block bg-violet-900' >
               <button className=" outline-none "  onClick={sidemenu}>
@@ -63,27 +60,34 @@ const  WorkArea = ({companies, scholar}) => {
               <div ref={responsive} id='responsive-menu' className={isActive ? 'block  ml-[-30px] ': 'hidden'}>
                 <ul className='w-screen'>
                   <Link to="#">
-                    <button onClick={()=>setChoice('5')}>
+                    <button onClick={()=>setChoice('0')}>
                       <li className='px-6 py-2 font-semibold '>
                         <MdSpaceDashboard className='inline-block mr-2'/>Dashboard
                       </li>
                     </button>
                   </Link>
                   <Link to="#profile" className='block'>
-                    <button onClick={()=>setChoice('0')}><li className='px-6 py-2 font-semibold '>
+                    <button onClick={()=>setChoice('1')}><li className='px-6 py-2 font-semibold '>
                         <HiUserCircle  className='inline-block mr-2'/>Profile
                       </li>
                     </button>
                   </Link>
                   <Link to="#companies" className='block'>
-                    <button onClick={()=>setChoice('1')}>
+                    <button onClick={()=>setChoice('2')}>
                       <li className='px-6 py-2 font-semibold '>
                         <HiUserGroup  className='inline-block mr-2'/>Companies
                       </li>
                     </button>
                   </Link>
+                  <Link to="#scholars" className='block'>
+                    <button onClick={()=>setChoice('3')}>
+                      <li className='block px-6 py-2 font-semibold '>
+                        <FaUserGraduate  className='inline-block mr-2'/>Scholars
+                      </li>
+                    </button>
+                  </Link>
                   <Link to="#notifications" className='block'>
-                    <button onClick={()=>setChoice('2 ')}>
+                    <button onClick={()=>setChoice('4')}>
                       <li className='block px-6 py-2 font-semibold '>
                         <BiNotification  className='inline-block mr-2'/>Notifications
                       </li>
@@ -104,7 +108,7 @@ const  WorkArea = ({companies, scholar}) => {
    )
  }
 
-export default WorkArea
+export default AdminWorkArea
 
 
 

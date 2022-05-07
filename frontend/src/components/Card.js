@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Card=({src ,name, content, batch} )=> {
+
     return(
         <>
             <div className='border-t-[30px] rounded-md border-violet-300  bg-white flex drop-shadow-md flex-col items-center m-2 w-56'>

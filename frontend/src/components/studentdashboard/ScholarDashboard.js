@@ -27,7 +27,7 @@ const  ScholarDashboard = () => {
       console.log("1")
       console.log(res.status)
       if(res.status==200){
-        dispatch({type:"USER", payload:true})
+        dispatch({type:"LOGGEDIN", role:"SCHOLAR"})
         setIsLoggedIn(true)
         setIsLoading(false)
       }   
@@ -59,60 +59,59 @@ const  ScholarDashboard = () => {
       })
       .catch(err=> console.log("Error getAllCompanies : "+err))
   }
-    // const getScholar=()=>{
-    // //    setTimeout(()=>{
-    //     console.log("here here")
-    //     axios.get(`api/scholar/profile`)
-    //     .then((res)=>{
-    //         const scholar = res.data.scholar;
-    //         setScholar(scholar);
-    //         setIsLoading(false)
-    //       }).catch(error=> {
-    //           console.log("Error getScholar : "+error)
-    //           console.log(error.response.status)
-    //           // if(error.response.status=='401')
-    //           //   navigate('/login')
-    //           if(error.response.status=='403'){}
-    //             navigate('/forbidden')
-    //         }) 
-    //     // },90000) 
-    // }
-    const getCompany=()=>{
+    const getScholar=()=>{
+    //    setTimeout(()=>{
         console.log("here here")
-        axios.get(`api/company/profile`)
+        axios.get(`api/scholar/profile`)
         .then((res)=>{
-            const company = res.data.company;
-            console.log(company)
-            setCompany(company);
+            const scholar = res.data.scholar;
+            setScholar(scholar);
+            setIsLoading(false)
           }).catch(error=> {
-              console.log("Error getcompany : "+error)
-              // console.log(error.response.status)
+              console.log("Error getScholar : "+error)
+              console.log(error.response.status)
               // if(error.response.status=='401')
               //   navigate('/login')
-            //   if(error.response.status=='403'){}
-            //     navigate('/forbidden')
+              if(error.response.status=='403'){}
+                navigate('/forbidden')
             }) 
+        // },90000) 
     }
-    const getAllScholars=()=>{
-      console.log("here here")
-      axios.get('/scholars')
-      .then((res)=>{
-          const scholars = res.data.scholars;
-          console.log("here")
-          console.log(res)
-          console.log(res.data)
-          setScholars(scholars);
-      })
-      .catch(err=> console.log("Error getAllScholars : "+err))
-  }
+    // const getCompany=()=>{
+    //     console.log("here here")
+    //     axios.get(`api/company/profile`)
+    //     .then((res)=>{
+    //         const company = res.data.company;
+    //         console.log(company)
+    //         setCompany(company);
+    //       }).catch(error=> {
+    //           console.log("Error getcompany : "+error)
+    //           // console.log(error.response.status)
+    //           // if(error.response.status=='401')
+    //           //   navigate('/login')
+    //         //   if(error.response.status=='403'){}
+    //         //     navigate('/forbidden')
+    //         }) 
+    // }
+  //   const getAllScholars=()=>{
+  //     console.log("here here")
+  //     axios.get('/scholars')
+  //     .then((res)=>{
+  //         const scholars = res.data.scholars;
+  //         console.log("here")
+  //         console.log(res)
+  //         console.log(res.data)
+  //         setScholars(scholars);
+  //     })
+  //     .catch(err=> console.log("Error getAllScholars : "+err))
+  // }
 
   useEffect(()=>{
     // setTimeout(()=>{
-    checkLoggedIn();
-    // getScholar();
-    getCompany();
+      if(state!='SCHOLAR'){navigate('/forbidden')}
+    // checkLoggedIn();
+    getScholar();
     getAllCompanies();
-    getAllScholars();
     // },80000000)
    
   },[]);

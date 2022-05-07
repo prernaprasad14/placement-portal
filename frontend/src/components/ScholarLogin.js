@@ -7,6 +7,7 @@ import { UserContext } from '../App';
 const ScholarLogin=()=>{
     document.title='Scholar Login | DUCS Placement Portal'
     const {state, dispatch}= useContext(UserContext)
+    const {userState, userDispatch}= useContext(UserContext)
     const navigate = useNavigate()
     const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
@@ -20,6 +21,7 @@ const ScholarLogin=()=>{
             console.log(res.status)
             if(res.status==200){
                 dispatch({type:"USER", payload:true})
+                userDispatch({type:"scholar", role:"scholar"})
                 setIsLoggedIn(true)
             }
         }).catch((error)=>{
@@ -50,7 +52,10 @@ const ScholarLogin=()=>{
             console.log(res.data)
             setId(res.data.id)
             if(res.data.success){
-                dispatch({type:"USER", payload:true})
+                if(res.data.role==='scholar'){
+                     dispatch({type:"LOGGEDIN", role:'SCHOLAR'})
+                }
+                dispatch({type:"LOGGEDIN", role:'ADMIN'})
                 setIsLoggedIn(true)
                 navigate(`/dashboard`)
             }
@@ -75,7 +80,7 @@ const ScholarLogin=()=>{
         });
     }
     if(isLoggedIn){
-        navigate('/dashboard')
+        navigate('/dashboard/scholar')
     }
     return (
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>

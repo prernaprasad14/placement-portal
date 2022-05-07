@@ -68,6 +68,10 @@ const ScholarTable=({scholars})=>{
     const selectRow=(e)=>{
       const {name} = e.target
       setCheckedRow({...checkedRow,[name]: e.target.checked})
+      console.log(ReactDOM.findDOMNode(e.target).parentNode )
+      const row = ReactDOM.findDOMNode(e.target).parentNode.parentNode 
+      row.style.color ="#484848"
+      row.style.backgroundColor ="#85D9AD"
     }
 
     const totalRowCount=()=>{

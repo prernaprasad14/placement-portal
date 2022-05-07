@@ -53,7 +53,7 @@ const Login=()=>{
                 console.log(res.data)
                 setId(res.data.id)
                 if(res.data.success){
-                    dispatch({type:"user",payload:true})
+                    dispatch({type:"LOGGEDIN",role:"COMPANY"})
                     navigate(`/dashboard`)
                     // navigate(`/dashboard}`)
                 }
@@ -78,7 +78,7 @@ const Login=()=>{
         
     }
     if(isLoggedIn){
-        navigate('/dashboard/')
+        navigate('/dashboard')
     }
     return (
         <div className='z-10 text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>

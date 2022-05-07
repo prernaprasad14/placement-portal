@@ -34,11 +34,11 @@ const AdminProfile=()=>{
               console.log("Error getAdmin : "+error)
               console.log(error.response.status)
               if(error.response.status=='401'){
-                dispatch({type:"USER", payload:false})
+                dispatch({type:"USER", role:"USER"})
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                dispatch({type:"USER", payload:true})
+                // dispatch({type:"USER", role:"ADMIN"})
                 navigate('/forbidden')
                 
               }
@@ -87,18 +87,14 @@ const AdminProfile=()=>{
                     <h4 className="font-semibold text-2xl mx-28 my-5">Profile</h4>
                     <div className="d-flex flex-column align-items-center text-center mx-3" >
                         <img className="rounded-circle " width="150px" src={profilepic}/>
-                        <span className="font-weight-bold">{pcData.username}</span>
-                        <span className="text-black-50">{pcData.email}</span>
+                        <span className="text-black-50">{admin.email}</span>
                     </div>
                 </div>
                 <div className="col-md-7 border-right">
                     <div className="p-3 py-5 ">
-                        <div className="row mt-2 py-2 sm:ml-8 ">
-                            <h3 className="font-semibold">Admin Details</h3>
-                            
-                        </div>
+                        
                         <div className="row mt-4 py-2 sm:ml-8">
-                            <h3 className=" font-semibold mb-2">Contact Details</h3>
+                            <h3 className="font-semibold mb-2">{admin.username}</h3>
                             <div className='flex flex-col my-3 items-center px-10 py-3' >
                                 <div className='flex flex-wrap w-[720px]'>
                                     {Object.entries(pcData).map((data, index)=>{

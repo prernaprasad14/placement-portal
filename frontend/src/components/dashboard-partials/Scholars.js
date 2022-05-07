@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import ScholarTable from "./ScholarTable"
+import ScholarTable from "../studentdashboard/ScholarTable"
 import axios from "../../axiosConfig"
 
 const Scholars=({data})=>{

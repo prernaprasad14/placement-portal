@@ -12,7 +12,7 @@ const Nav = () =>{
     const RenderNav=()=>{
         console.log("RenderNav : state "+state)
 
-        if(state)
+        if(state==='ADMIN'|| state==='SCHOLAR' || state==='COMPANY')
         {
             console.log("RenderNav : state "+state)
             return(

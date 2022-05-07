@@ -15,12 +15,11 @@ function Page404() {
         .then(res=>{
             if(res.status == 200)
             setLoggedIn(true)
-            dispatch({type:"USER", payload:true})
+            dispatch({type:"LOGGEDIN",role:res.data.role})
         }).catch(err=> console.log(err+"404"))
     },[])
-    return (
-        <>
-        {loggedIn && <div className='bg-zinc-100 bg-gradient-to-b h-full from-white to-zinc-100/25  '>
+    if(loggedIn){
+        return (<div className='bg-zinc-100 bg-gradient-to-b h-full from-white to-zinc-100/25  '>
             <div className=' flex flex-col py-40 items-center '>
                 <p className='px-2 text-6xl font-bold text-zinc-400/75'>404</p>
                 <p className='px-2 text-3xl font-bold text-zinc-400/75'> Page not found</p>
@@ -31,7 +30,12 @@ function Page404() {
                     </Link>
                 </p>
             </div>
-        </div>}
+        </div>
+        )
+    }
+    return (
+        <>
+        
         <div className='bg-zinc-100 bg-gradient-to-b h-full from-white to-zinc-100/25  '>
             <div className=' flex flex-col py-40 items-center '>
                 <p className='px-2 text-6xl font-bold text-zinc-400/75'>404</p>
