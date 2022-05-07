@@ -7,6 +7,7 @@ const{ authenticateScholar, isLoggedIn }= require('../middleware/authenticate')
 
 const {generateToken}= require('../model/Scholar');
 
+const Admin = require('../model/Admin');
 const Scholar = require('../model/Scholar');
 
 const User = require('../model/User');
@@ -160,18 +161,37 @@ router.post('/register', validateScholarRegistration, validate , async (req, res
    
 });
 router.post('/login', validateScholarLogin, validate, async (req, res)=>{
-    const user = await Scholar.findOne({"email":req.body.email})
-    console.log("check1")
-    if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
-    console.log("check2")
-    
-    const validPass = await bcrypt.compare(req.body.password, user.password)
-    console.log("check3")
 
-    if(!validPass) return res.status(400).json({success:false, message:"Invalid credentails"});
-    console.log("check4")
+    var admin = await Admin.findOne({"email":req.body.email})
+    if(!admin){
 
-    const token =await user.generateToken()
+      const  user = await Scholar.findOne({"email":req.body.email})
+        console.log("check1")
+        if(!user) return res.status(400).json({success:false, message:"Invalid credentails"});
+        console.log("check2")
+        
+        const validPass = await bcrypt.compare(req.body.password, user.password)
+
+        if(!validPass) return res.status(400).json({success:false, message:"Invalid credentails"});
+
+        const token =await user.generateToken()
+        console.log(`login route    :: token:: ${token}`)
+        const date = new Date();
+        res.cookie("jwt", token, {
+            
+            expires:new Date( date + 30*24*60*60*1000),
+            maxAge:  30*24*60*60*1000,
+            // secure:true,
+            httpOnly: true
+        });
+        console.log(user._id)
+        return res.status(200).json({success: true, role:"scholar", message:"Logged in", user, token})  
+    }  
+    const validPass = await bcrypt.compare(req.body.password, admin.password)
+
+    if(!validPass) return res.status(400).json({success:false,  message:"Invalid credentails"});
+
+    const token =await admin.generateToken()
     console.log(`login route    :: token:: ${token}`)
     const date = new Date();
     res.cookie("jwt", token, {
@@ -181,8 +201,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
         // secure:true,
         httpOnly: true
     });
-    console.log(user._id)
-    return res.status(200).json({success: true, message:"Logged in", user, token})    
+    return res.status(200).json({success: true, role:"admin" , message:"Logged in", admin, token}) 
 });
 
 router.get('/profile', authenticateScholar ,  async(req,res)=>{

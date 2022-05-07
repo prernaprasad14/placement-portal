@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
 const { generateCreateUserMail } = require('../mail');
-const { authenticateCompany } = require('../middleware/authenticate');
+const { authenticateCompany ,authenticateUser} = require('../middleware/authenticate');
 
 router.post('/create-user', validateCompanyCreate, async(req,res)=>{
 
@@ -191,6 +191,18 @@ router.get('/verify-email', async(req, res)=>{
     console.log("2 exists"+ exists)
     if(exists) return res.status(400).json({success: false, message:"already registered"})
     return res.status(200).json({success: true, message:"Not registered"})
+});
+
+router.get('/job-desc/:username', authenticateUser, async(req, res)=>{
+    console.log("company /job-desc   passed route")
+    if(req.role=='scholar'){
+        var company= await Company.findOne({username : req.params.username},{password:0, token:0, email:0, head_name:0, head_email:0, second_email:0, second_mobile:0,
+                                             second_name:0})
+    }else{
+       company= await Company.findOne({username : req.params.username},{password:0, token:0,})
+
+    }
+    return res.status(200).json({success:true, company})
 });
 
 router.get('/profile', authenticateCompany, async(req,res)=>{

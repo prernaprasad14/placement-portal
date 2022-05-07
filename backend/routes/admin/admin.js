@@ -39,7 +39,7 @@ const Home = require('../../model/Home');
 //     return res.status(200).json({success: true, message: "Retrieved admin profile" , admin: req.user, pc: pc})
 // })
 router.get('/profile', async(req, res)=>{
-    const admin = await Admin.findOne({})
+    const admin = await Admin.findOne({},{password:0, token:0})
     console.log(admin)
     if(!admin)
         return res.status(404).json({success:false, message: "Admin profile not found"})

@@ -54,7 +54,8 @@ app.use('/scholars', async (req, res)=>{
 
 app.use('/companies',  async (req, res)=>{
     console.log("companies route passed !")
-    const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
+    const companies = await Company.find({}, { website:1, username:1, pre_placement_talk:1, coding_test_date:1})
+    // const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
     console.log("companies route passed !"+companies)
     console.log("companies route passed !"+JSON.stringify(companies))
     const date= new Date()
