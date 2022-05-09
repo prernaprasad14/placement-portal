@@ -5,56 +5,10 @@ var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
 const Company = require('../model/Company');
 const jwt = require('jsonwebtoken');
-const {validateCompanyRegistration, validateCompanyCreate, validateLogin, validate} = require('../userinputvalidation');
+const {validateCompanyRegistration,  validateLogin, validate} = require('../userinputvalidation');
 const cookieParser = require('cookie-parser');
 const { generateCreateUserMail } = require('../mail');
 const { authenticateCompany ,authenticateUser} = require('../middleware/authenticate');
-
-router.post('/create-user', validateCompanyCreate, async(req,res)=>{
-
-    try{ 
-        console.log("1 here")
-        const companyExists= await Company.findOne({"loginDetails.email":req.body.email})
-        if(companyExists) return res.json({success: false, message:"Already registered"})
-        console.log("2 here")
-        const emailExists= await Credentials.findOne({"loginDetails.email":req.body.email})
-        if(!emailExists){
-            const user = new Credentials({email:req.body.email, username: req.body.username})
-            await user.generateToken();
-            await user.save()
-        }
-        var transporter = nodemailer.createTransport({
-            host : "smtp.mailtrap.io",
-            port : 2525,
-            auth: {
-                user: process.env.MAILTRAP_USERNAME,
-                pass: process.env.MAILTRAP_PASSWORD
-            }
-        });
-        console.log('company created');
-        const hash = await bcrypt.hash(req.body.username, 8)
-        const date = new Date()
-        console.log(`hash username ${hash}`); 
-        transporter.sendMail({
-            from: 'placementcellducs@cs.du.ac.in',
-            to: `${user.email}`,
-            subject: `Registration for DUCS Placements session ${date.getFullYear()}`,
-            attachments: [{
-                filename: 'logo.png',
-                path: __dirname+'/img/logo.png',
-                cid: 'logo'
-            }],
-            html: generateCreateUserMail(`http://localhost:3000/company-registration?email=${user.email}&user=${hash}&token=${user.token}`, user.username ),
-     
-        });
-    
-        return res.status(200).json({success: true, message:'Email has been sent '})
-
-    }catch(error){
-        console.log("create user error part:: An error has occurred : "+error)
-    }
-    
-}); 
 
 router.post('/register', validateCompanyRegistration, validate , async (req, res)=>{
     try{
