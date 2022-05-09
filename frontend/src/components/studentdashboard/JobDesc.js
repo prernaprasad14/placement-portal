@@ -81,7 +81,6 @@ const JobDesc=()=>{
                             <h3 className="font-semibold my-2">Company Details</h3>
                             <div className="col-md-12"><label className="font-normal">Company Name</label><p className="border-2 p-1 rounded-md">{data.cname}</p></div>
                             <div className="col-md-12"><label className="font-normal">Website</label><p className="border-2 p-1 rounded-md">{data.website}</p></div>
-                            <div className="col-md-12"><label className="font-normal">Mobile no.</label><p className="border-2 p-1 rounded-md" >{data.phone}</p></div>
                         </div>
                         <div className="row mt-4 py-2 sm:ml-8">
                             <h3 className="font-semibold my-2">Job Description</h3>

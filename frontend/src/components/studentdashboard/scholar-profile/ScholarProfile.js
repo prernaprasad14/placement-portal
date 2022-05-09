@@ -38,11 +38,11 @@ const ScholarProfile=({data})=>{
               console.log("Error getScholar : "+error)
               console.log(error.response.status)
               if(error.response.status=='401'){
-                dispatch({type:"USER", payload:false})
+                dispatch({type:"USER", role:"USER"})
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                dispatch({type:"USER", payload:true})
+                dispatch({type:"USER", role:"SCHOLAR"})
                 navigate('/forbidden')
                 
               }
@@ -54,13 +54,9 @@ const ScholarProfile=({data})=>{
         console.log("inside use effect")
         if(data!=null){
             setIsLoading(false)
-            // getScholar()
+            getScholar()
         }
-    },[]);
-    const edit=(event)=>{
-        setIsEditMode(true)
-    }
-    
+    },[]);    
     console.log("6 outside function")
     console.log("7 profile data scholar({data})::"+JSON.stringify(data))
     if(data!=''){

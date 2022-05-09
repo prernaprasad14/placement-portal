@@ -5,7 +5,7 @@ import {Link } from 'react-router-dom'
 import {MdSpaceDashboard} from 'react-icons/md'
 import {BiNotification} from 'react-icons/bi'
 import {HiUserGroup,HiUserCircle} from 'react-icons/hi'
-import {FaUserGraduate,FaSignOutAlt} from 'react-icons/fa'
+import {FaUserGraduate,FaSignOutAlt,FaUserPlus} from 'react-icons/fa'
 
 const  AdminSidebar= ({menu,chosenItem}) => {
   console.log("2 insideSidebar")
@@ -51,6 +51,12 @@ const  AdminSidebar= ({menu,chosenItem}) => {
             <div className='text-lg '>              
                 <BiNotification  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
                 <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Notifications</p>
+            </div>
+          </Link>
+          <Link to='#manage-users' onClick={()=>chosenItem("5")} className='side-menu-links'>
+            <div className='text-lg '>              
+                <FaUserPlus  className='inline-block text-xl mb-1 mx-2 sm:text-sm md:text-lg'/>
+                <p className='hidden sm:inline-block sm:text-sm md:text-lg'>Manage Users</p>
             </div>
           </Link>
           <Link to='/logout' className=' mt-auto side-menu-links' >

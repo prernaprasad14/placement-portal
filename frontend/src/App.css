@@ -144,12 +144,12 @@ form div{
 	margin: 16px 0;
 }
 
-label{
+/* label{
 	margin:2px 1px ;
 	padding: 2px 0;
 	color: rgb(43, 43, 43);
 	font-weight: 500;
-}
+} */
 input+p{
 	height: 0;
 	opacity: 0;
@@ -389,11 +389,6 @@ tbody tr:hover{
 	background: #803ae2;
   }
 
-.form-control:focus {
-    box-shadow: none;
-    border-color: #BA68C8
-}
-
 .profile-button {
     background: rgb(99, 39, 120);
     box-shadow: none;
@@ -430,11 +425,19 @@ tbody tr:hover{
     border: solid 1px #BA68C8
 }
 
-.download-xls-btn{
+input[type=file]::file-selector-button,
+#create-user, .download-xls-btn{
 	background-color:#2dd4bf;
 	color: #2f2f2f;
+	display:inline-block ;
+	border-radius: 4px;
+	margin:auto;
+	padding:8px 16px ;
+	color:white;
+	font-weight:300;
 }
-.download-xls-btn:hover{
+input[type=file]::file-selector-button:hover,
+#create-user:hover,.download-xls-btn:hover{
 	background-color: #14b8a5;
 }
 input[type="checkbox"]::selection{
@@ -446,4 +449,19 @@ input[type="checkbox"]:hover{
 input[type="checkbox"]:active,
 input[type="checkbox"]:focus {
 	background-color: #ffffff;
+}
+input[type=file]::file-selector-button {
+	background-color:#2dbed4;
+	border:0;
+	margin: 0 3px;
+	cursor:pointer;
+	border-radius: 5px;
+	color:white;
+	padding: 8px 16px;
+}
+ input[type=file]::file-selector-button:hover {
+	background-color: #147fb8;
+	border:0;
+	color:white;
+	
 }

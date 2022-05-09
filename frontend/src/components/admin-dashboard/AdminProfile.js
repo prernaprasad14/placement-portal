@@ -96,7 +96,7 @@ const AdminProfile=()=>{
                         <div className="row mt-4 py-2 sm:ml-8">
                             <h3 className="font-semibold mb-2">{admin.username}</h3>
                             <div className='flex flex-col my-3 items-center px-10 py-3' >
-                                <div className='flex flex-wrap w-[720px]'>
+                                <div className='flex flex-col sm:flex-row flex-wrap sm:w-[738px] px-2 py-4'>
                                     {Object.entries(pcData).map((data, index)=>{
                                         
                                         console.log(data[1].pcname)

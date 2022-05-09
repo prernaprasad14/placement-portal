@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 import { UserContext } from '../../App'
 import axios from '../../axiosConfig'
-import CreateUser from './CreateUser'
+import CreateUser from '../admin-dashboard/CreateUser'
 import Loading from '../Loading'
 
 const  ScholarDashboard = () => {

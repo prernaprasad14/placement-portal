@@ -25,7 +25,7 @@ function Home() {
         
         console.log(res.status)
         if(res.status==200){
-            dispatch({type:"USER", payload:true})
+            dispatch({type:"USER", role:state})
             setIsLoading(false)
         }   
         }).catch((error)=>{
@@ -57,7 +57,6 @@ function Home() {
         .catch((err)=>{
             setError(true)
             setIsLoading(false)
-
         })  
     }
     useEffect(()=>{

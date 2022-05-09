@@ -20,7 +20,7 @@ const Login=()=>{
          .then((res)=>{
              console.log(res.status)
              if(res.status==200){
-                dispatch({type:"USER",payload:true})
+                dispatch({type:"USER",role:"COMPANY"})
                 setIsLoggedIn(true)
              }
          }).catch((error)=>{

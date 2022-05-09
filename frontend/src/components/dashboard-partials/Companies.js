@@ -32,8 +32,8 @@ const Companies=({data})=>{
             <div className="flex space-between my-3">
                 <div className="text-lg mx-12 font-semibold w-4/6"><p>Companies</p></div>
             </div>
-                <CompanyCard companies={data}/>
-            </div>
+            <CompanyCard companies={data}/>
+        </div>
 
         </>)
     }

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-// import CreateUser from './CreateUser'
+import CreateUser from './CreateUser'
 import AdminProfile from './AdminProfile'
 import AdminSidebar from './AdminSidebar'
 import Scholars from '../dashboard-partials/Scholars'
@@ -13,7 +13,7 @@ import {TiThMenu} from 'react-icons/ti'
 
 
 
-const  AdminWorkArea = ({companies, scholars, scholar, company}) => {
+const  AdminWorkArea = ({companies, scholars, company}) => {
   console.log("3 inside workarea")
   console.log(company)
   const [choice , setChoice] = useState('0')
@@ -37,7 +37,8 @@ const  AdminWorkArea = ({companies, scholars, scholar, company}) => {
       case '2' : return <Companies data={companies}/>
       
       case '3' : return<Scholars  data={scholars}/>
-    // case '4' : return <><Notifications/></>
+      // case '4' : return <><Notifications/></>
+      case '5' : return<CreateUser/>
   
     default :  return <><AdminProfile/></>
   }
@@ -90,6 +91,13 @@ const  AdminWorkArea = ({companies, scholars, scholar, company}) => {
                     <button onClick={()=>setChoice('4')}>
                       <li className='block px-6 py-2 font-semibold '>
                         <BiNotification  className='inline-block mr-2'/>Notifications
+                      </li>
+                    </button>
+                  </Link>
+                  <Link to="#notifications" className='block'>
+                    <button onClick={()=>setChoice('5')}>
+                      <li className='block px-6 py-2 font-semibold '>
+                        <BiNotification  className='inline-block mr-2'/>Manage Users
                       </li>
                     </button>
                   </Link>

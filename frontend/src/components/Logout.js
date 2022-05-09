@@ -19,7 +19,7 @@ const Logout=()=>{
             credentials: "include"
         }).then((res)=>{
             console.log(res)
-            dispatch({type:"USER", payload:false})
+            dispatch({type:"USER", role:"USER"})
             navigate('/')
         }).catch(err=> console.log("error"+err))
     },[]);

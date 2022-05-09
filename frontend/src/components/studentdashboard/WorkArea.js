@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Item from './Item'
-import CreateUser from './CreateUser'
+import CreateUser from '../admin-dashboard/CreateUser'
 import StudentProfile from '../studentdashboard/scholar-profile/ScholarProfile'
 import CompanyProfile from '../companydashboard/CompanyProfile'
 // import AdminProfile from '../admin-dashboard/AdminProfile'

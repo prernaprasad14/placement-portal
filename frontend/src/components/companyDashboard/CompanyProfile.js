@@ -35,7 +35,7 @@ const CompanyProfile=({data})=>{
           }).catch(error=> {
               console.log("Error getCompany : "+error)
               if(error.response.status=='401'){
-                dispatch({type:"USER", payload:false})
+                dispatch({type:"USER", role:"USER"})
                 navigate('/login')
               }
               if(error.response.status=='403'){

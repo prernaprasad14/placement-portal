@@ -87,7 +87,7 @@ const Login=()=>{
         
     }
     if(isLoggedIn){
-        dispatch({type:"user", payload:"true"})
+        dispatch({type:"LOGGEDIN", role:"COMPANY"})
         navigate('/dashboard')
     }
     return (
