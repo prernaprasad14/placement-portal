@@ -18,7 +18,7 @@ function Dashboard(){
     else if(state==='COMPANY'){
        navigate('/dashboard/company')
     }
-    else navigate('/404')
+    else navigate('/404-not-found')
     })
    
     return(

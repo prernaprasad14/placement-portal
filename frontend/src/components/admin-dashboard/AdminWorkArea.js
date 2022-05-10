@@ -13,9 +13,8 @@ import {TiThMenu} from 'react-icons/ti'
 
 
 
-const  AdminWorkArea = ({companies, scholars, company}) => {
+const  AdminWorkArea = ({companies, scholars}) => {
   console.log("3 inside workarea")
-  console.log(company)
   const [choice , setChoice] = useState('0')
   const responsive= useRef()
   console.log(choice+"choice")

@@ -21,7 +21,7 @@ const JobDesc=()=>{
     const getJobDesc=()=>{
     //    setTimeout(()=>{
         console.log("here here")
-        axios(`api/company/job-desc/${username}`)
+        axios.get(`api/company/job-desc/${username}`)
         .then((res)=>{
             console.log(res)
             const company = res.data.company;
@@ -32,11 +32,11 @@ const JobDesc=()=>{
           }).catch(error=> {
               console.log("Error getCompany : "+error)
               if(error.response.status=='401'){
-                dispatch({type:"USER", payload:false})
+                dispatch({type:"USER",  role:"USER"})
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                dispatch({type:"USER", payload:true})
+                dispatch({type:"USER", role:state})
                 navigate('/forbidden')
                 
               }
@@ -46,6 +46,7 @@ const JobDesc=()=>{
     useEffect(()=>{
         // window.scrollTo(0, 0)
         console.log("inside use effect")
+        console.log(state)
         getJobDesc()
     
 
@@ -81,7 +82,25 @@ const JobDesc=()=>{
                             <h3 className="font-semibold my-2">Company Details</h3>
                             <div className="col-md-12"><label className="font-normal">Company Name</label><p className="border-2 p-1 rounded-md">{data.cname}</p></div>
                             <div className="col-md-12"><label className="font-normal">Website</label><p className="border-2 p-1 rounded-md">{data.website}</p></div>
+                            {state ==='ADMIN' &&     
+                                <div className="col-md-4"><label className="font-normal">Contact no.</label><p className="border-2 p-1 rounded-md">{data.second_mobile}</p></div>
+                            }
                         </div>
+                        {state ==='ADMIN' && <div className="row mt-4 py-2 sm:ml-8">
+                            <h3 className=" font-semibold mb-2">Contact Details</h3>
+                            <div className="row border-2 rounded-md m-1 p-2">
+                                <h4 className=" pt-2 font-semibold">HR</h4>
+                                <div className="col-md-4"><label className="font-normal">Name</label><p className="border-2 p-1 rounded-md">{data.head_name}</p></div>
+                                <div className="col-md-4"><label className="font-normal">Email</label><p className="border-2 p-1 rounded-md">{data.head_email}</p></div>
+                                <div className="col-md-4"><label className="font-normal">Contact no.</label><p className="border-2 p-1 rounded-md">{data.head_mobile}</p></div>
+                            </div>
+                            <div className="row border-2 rounded-md m-1 p-2">
+                                <h4 className=" pt-2 font-semibold">Second contact person</h4>
+                                <div className="col-md-4"><label className="font-normal">Name</label><p className="border-2 p-1 rounded-md">{data.second_name}</p></div>
+                                <div className="col-md-4"><label className="font-normal">Email</label><p className="border-2 p-1 rounded-md">{data.second_email}</p></div>
+                                <div className="col-md-4"><label className="font-normal">Contact no.</label><p className="border-2 p-1 rounded-md">{data.second_mobile}</p></div>
+                            </div>
+                        </div>}
                         <div className="row mt-4 py-2 sm:ml-8">
                             <h3 className="font-semibold my-2">Job Description</h3>
                                 <div className="col-md-12"><label className="font-normal">Job profile</label><p className="border-2 p-1 rounded-md">{data.job_profile}</p></div>

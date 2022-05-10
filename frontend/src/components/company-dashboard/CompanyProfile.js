@@ -16,22 +16,18 @@ const CompanyProfile=({data})=>{
     console.log("1here")
     const [company, setCompany]= useState('')
     const [isLoading, setIsLoading]= useState(true)
-    const [username , setUsername] = useState('')
     const [isEditMode , setIsEditMode] = useState(false)
     const [isLoggedIn , setIsLoggedIn] = useState(false)
-    // const [placementdetails, setPlacementDetails] = useState(data.placementdetails)
-    // console.log(placementdetails)
     const getCompany=()=>{
     //    setTimeout(()=>{
         console.log("here here")
-        axios(`api/company/profile/${username}`)
+        axios(`api/company/profile`)
         .then((res)=>{
             console.log(res)
             const company = res.data.company;
            console.log(company);
             setCompany(company);
             setIsLoading(false)
-            setUsername(company.username)
           }).catch(error=> {
               console.log("Error getCompany : "+error)
               if(error.response.status=='401'){
@@ -39,7 +35,7 @@ const CompanyProfile=({data})=>{
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                dispatch({type:"USER", payload:true})
+                dispatch({type:"LOGGEDIN", role:state})
                 navigate('/forbidden')
                 
               }
@@ -49,13 +45,12 @@ const CompanyProfile=({data})=>{
     useEffect(()=>{
         // window.scrollTo(0, 0)
         console.log("inside use effect")
-        console.log(data)
-        setIsLoading(true)
-        if(data!=null){
-            setIsLoading(false)
-        }else{
+        // setIsLoading(true)
+        // if(data!=null){
+        //     setIsLoading(false)
+        // }else{
             getCompany()
-        }
+        // }
 
     },[]);
     const edit=(event)=>{
@@ -63,9 +58,9 @@ const CompanyProfile=({data})=>{
     }
     
     console.log("6 outside function")
-    console.log("7 profile data Company({data})::"+JSON.stringify(data))
-    if(data!=null){
-        console.log(data)
+    console.log("7 profile data Company({data})::")
+    if(company!=null){
+        console.log(company)
         return(<>
         
         <div className="profile w-90% rounded bg-white m-3 ">

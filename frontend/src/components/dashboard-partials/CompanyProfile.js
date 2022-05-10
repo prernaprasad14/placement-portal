@@ -39,7 +39,7 @@ const CompanyProfile=({data})=>{
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                dispatch({type:"USER", payload:true})
+                dispatch({type:"USER", role:state})
                 navigate('/forbidden')
                 
               }

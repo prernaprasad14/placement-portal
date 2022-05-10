@@ -1,12 +1,13 @@
-import { useEffect, useState, createElement} from "react"
+import { useEffect, useState, createElement, useContext} from "react"
 import  ReactDOM  from "react-dom";
 import { BsThreeDotsVertical,BsArrowLeftSquareFill,BsArrowRightSquareFill } from 'react-icons/bs';
-import { RiArrowUpSFill} from 'react-icons/ri';
-import Row from "./ScholarRow"
+import { UserContext } from "../../App";
+import Loading from "../Loading";
 
 const ScholarTable=({scholars})=>{
     console.log("4 -insideTable ")
     let count=1;
+    const {state} =useContext(UserContext)
     const [data, setData] = useState(scholars)
     const [order, setOrder]= useState("ASC")
     const [rowCount, setRowCount]= useState(scholars.length)
@@ -105,11 +106,14 @@ const ScholarTable=({scholars})=>{
       }
       
       totalRowCount()
+      console.log(scholars)
     }, [rowCount, checked, checkedRow]);
-    
-    
+ 
+
+     
     return(
     <>
+  
     <div className="flex flex-col">
         <div className=" px-4 py-2 mx-3 flex items-center border-slate-100 text-gray-700 text-sm">
             <input checked={checkedAll} type="checkbox" onChange={(e)=>selectAllFields(e)}  className=" rounded-sm  border-purple-300 "/>
@@ -142,7 +146,7 @@ const ScholarTable=({scholars})=>{
                             </th>
                             <th rowSpan="2" key="phone" className=''>Phone&nbsp;no.</th>
                             <th rowSpan="2" key="alt_phone" className=''>Alternative&nbsp;no.</th>
-                            <th rowSpan="2" key="status" onClick={()=>sort('placement_status')} className=" ">Status<span className={order==="ASC" ? "px-2 rotate-180":"px-2 "}></span></th>
+                            {state==="ADMIN" && <th rowSpan="2" key="status" onClick={()=>sort('placement_status')} className=" ">Status<span className={order==="ASC" ? "px-2 rotate-180":"px-2 "}></span></th>}
                             <th rowSpan="2" key="gender" className="">Gender</th>                   
                             <th colSpan="6" key="pg" className={checked.pg === true ? "px-1 mr-5 ": "hidden px-1 mr-5"}>Post&#8209;Graduation&nbsp;Details</th>                   
                             <th colSpan="8" key="grad" className={checked.grad === true ? "px-1 mr-5 ": "hidden px-1 mr-5"}>Graduation&nbsp;Details</th>                   
@@ -212,7 +216,7 @@ const ScholarTable=({scholars})=>{
                                     <td className=''>{scholar.email}</td>
                                     <td className=''>{scholar.phone}</td>
                                     <td className=''>{scholar.alternative_phone}</td>
-                                    <td className=''>{scholar.placement_status}</td>        
+                                    {state==="ADMIN"&& <td className=''>{scholar.placement_status}</td>   }     
                                     <td className=''>{scholar.gender}</td>    
                                     { checked.pg && <>
                                         <td className=''>{scholar.pg_course}</td>      
@@ -261,7 +265,7 @@ const ScholarTable=({scholars})=>{
                                 </tr>}
                             </>)
                         })
-                    }
+                      }
                     </tbody>   
                 </table>
         </div>
@@ -277,6 +281,7 @@ const ScholarTable=({scholars})=>{
     </div>
     </>
     )
+
 }
 
 export default ScholarTable

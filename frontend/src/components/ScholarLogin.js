@@ -20,8 +20,10 @@ const ScholarLogin=()=>{
         .then((res)=>{
             console.log(res.status)
             if(res.status==200){
-                dispatch({type:"USER", payload:true})
-                userDispatch({type:"scholar", role:"scholar"})
+                if(res.data.role==='SCHOLAR'){
+                    dispatch({type:"LOGGEDIN", role:"SCHOLAR"})
+                }
+                dispatch({type:"LOGGEDIN", role:"ADMIN"})
                 setIsLoggedIn(true)
             }
         }).catch((error)=>{

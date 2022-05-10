@@ -10,17 +10,16 @@ const Logout=()=>{
     const {state, dispatch} = useContext(UserContext);
     const navigate = useNavigate();
     useEffect(()=>{
-      
-            axios.get('api/user/logout',{
-            headers:{
-                Accept :"application/json",
-                "Content-Type":"application/json"
-            },
-            credentials: "include"
-        }).then((res)=>{
+        axios.get('api/user/logout')
+        // {headers:{
+        //     Accept :"application/json",
+        //     "Content-Type":"application/json"
+        // },
+        // credentials: "include"}
+        .then((res)=>{
             console.log(res)
             dispatch({type:"USER", role:"USER"})
-            navigate('/')
+            navigate('/login')
         }).catch(err=> console.log("error"+err))
     },[]);
 

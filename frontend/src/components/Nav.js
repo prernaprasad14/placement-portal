@@ -2,9 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import logo from "../img/logo.png"
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../App'
-import MenuItem from './studentdashboard/MenuItem'
-import Sidebar from './studentdashboard/Sidebar'
-import ScholarDashboard from './studentdashboard/ScholarDashboard'
 
 const Nav = () =>{
     const {state, dispatch}= useContext(UserContext)
@@ -12,7 +9,7 @@ const Nav = () =>{
     const RenderNav=()=>{
         console.log("RenderNav : state "+state)
 
-        if(state==='ADMIN'|| state==='SCHOLAR' || state==='COMPANY')
+        if(state!='USER')
         {
             console.log("RenderNav : state "+state)
             return(

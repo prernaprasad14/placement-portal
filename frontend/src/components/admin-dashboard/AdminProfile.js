@@ -38,7 +38,7 @@ const AdminProfile=()=>{
                 navigate('/login')
               }
               if(error.response.status=='403'){
-                // dispatch({type:"USER", role:"ADMIN"})
+                dispatch({type:"LOGGEDIN", role : state})
                 navigate('/forbidden')
                 
               }
