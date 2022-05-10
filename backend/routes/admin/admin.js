@@ -8,7 +8,7 @@ const Home = require('../../model/Home');
 const Scholar = require('../../model/Scholar');
 const Company = require('../../model/Company');
 const Credentials = require('../../model/Credentials');
-const {validateScholarCreate, validateCompanyCreate}=require('../../userinputvalidation');
+const {validateScholarCreate, validateCompanyCreate, validate}=require('../../userinputvalidation');
 const { generateCreateUserMail} = require('../../mail');
 const{ join, sep } =require('path');
 
@@ -53,7 +53,7 @@ router.get('/profile', async(req, res)=>{
     return res.status(200).json({success: true, message: "Retrieved admin profile" , admin: admin})
 });
 
-router.post('/create-user/scholar', validateScholarCreate, async(req,res)=>{
+router.post('/create-user/scholar', validateScholarCreate, validate, async(req,res)=>{
     try{ 
         console.log("1 here")
         console.log("2 req.body.email  "+req.body.email)
@@ -61,7 +61,7 @@ router.post('/create-user/scholar', validateScholarCreate, async(req,res)=>{
         console.log("3 scholarExists  "+scholarExists)
         if(scholarExists) return res.json({success: false, message:"Already registered"})
         console.log("4 here")
-        const emailExists= await Credentials.findOne({"email":req.body.email})
+        const emailExists = await Credentials.findOne({"email":req.body.email})
         console.log(__dirname+'../img')
         console.log("5 emailExists"+ emailExists)
         if(!emailExists) 
@@ -97,7 +97,7 @@ router.post('/create-user/scholar', validateScholarCreate, async(req,res)=>{
         });
     }
         console.log('8 email sent');
-        return res.json({success:200, message:'Email has been sent '})
+        return res.json({success:200, message:`Email has been sent to ${email}`})
 
     }catch(error){
         console.log("create user error part:: An error has occurred : "+error)
@@ -106,7 +106,7 @@ router.post('/create-user/scholar', validateScholarCreate, async(req,res)=>{
 }); 
 
 
-router.post('/create-user/company', validateCompanyCreate, async(req,res)=>{
+router.post('/create-user/company', validateCompanyCreate, validate, async(req,res)=>{
 
     try{ 
         console.log("1 here")
@@ -115,37 +115,36 @@ router.post('/create-user/company', validateCompanyCreate, async(req,res)=>{
         console.log("2 here")
         const emailExists= await Credentials.findOne({email:req.body.email})
         if(!emailExists){
-         const user = new Credentials({email:req.body.email, username: req.body.username})
-            await user.generateToken();
-            await user.save()
+            const user = new Credentials({email:req.body.email, username: req.body.username})
+                await user.generateToken();
+                await user.save()
+            
+            var transporter = nodemailer.createTransport({
+                host : "smtp.mailtrap.io",
+                port : 2525,
+                auth: {
+                    user: process.env.MAILTRAP_USERNAME,
+                    pass: process.env.MAILTRAP_PASSWORD
+                }
+            });
+            console.log('company created');
+            const hash = await bcrypt.hash(req.body.username, 8)
+            const date = new Date()
+            console.log(`hash username ${hash}`); 
+            transporter.sendMail({
+                from: 'placementcellducs@cs.du.ac.in',
+                to: `${user.email}`,
+                subject: `Registration for DUCS Placements session ${date.getFullYear()}`,
+                attachments: [{
+                    filename: 'logo.png',
+                    path: join(__dirname, sep, '..','img','logo.png'),
+                    cid: 'logo'
+                }],
+                html: generateCreateUserMail(`http://localhost:3000/company-registration?email=${user.email}`, user.username ),
         
-        var transporter = nodemailer.createTransport({
-            host : "smtp.mailtrap.io",
-            port : 2525,
-            auth: {
-                user: process.env.MAILTRAP_USERNAME,
-                pass: process.env.MAILTRAP_PASSWORD
-            }
-        });
-        console.log('company created');
-        const hash = await bcrypt.hash(req.body.username, 8)
-        const date = new Date()
-        console.log(`hash username ${hash}`); 
-        transporter.sendMail({
-            from: 'placementcellducs@cs.du.ac.in',
-            to: `${user.email}`,
-            subject: `Registration for DUCS Placements session ${date.getFullYear()}`,
-            attachments: [{
-                filename: 'logo.png',
-                path: join(__dirname, sep, '..','img','logo.png'),
-                cid: 'logo'
-            }],
-            html: generateCreateUserMail(`http://localhost:3000/company-registration?email=${user.email}`, user.username ),
-     
-        });
-    }
-        return res.status(200).json({success: true, message:'Email has been sent '})
-
+            });
+            return res.status(200).json({success: true, message:`Email has been sent to ${user.email}`})
+        }
     }catch(error){
         console.log("create user error part:: An error has occurred : "+error)
     }
