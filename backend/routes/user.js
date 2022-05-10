@@ -203,6 +203,7 @@ router.get('/verify-token', isResetTokenValid, async(req,res)=>{
 
 router.get('/logged-in', isLoggedIn, async(req, res)=>{
     console.log("req for logged-in")
-    return res.status(200).json({success:true, message:"user logged in", role:"ADMIN"})
+    console.log(req.role)
+    return res.status(200).json({success:true, message:"user logged in", role: req.role})
 })
 module.exports = router;  

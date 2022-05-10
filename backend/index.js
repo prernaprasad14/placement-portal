@@ -44,12 +44,25 @@ app.use('/api/user', userRoute);
 app.use('/api/scholar', scholarRoute);
 app.use('/api/company', companyRoute);
 
-app.use('/scholars', async (req, res)=>{
+app.use('/scholars/:state', async (req, res)=>{
     console.log("scholars route passed !")
-    const scholars = await Scholar.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0})
-    const date= new Date()
-    console.log(date)
-    res.json({success: true, message:"retrieved scholars", scholars})
+    const {state}=req.params
+    if(state==='ADMIN'){
+        const scholars = await Scholar.find({}, {password:0, token:0, createdAt:0, __v:0})
+        if(!scholars){
+            return res.status(400).json({success:false, message:"couldnt complete reqest"})
+        }const date= new Date()
+        console.log(date)
+        res.json({success: true, message:"retrieved scholars", scholars}) 
+    }else if(state==='COMPANY'){
+        const scholars = await Scholar.find({}, {password:0, placement_status : 0, token:0, createdAt:0, __v:0})
+        if(!scholars){
+            return res.status(400).json({success:false, message:"couldnt complete reqest"})
+        }
+        const date= new Date()
+        console.log(date)
+        res.json({success: true, message:"retrieved scholars", scholars}) 
+    }
 });
 
 app.use('/companies',  async (req, res)=>{

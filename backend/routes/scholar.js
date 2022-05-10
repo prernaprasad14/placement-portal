@@ -122,7 +122,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
         
         const validPass = await bcrypt.compare(req.body.password, user.password)
 
-        if(!validPass) return res.status(400).json({success:false, message:"Invalid credentails"});
+        if(!validPass) return res.status(400).json({success:false, role:"USER", message:"Invalid credentails"});
 
         const token =await user.generateToken()
         console.log(`login route    :: token:: ${token}`)
@@ -135,7 +135,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
             httpOnly: true
         });
         console.log(user._id)
-        return res.status(200).json({success: true, role:"scholar", message:"Logged in", user, token})  
+        return res.status(200).json({success: true, role:"SCHOLAR", message:"Logged in", user, token})  
     }  
     const validPass = await bcrypt.compare(req.body.password, admin.password)
 
@@ -151,7 +151,7 @@ router.post('/login', validateScholarLogin, validate, async (req, res)=>{
         // secure:true,
         httpOnly: true
     });
-    return res.status(200).json({success: true, role:"admin" , message:"Logged in", admin, token}) 
+    return res.status(200).json({success: true, role:"ADMIN" , message:"Logged in", admin, token}) 
 });
 
 router.get('/profile', authenticateScholar ,  async(req,res)=>{

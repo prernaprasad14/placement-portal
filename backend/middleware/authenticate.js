@@ -109,15 +109,55 @@ exports.authenticateCompany = async(req, res, next)=>{
 }
 
 exports.isLoggedIn = async (req, res, next)=>{
-    const token = req.cookies.jwt
-    console.log("req for logged-in")
-    if(!token){
-        return res.status(401).json({success:false, message:"user not logged in"})
+    try{
+        console.log("authenticate user middleware")
+        const token = req.cookies.jwt;
+        console.log("token"+token)
+        if(!token){
+            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
+        } 
+        const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
+        console.log("verifyToken")
+        console.log(verifyToken)
+        if(!verifyToken) {
+            return res.status(403).json({success: false, message:"Forbidden"})
+        }
+        const admin = await Admin.findOne({_id:verifyToken._id, token});
+        console.log(admin)
+        if(!admin){
+            const scholar = await Scholar.findOne({_id:verifyToken._id, token});
+            console.log(scholar)
+            if(!scholar){
+                const company = await Company.findOne({_id:verifyToken._id, token});
+                console.log(company)
+                if(!company) { return res.status(404).json({success:false, message:"not found"})}
+                req.token = token;
+                req.company = company;
+                req.companyId = company._id;
+                req.role = 'COMPANY'
+            }
+            else{
+                req.token = token;
+                req.scholar = scholar;
+                req.scholarId = scholar._id;
+                req.role = 'SCHOLAR'
+            }
+        }
+        else{
+                req.token = token;
+                req.admin = admin;
+                req.adminId = admin._id;
+                req.role = 'ADMIN'
+        }
+        console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::middleware:::::::::::::::::::::::::::::::::::::::::::")
+        console.log(req.role)
+        console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::middleware:::::::::::::::::::::::::::::::::::::::::::")
+        next();
+    }catch{
+        console.log("Company authentication error")
+        return res.status(401).json({success: false, message: "Unauthorized access"})
+
     }
-    const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
-    console.log("token"+token)
-    res.role="ADMIN"// res.status(200).json({success:true, message:"user already logged in"})
-    next();
 }
 
 exports.isAdmin=async(req,res,next)=>{
