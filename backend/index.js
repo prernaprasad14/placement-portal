@@ -14,7 +14,7 @@ const scholarRoute = require('./routes/scholar');
 const userRoute = require('./routes/user');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const User = require('./model/User');
-const {isAdmin, isScholar}= require('./middleware/authenticate')
+const {isAdmin, isScholar, isLoggedIn}= require('./middleware/authenticate')
 
 
 dotenv.config();
@@ -66,7 +66,7 @@ app.use('/scholars/:state', async (req, res)=>{
     }
 });
 
-app.use('/companies',  async (req, res)=>{
+app.use('/companies', isLoggedIn, async (req, res)=>{
     console.log("companies route passed !")
     const companies = await Company.find({}, { website:1, username:1, pre_placement_talk:1, coding_test_date:1})
     // const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})

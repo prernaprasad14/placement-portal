@@ -115,7 +115,7 @@ exports.isLoggedIn = async (req, res, next)=>{
         console.log("token"+token)
         if(!token){
             return res.status(401).json({success: false, message:"Unauthorized: Please login"})
-        } 
+        }
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
         console.log("verifyToken")
         console.log(verifyToken)
@@ -149,9 +149,6 @@ exports.isLoggedIn = async (req, res, next)=>{
                 req.adminId = admin._id;
                 req.role = 'ADMIN'
         }
-        console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::middleware:::::::::::::::::::::::::::::::::::::::::::")
-        console.log(req.role)
-        console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::middleware:::::::::::::::::::::::::::::::::::::::::::")
         next();
     }catch{
         console.log("Company authentication error")

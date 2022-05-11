@@ -133,7 +133,7 @@ router.post('/login', validateLogin, validate,  async (req, res)=>{
         // httpOnly: true
     });
     console.log("hereeeeeee")
-    res.status(200).json({success: true, message:"Logged in", user, token})
+    res.status(200).json({success: true, message:"Logged in", role:"COMPANY", user})
     
     
 });
