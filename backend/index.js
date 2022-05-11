@@ -16,11 +16,11 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 const User = require('./model/User');
 const {isAdmin, isScholar}= require('./middleware/authenticate')
 
+
 dotenv.config();
 
 //connect to database
 require('./db/conn.js')
-
 
 //Middleware
 app.use(
@@ -28,7 +28,8 @@ app.use(
         origin: 'http://localhost:3000', // 3000 is where we have set our frontend to run
         credentials: true,
     })
-)
+);
+
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
