@@ -9,7 +9,6 @@ import Loading from '../Loading'
 
 const  ScholarDashboard = () => {
   document.title='Dashboard | DUCS Placement Portal'
-  const id="62530ab146c921a4807c7607"
   const navigate = useNavigate()
   console.log("1 inside ScholarDashboard")
   const {state, dispatch}= useContext(UserContext)
@@ -27,7 +26,8 @@ const  ScholarDashboard = () => {
       console.log("1")
       console.log(res.status)
       if(res.status==200){
-        dispatch({type:"LOGGEDIN", role:"SCHOLAR"})
+        console.log(res.data.role)
+        dispatch({type:"LOGGEDIN", role:res.data.role})
         setIsLoggedIn(true)
         setIsLoading(false)
       }   

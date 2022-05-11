@@ -37,9 +37,9 @@ const  AdminWorkArea = ({companies, scholars}) => {
       
       case '3' : return<Scholars  data={scholars}/>
       // case '4' : return <><Notifications/></>
-      case '5' : return<CreateUser/>
+      case '5' : return(<CreateUser/>)
   
-    default :  return <><AdminProfile/></>
+    default :  return (<><AdminProfile/></>)
   }
   }
   useEffect(()=>{
@@ -59,13 +59,13 @@ const  AdminWorkArea = ({companies, scholars}) => {
               </button>
               <div ref={responsive} id='responsive-menu' className={isActive ? 'block  ml-[-30px] ': 'hidden'}>
                 <ul className='w-screen'>
-                  <Link to="#">
+                  {/* <Link to="#">
                     <button onClick={()=>setChoice('0')}>
                       <li className='px-6 py-2 font-semibold '>
                         <MdSpaceDashboard className='inline-block mr-2'/>Dashboard
                       </li>
                     </button>
-                  </Link>
+                  </Link> */}
                   <Link to="#profile" className='block'>
                     <button onClick={()=>setChoice('1')}><li className='px-6 py-2 font-semibold '>
                         <HiUserCircle  className='inline-block mr-2'/>Profile

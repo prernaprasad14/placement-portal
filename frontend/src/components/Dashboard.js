@@ -1,4 +1,3 @@
-import { Route , Routes} from 'react-router-dom';
 import { useState, useContext, useEffect} from 'react';
 import { useNavigate } from 'react-router';
 import {UserContext} from '../App';
@@ -9,17 +8,18 @@ function Dashboard(){
     const {state} = useContext(UserContext)
     console.log(state)
     useEffect(()=>{
+        console.log(state)
         if(state==='ADMIN'){
        navigate('/dashboard/admin')
-    }
-    else if(state==='SCHOLAR'){
-       navigate('/dashboard/scholar')
-    }
-    else if(state==='COMPANY'){
-       navigate('/dashboard/company')
-    }
-    else navigate('/404-not-found')
-    })
+        }
+        else if(state==='SCHOLAR'){
+        navigate('/dashboard/scholar')
+        }
+        else if(state==='COMPANY'){
+        navigate('/dashboard/company')
+        }
+        else navigate('/')
+    },[])
    
     return(
     <>

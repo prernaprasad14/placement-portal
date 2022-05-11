@@ -1,16 +1,22 @@
 import { Link, useNavigate} from 'react-router-dom';
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import axios from '../../axiosConfig';
+import { UserContext } from '../../App';
+import {AiOutlineUserAdd,AiOutlineUsergroupAdd} from 'react-icons/ai'
+import {FaUserPlus} from 'react-icons/fa'
 
 const CreateUser=()=>{
     console.log("3 inside CreateUser")
     const [role, setRole] =useState('scholar')
+    const {state}= useContext(UserContext)
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [error, setError] = useState(false)
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState()
+    const [fileName, setFileName] = useState('')
     const [isFileEmpty, setIsFileEmpty] = useState(true)
     const [message, setMessage] = useState('')
+    const [fileMessage, setFileMessage] = useState('')
     const [btnDisabled, setBtnDisabled] = useState(true)
     const scholarEmailRegex = /^\w{3,20}(\.\w{3,20}){0,3}(@cs\.du\.ac\.in)$/;
     const handleEmail=(e)=>{
@@ -20,11 +26,6 @@ const CreateUser=()=>{
     const handleUsername=(e)=>{
        
         setUsername(e.target.value) 
-    }
-    const handleFile=(e)=>{
-        setFile(e.target.files[0]) 
-        setIsFileEmpty(false)
-        console.log(file)
     }
     const handleSubmit  = async (e)=>{
         e.preventDefault();
@@ -44,6 +45,34 @@ const CreateUser=()=>{
         .catch(error=>{
             console.log(error)
             // setMessage(error[0])
+        })
+    }
+
+    const handleFileSelection=(e)=>{
+        
+        console.log(file)
+        console.log(fileName)
+        console.log(e.target.files[0])
+        setFile(e.target.files[0]) 
+        setFileName(e.target.files[0].name) 
+        setIsFileEmpty(false)
+    }
+    const handleFileUpload=(e)=>{
+        e.preventDefault();
+        console.log('inside createusers handleFileUpload')
+        const formData = new FormData() 
+        console.log(file)
+        console.log(fileName)
+        formData.append('file', file)
+        formData.append('fileName', fileName)
+        axios.post('api/admin/create-users', formData)
+        .then(res=>{
+            console.log(res)
+            setFileMessage(res.data.message)
+        }).catch(err=>{
+            console.log(err)
+            // setMessage(err.response.data)
+            // setError(true)
         })
     }
     useEffect(()=>{
@@ -69,7 +98,7 @@ const CreateUser=()=>{
         <>
         <div className="user-select-none w-90% rounded h-auto flex flex-col m-3 bg-white">
             <div className="flex space-between my-3">
-                <div className="text-lg mx-12 font-semibold w-4/6"><p>Create User</p></div>
+                <div className="text-lg mx-12 font-semibold w-4/6"><p><FaUserPlus className='mb-2  font-bold text-2xl inline-block'/>&nbsp;Manage Users</p></div>
             </div>
             <div className="flex flex-unwrap flex-col sm:flex-col items-start sm:flex-wrap rounded-md border-slate-100  mx-8 my-6 p-4 border-2 text-gray-700">
                 <div>
@@ -77,7 +106,7 @@ const CreateUser=()=>{
 
                     <form className='flex flex-col justify-center items-start bg-slate-100/25 rounded p-4'>
                      {error &&  
-                        <p className='py-2 my-2  text-pink-600'>Use <span className='font-bold'>cs.du.ac.in</span> domain to create scholars</p>
+                        <p className='py-2 my-2  text-slate-700'>Use <span className='font-bold italic'>cs.du.ac.in</span> domain to create scholars</p>
                        }  
                      {message &&  
                         <p className='py-2 my-2 text-emerald-600'>{message}</p>
@@ -93,17 +122,23 @@ const CreateUser=()=>{
                             <option>Company</option>
                         </select>
                         <button disabled={btnDisabled} onClick={handleSubmit}  type="submit" className={btnDisabled ? 'disabled-btn' :'create-user'} >
-                            Create User</button>                        
+                        <AiOutlineUserAdd className='mb-1 font-bold text-2xl inline-block'/>Create User</button>                        
                     </form>
                 </div>
                 <div className='mt-4 border-t-2 border-slate-100'>
 
-                <h3 className='mt-4 mb-2 font-semibold'>Create multiple users using file</h3>
+                <h3 className='mt-4 mb-2 font-semibold'>Create multiple users by uploading file a<span className='font-bold italic '> csv </span>file</h3>
                 <div className='items-center flex bg-slate-100/25 rounded w-[1012px] p-4'>
-                    <form className='flex'>
-                        <input required onChange={handleFile} type="file" id="file-upload" className='mt-1 mr-6'/>
-                        <button disabled={isFileEmpty} onClick={handleSubmit}  type="submit" className={isFileEmpty ? 'disabled-btn' :'create-user'} >
-                                Create Users</button>   
+                    <form className='flex flex-col' onSubmit={handleFileUpload}>
+                        {fileMessage &&  
+                            <p className='py-2 my-2  text-emerald-600'>{fileMessage}</p>
+                        }  
+                        <div className='flex'>
+                            <input name={fileName} required onChange={handleFileSelection} type="file" accept=".xlsx, .xls, .csv" id="file-upload" className='mt-1 mr-6'/>
+                            <button disabled={isFileEmpty}  type="submit" className={isFileEmpty ? 'disabled-btn' :'create-user'} >
+                            <AiOutlineUsergroupAdd className='mb-1 font-bold text-2xl inline-block'/>Create Users</button>   
+                        </div>
+                        
                     </form>        
                 </div>
             </div>

@@ -9,7 +9,7 @@ const Logout=()=>{
     document.title='Logging out | DUCS Placement Portal'
     const {state, dispatch} = useContext(UserContext);
     const navigate = useNavigate();
-    useEffect(()=>{
+    const logout=()=>{
         axios.get('api/user/logout')
         // {headers:{
         //     Accept :"application/json",
@@ -18,9 +18,14 @@ const Logout=()=>{
         // credentials: "include"}
         .then((res)=>{
             console.log(res)
+            console.log(state)
             dispatch({type:"USER", role:"USER"})
-            navigate('/login')
-        }).catch(err=> console.log("error"+err))
+            navigate('/')
+        }).catch(err=> console.log("error"+err))   
+      
+    } 
+    useEffect(()=>{
+        logout();
     },[]);
 
     return(

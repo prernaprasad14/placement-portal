@@ -25,7 +25,7 @@ function Home() {
         
         console.log(res.status)
         if(res.status==200){
-            dispatch({type:"USER", role:state})
+            dispatch({type:"LOGGEDIN", role:res.data.role})
             setIsLoading(false)
         }   
         }).catch((error)=>{

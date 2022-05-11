@@ -20,10 +20,7 @@ const ScholarLogin=()=>{
         .then((res)=>{
             console.log(res.status)
             if(res.status==200){
-                if(res.data.role==='SCHOLAR'){
-                    dispatch({type:"LOGGEDIN", role:"SCHOLAR"})
-                }
-                dispatch({type:"LOGGEDIN", role:"ADMIN"})
+                dispatch({type:"LOGGEDIN", role:res.data.role})
                 setIsLoggedIn(true)
             }
         }).catch((error)=>{
@@ -82,7 +79,7 @@ const ScholarLogin=()=>{
         });
     }
     if(isLoggedIn){
-        navigate('/dashboard/scholar')
+        navigate('/dashboard')
     }
     return (
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
