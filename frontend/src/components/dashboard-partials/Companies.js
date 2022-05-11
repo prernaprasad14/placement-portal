@@ -1,16 +1,21 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import CompanyCard from "./CompanyCard"
 import axios from "../../axiosConfig"
+import { UserContext } from "../../App";
 
 const Companies=({data})=>{
     console.log("1 inside Companies")
     console.log("3333333 companiesData"+data)
+    const {state}=useContext(UserContext)
     const [companies, setCompanies]= useState('')
     const date= Date.now()
     console.log("2 Company")
     useEffect(()=>{
-        getAllCompanies()
+        if(state==='ADMIN'|| state==='SCHOLAR'){
+        
+            getAllCompanies()
+        }
     },[]);
 
     const getAllCompanies=()=>{

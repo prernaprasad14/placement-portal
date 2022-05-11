@@ -28,25 +28,23 @@ const  CompanyDashboard = () => {
           console.log(res.data.role)
         dispatch({type:"LOGGEDIN", role:res.data.role})
         setIsLoggedIn(true)
-        
       }   
-
       }).catch((error)=>{
           console.log("error checkLoggedIn"+error)
           console.log("error res"+error.response)
-        //  if(error.response.status=='401'){
-        //   console.log("2")
-        //   dispatch({type:"USER", role:"UESR"})
-        //    navigate('/login')
-        //  }
-        //  if(error.response.status=='403'){
-        //   console.log("3")
-        //   dispatch({type:"USER", role:"UESR"})
-        //    navigate('/forbidden')
-        //  }
+         if(error.response.status=='401'){
+          console.log("2")
+          dispatch({type:"USER", role:"USER"})
+           navigate('/login')
+         }
+         if(error.response.status=='403'){
+          console.log("3")
+          dispatch({type:"LOGGEDIN", role:res.data.role})
+           navigate('/forbidden')
+         }
       })
   }
-    const getAllScholars=()=>{
+  const getAllScholars=()=>{
         console.log(state)
       axios.get(`/scholars/${state}`)
       .then((res)=>{
@@ -69,28 +67,26 @@ const  CompanyDashboard = () => {
             setCompany(company);
           }).catch(error=> {
               console.log("Error getCompany : "+error)
-              if(error.response.status=='401'){
-                dispatch({type:"USER", role:state})
-                navigate('/login')
-              }
-              if(error.response.status=='403'){
-                dispatch({type:"LOGGEDIN", role:"COMPANY"})
-                navigate('/forbidden')
+              // if(error.response.status=='401'){
+              //   dispatch({type:"USER", role:state})
+              //   navigate('/login')
+              // }
+              // if(error.response.status=='403'){
+              //   dispatch({type:"LOGGEDIN", role:"COMPANY"})
+              //   navigate('/forbidden')
                 
-              }
+              // }
             }) 
         // },90000) 
     }
   useEffect(()=>{
     // setTimeout(()=>{
-    checkLoggedIn();
-    console.log(state)
-    if(state!=='COMPANY'){
-        navigate('/forbidden')
+    checkLoggedIn();   
+    if(state==='COMPANY'){
+      getCompany();
+      getAllScholars();
+      setIsLoading(false)
     }
-    getCompany();
-    getAllScholars();
-    setIsLoading(false)
     // },80000000)
    
   },[]);

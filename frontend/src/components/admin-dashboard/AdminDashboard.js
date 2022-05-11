@@ -27,26 +27,20 @@ const  AdminDashboard = () => {
       console.log("1")
       console.log(res.status)
       if(res.status==200){
-        if(res.status.role==='ADMIN')
-        {
-          dispatch({type:"LOGGEDIN",role:"ADMIN"})
+          dispatch({type:"LOGGEDIN", role:res.data.role})
           setIsLoggedIn(true)
-        }
-        
       }   
       }).catch((error)=>{
           console.log("error checkLoggedIn"+error)
           console.log("error res"+error.response)
-        //  if(error.response.status=='401'){
-        //   console.log("2")
-        //   dispatch({type:"USER", payload:false})
-        //    navigate('/login')
-        //  }
-        //  if(error.response.status=='403'){
-        //   console.log("3")
-        //   dispatch({type:"USER", payload:false})
-        //    navigate('/forbidden')
-        //  }
+         if(error.response.status=='401'){
+           dispatch({type:"USER", role:"USER"})
+           navigate('/login')
+         }
+         if(error.response.status=='403'){
+           dispatch({type:"LOGGEDIN", role:state})
+           navigate('/forbidden')
+         }
       })
   }
     const getAllCompanies=()=>{
@@ -77,13 +71,12 @@ const  AdminDashboard = () => {
 
   useEffect(()=>{
     // setTimeout(()=>{
-    // checkLoggedIn();
-    if(state!='ADMIN'){
-      navigate('/forbidden')
+    checkLoggedIn();
+    if(state==='ADMIN'){
+      getAllCompanies();
+      getAllScholars();
+      setIsLoading(false)
     }
-    getAllCompanies();
-    getAllScholars();
-    setIsLoading(false)
     // },80000000)
    
   },[]);

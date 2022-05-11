@@ -60,7 +60,7 @@ function Home() {
         })  
     }
     useEffect(()=>{
-        checkLoggedIn();
+        // checkLoggedIn();
         getHomeData()
     }
     ,[])

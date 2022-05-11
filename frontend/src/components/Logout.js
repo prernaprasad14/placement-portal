@@ -17,15 +17,13 @@ const Logout=()=>{
         // },
         // credentials: "include"}
         .then((res)=>{
-            console.log(res)
-            console.log(state)
             dispatch({type:"USER", role:"USER"})
-            navigate('/')
         }).catch(err=> console.log("error"+err))   
       
     } 
     useEffect(()=>{
         logout();
+        navigate('/')
     },[]);
 
     return(

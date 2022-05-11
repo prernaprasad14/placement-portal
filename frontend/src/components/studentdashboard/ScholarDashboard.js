@@ -23,32 +23,30 @@ const  ScholarDashboard = () => {
     axios.get('/api/user/logged-in')
       .then((res)=>{
         console.log("1",res)
-      console.log("1")
-      console.log(res.status)
-      if(res.status==200){
-        console.log(res.data.role)
-        dispatch({type:"LOGGEDIN", role:res.data.role})
-        setIsLoggedIn(true)
-        setIsLoading(false)
-      }   
-
+        console.log("1")
+        console.log(res.status)
+        if(res.status==200){
+          console.log(res.data.role)
+          dispatch({type:"LOGGEDIN", role:res.data.role})
+          setIsLoggedIn(true)
+          setIsLoading(false)
+        }   
       }).catch((error)=>{
           console.log("error checkLoggedIn"+error)
           console.log("error res"+error.response)
-        //  if(error.response.status=='401'){
-        //   console.log("2")
-        //   dispatch({type:"USER", payload:false})
-        //    navigate('/login')
-        //  }
-        //  if(error.response.status=='403'){
-        //   console.log("3")
-        //   dispatch({type:"USER", payload:false})
-        //    navigate('/forbidden')
-        //  }
+         if(error.response.status=='401'){
+          dispatch({type:"USER", role:"USER"})
+           navigate('/login')
+         }
+         if(error.response.status=='403'){
+          dispatch({type:"LOGGEDIN", role:state})
+           navigate('/forbidden')
+         }
       })
   }
     const getAllCompanies=()=>{
-      console.log("here here")
+
+        console.log("here here")
       axios.get('/companies')
       .then((res)=>{
           const companies = res.data.companies;
@@ -70,48 +68,22 @@ const  ScholarDashboard = () => {
           }).catch(error=> {
               console.log("Error getScholar : "+error)
               console.log(error.response.status)
-              // if(error.response.status=='401')
-              //   navigate('/login')
+              if(error.response.status=='401')
+                navigate('/login')
               if(error.response.status=='403'){}
                 navigate('/forbidden')
             }) 
         // },90000) 
     }
-    // const getCompany=()=>{
-    //     console.log("here here")
-    //     axios.get(`api/company/profile`)
-    //     .then((res)=>{
-    //         const company = res.data.company;
-    //         console.log(company)
-    //         setCompany(company);
-    //       }).catch(error=> {
-    //           console.log("Error getcompany : "+error)
-    //           // console.log(error.response.status)
-    //           // if(error.response.status=='401')
-    //           //   navigate('/login')
-    //         //   if(error.response.status=='403'){}
-    //         //     navigate('/forbidden')
-    //         }) 
-    // }
-  //   const getAllScholars=()=>{
-  //     console.log("here here")
-  //     axios.get('/scholars')
-  //     .then((res)=>{
-  //         const scholars = res.data.scholars;
-  //         console.log("here")
-  //         console.log(res)
-  //         console.log(res.data)
-  //         setScholars(scholars);
-  //     })
-  //     .catch(err=> console.log("Error getAllScholars : "+err))
-  // }
-
+   
+   
   useEffect(()=>{
     // setTimeout(()=>{
-      if(state!='SCHOLAR'){navigate('/forbidden')}
-    // checkLoggedIn();
-    getScholar();
-    getAllCompanies();
+    checkLoggedIn();  
+    if(state==='SCHOLAR'){
+      getScholar();
+      getAllCompanies();
+    }
     // },80000000)
    
   },[]);
@@ -135,7 +107,7 @@ const  ScholarDashboard = () => {
 
           
         <div className=''>
-            <WorkArea companies={companies} scholars={scholars}  scholar={scholar} company={company}/>        
+            <WorkArea companies={companies}  scholar={scholar}/>        
         </div>
   
  

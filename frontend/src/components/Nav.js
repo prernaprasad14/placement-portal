@@ -9,7 +9,7 @@ const Nav = () =>{
     const RenderNav=()=>{
         console.log("RenderNav : state "+state)
 
-        if(state!='USER')
+        if(state!=='USER')
         {
             console.log("RenderNav : state "+state)
             return(

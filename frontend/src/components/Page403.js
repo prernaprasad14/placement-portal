@@ -7,7 +7,7 @@ function Page403() {
     const {state}= useContext(UserContext)
     document.title='403 Forbidden | DUCS Placement Portal'
     return (
-        <>{state}
+        <>
         <div className='bg-zinc-100 bg-gradient-to-b h-full z-50 from-white via-zinc-100/25 to- -100/30'>
         <div className=' flex flex-col py-40 items-center '>
             <p className='px-2 text-6xl font-bold text-zinc-400/75'>403</p>

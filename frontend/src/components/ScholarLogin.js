@@ -51,10 +51,7 @@ const ScholarLogin=()=>{
             console.log(res.data)
             setId(res.data.id)
             if(res.data.success){
-                if(res.data.role==='scholar'){
-                     dispatch({type:"LOGGEDIN", role:'SCHOLAR'})
-                }
-                dispatch({type:"LOGGEDIN", role:'ADMIN'})
+                dispatch({type:"LOGGEDIN", role:res.data.role})
                 setIsLoggedIn(true)
                 navigate(`/dashboard`)
             }
