@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "ducs-placement-portal",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "buffer": "^6.0.3",
     "concurrently": "^7.0.0",
+    "cookie-parser": "^1.4.6",
     "react-html-table-to-excel": "^2.0.0"
   }
 }
