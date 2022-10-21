@@ -1,13 +1,14 @@
 import axios from '../../axiosConfig'
 import React, {useEffect, useState} from 'react'
 import { BsThreeDotsVertical } from 'react-icons/bs';
-
+import {useNavigate} from 'react-router-dom'
 
 const CompanyRow =({company})=>{
     // const {username, email} =company.company[1].loginDetails
     // const {website, phone} =company.company[1]
     // const id = JSON.stringify(_id)
     // const {cname} =company.company[1]
+    const navigate =useNavigate()
     console.log("company")
     console.log(company)
     const onClick=()=>{

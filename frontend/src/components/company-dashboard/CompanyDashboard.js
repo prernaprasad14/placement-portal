@@ -10,7 +10,6 @@ const  CompanyDashboard = () => {
   document.title='Dashboard | DUCS Placement Portal'
   const id="62530ab146c921a4807c7607"
   const navigate = useNavigate()
-  console.log("1 inside CompanyDashboard")
   const {state, dispatch}= useContext(UserContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -22,43 +21,33 @@ const  CompanyDashboard = () => {
     axios.get('/api/user/logged-in')
       .then((res)=>{
         console.log("1",res)
-      console.log("1")
-      console.log(res.status)
-      if(res.status==200){
-          console.log(res.data.role)
-        dispatch({type:"LOGGEDIN", role:res.data.role})
-        setIsLoggedIn(true)
-      }   
+        if(res.status==200){
+            console.log(res.data.role)
+          dispatch({type:"LOGGEDIN", role:res.data.role})
+          setIsLoading(false)
+          setIsLoggedIn(true)
+        }   
       }).catch((error)=>{
           console.log("error checkLoggedIn"+error)
           console.log("error res"+error.response)
          if(error.response.status=='401'){
           console.log("2")
           dispatch({type:"USER", role:"USER"})
+          setIsLoading(false)
            navigate('/login')
          }
          if(error.response.status=='403'){
           console.log("3")
-          dispatch({type:"LOGGEDIN", role:res.data.role})
+          dispatch({type:"LOGGEDIN", role:state})
+          setIsLoading(false)
            navigate('/forbidden')
          }
       })
   }
-  const getAllScholars=()=>{
-        console.log(state)
-      axios.get(`/scholars/${state}`)
-      .then((res)=>{
-          const scholars = res.data.scholars;
-          console.log("here")
-          console.log(res)
-          console.log(res.data)
-          setScholars(scholars);
-      })
-      .catch(err=> console.log("Error getAllScholars : "+err))
-  }
+  
   const getCompany=()=>{
-    //    setTimeout(()=>{
-        console.log("here here")
+
+
         axios(`api/company/profile`)
         .then((res)=>{
             console.log(res)
@@ -72,35 +61,41 @@ const  CompanyDashboard = () => {
               //   navigate('/login')
               // }
               // if(error.response.status=='403'){
-              //   dispatch({type:"LOGGEDIN", role:"COMPANY"})
+              //   dispatch({type:"LOGGEDIN", role:"company"})
               //   navigate('/forbidden')
                 
               // }
             }) 
-        // },90000) 
-    }
+
+  }
+  const getAllScholars=()=>{
+      console.log("Inside getAllScholars, user state:",state)
+      axios.get(`/api/scholar/scholars`)
+      .then((res)=>{
+          const scholars = res.data.scholars;
+          console.log("here")
+          console.log(res)
+          console.log(res.data)
+          setScholars(scholars);
+      })
+      .catch(err=> console.log("Error getAllScholars : "+err))
+  }
   useEffect(()=>{
-    // setTimeout(()=>{
-    checkLoggedIn();   
-    if(state==='COMPANY'){
-      getCompany();
-      getAllScholars();
-      setIsLoading(false)
-    }
-    // },80000000)
-   
+    window.scrollTo(0,0)
+    checkLoggedIn();
   },[]);
 
   if(isLoading){
-    return(
-      <>
-        <Loading message={`Fetching Data`}/>
-        </>)
-    }
+    return <Loading message={`Fetching Data`}/>
+  }
+
+  if(state!=='company')
+    navigate('/forbidden')
+    
   return(  
     <>
         <div className=''>
-            <CompanyWorkArea  scholars={scholars} company={company}/>        
+            <CompanyWorkArea />        
         </div>
   
  

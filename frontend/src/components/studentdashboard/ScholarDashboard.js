@@ -1,16 +1,14 @@
-import { Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import React, { useEffect , useState, useContext} from 'react'
-import Sidebar from './Sidebar'
 import WorkArea from './WorkArea'
 import { UserContext } from '../../App'
 import axios from '../../axiosConfig'
-import CreateUser from '../admin-dashboard/CreateUser'
 import Loading from '../Loading'
 
 const  ScholarDashboard = () => {
   document.title='Dashboard | DUCS Placement Portal'
+
   const navigate = useNavigate()
-  console.log("1 inside ScholarDashboard")
   const {state, dispatch}= useContext(UserContext)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -45,7 +43,7 @@ const  ScholarDashboard = () => {
       })
   }
     const getAllCompanies=()=>{
-
+      if(state==='scholar'){
         console.log("here here")
       axios.get('/companies')
       .then((res)=>{
@@ -56,10 +54,10 @@ const  ScholarDashboard = () => {
           setCompanies(companies);
       })
       .catch(err=> console.log("Error getAllCompanies : "+err))
+    }
   }
     const getScholar=()=>{
-    //    setTimeout(()=>{
-        console.log("here here")
+
         axios.get(`api/scholar/profile`)
         .then((res)=>{
             const scholar = res.data.scholar;
@@ -73,18 +71,18 @@ const  ScholarDashboard = () => {
               if(error.response.status=='403'){}
                 navigate('/forbidden')
             }) 
-        // },90000) 
+
     }
    
    
   useEffect(()=>{
-    // setTimeout(()=>{
-    checkLoggedIn();  
-    if(state==='SCHOLAR'){
-      getScholar();
-      getAllCompanies();
-    }
-    // },80000000)
+    window.scrollTo(0,0)
+
+    console.log("Inside ScholarDashboard") 
+    checkLoggedIn();
+   
+    // getScholar();
+    // getAllCompanies();}
    
   },[]);
 
@@ -94,21 +92,29 @@ const  ScholarDashboard = () => {
         <Loading message={`Fetching Data`}/>
         </>)
     }
+  
+    if(state!=='scholar')
+      navigate('/forbidden')
+      
   return(  
     <>
-    
-        {/* <ul className=''>
+    {/* <div className='flex'>
+    <div className='w-1/6 sticky top-0 bg-rose-50'>
+      <ul className=''>
             <li className='item bg-orange-400'><Link to="/dashboard">ScholarDashboard</Link></li>    
             <li className='item'><Link to="/dashboard/profile">Profile</Link></li>    
             <li className='item'><Link to="/dashboard/scholar">Scholars</Link></li>    
             <li className='item'><Link to="/dashboard/companies">Companies</Link></li>    
             <li className='item'><Link to="/dashboard/notifications">Notifications</Link></li>    
-        </ul> */}
+        </ul>
+    </div> */}
 
-          
-        <div className=''>
-            <WorkArea companies={companies}  scholar={scholar}/>        
-        </div>
+    {/* <div className='w-5/6'> */}
+    <div className=''>
+        <WorkArea/>        
+    </div>
+
+    {/* </div> */}
   
  
      </>

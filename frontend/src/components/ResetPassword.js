@@ -17,8 +17,7 @@ const ResetPassword = () =>{
         passsword:'',
         confirmPassword:''
     })
-    console.log(location)
-    
+
     const verifyToken=async()=>{
         const {email, token} = queryString.parse(location.search)
         try{
@@ -64,7 +63,7 @@ const ResetPassword = () =>{
             setIsLoading(false);
             if(data.success){
                 setSuccess(true)
-                setTimeout(()=>{navigate(`/login`)},3000)
+                setTimeout(()=>{navigate(`/login`)},2500)
             }
         }catch(error){
             if(error?.response?.data){
@@ -120,15 +119,15 @@ const ResetPassword = () =>{
       
         <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
         <div className='text-bold bg-white drop-shadow-[0_0_3px_rgba(0,0,0,0.1)] mt-3 rounded-lg'>  
-        <h4 className='my-2 font-medium text-lg inline-block'>Reset Password</h4>
-            <form className='px-36 py-8 rounded-lg' onSubmit={handleSubmit}>
+        <h4 className='my-2 font-medium text-lg m-3 inline-block'>Reset Password</h4>
+            <form className='px-36 py-3 rounded-lg' onSubmit={handleSubmit}>
                 <div>
                     <label  className="m-0 p-0">Password</label>
-                    <input required type="password" name="password" placeholder="********" defaultValue='' onChange={handleChange}  className="px-3 my-5 border-2 rounded-md  border-violet-200" />
+                    <input required type="password" name="password" placeholder="********" defaultValue='' onChange={handleChange}  className="px-3 my-2 border-2 rounded-md  border-violet-200" />
                 </div>
                 <div>
-                    <label  className="m-0 p-0">confirmPassword</label>
-                    <input required type="password" name="confirmPassword" placeholder="********" defaultValue='' onChange={handleChange}  className="px-3 my-5 border-2 rounded-md  border-violet-200" />
+                    <label  className="m-0 p-0">Confirm Password</label>
+                    <input required type="password" name="confirmPassword" placeholder="********" defaultValue='' onChange={handleChange}  className="px-3 my-2 border-2 rounded-md  border-violet-200" />
                     
                 </div>
                 {/* {success && <p className='text-pink-600'>{success}</p>} */}

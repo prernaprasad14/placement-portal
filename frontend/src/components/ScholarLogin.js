@@ -3,31 +3,32 @@ import React, { useContext, useEffect, useState} from 'react';
 import axios from '../axiosConfig';
 import { Link } from 'react-router-dom'
 import { UserContext } from '../App';
+import Loading from './Loading';
 
 const ScholarLogin=()=>{
     document.title='Scholar Login | DUCS Placement Portal'
     const {state, dispatch}= useContext(UserContext)
-    const {userState, userDispatch}= useContext(UserContext)
     const navigate = useNavigate()
     const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
     const [error, setError]= useState('')
-    const [isLoggedIn, setIsLoggedIn]= useState(false)
-    const [id, setId]= useState('')
+    const [isLoggedIn, setIsLoggedIn]= useState(true)
 
     const checkLoggedIn=()=>{
-       axios.get('/api/user/logged-in')
-        .then((res)=>{
-            console.log(res.status)
-            if(res.status==200){
-                dispatch({type:"LOGGEDIN", role:res.data.role})
-                setIsLoggedIn(true)
-            }
+        axios.get('/api/user/logged-in')
+         .then((res)=>{
+             console.log(res)
+            dispatch({type:"LOGGEDIN", role:res.data.role})
+            setIsLoggedIn(true)
+            navigate('/dashboard')
+            
         }).catch((error)=>{
+            dispatch({type:"USER", role:"USER"})
+            setIsLoggedIn(false)
             console.log("error checkLoggedIn"+error)
-        })
-
-    }
+        }) 
+     }
+     
     useEffect(()=>{
         checkLoggedIn();
     },[]);
@@ -41,19 +42,21 @@ const ScholarLogin=()=>{
     const onSubmit = async(e) =>{
         e.preventDefault()
         const userObject = { 
-                email: email,
-                password: password    
+            email: email,
+            password: password    
         };
-        console.log(":: userObject :: "+userObject)
-        console.log(":: userObject :: "+JSON.stringify(userObject))
+
         await axios.post('api/scholar/login', userObject)
         .then((res) => {
             console.log(res.data)
-            setId(res.data.id)
+            console.log(res.data)
             if(res.data.success){
-                dispatch({type:"LOGGEDIN", role:res.data.role})
-                setIsLoggedIn(true)
-                navigate(`/dashboard`)
+                dispatch({type:"LOGGEDIN",role:res.data.role})
+                if(res.data.role ==='scholar' ){
+
+                    navigate(`/dashboard/scholar`)
+                }
+                else navigate('/dashboard/admin')
             }
             else{
                console.log("error")
@@ -75,15 +78,12 @@ const ScholarLogin=()=>{
             console.log("catch part: "+error)
         });
     }
-    if(isLoggedIn){
-        navigate('/dashboard')
-    }
-    return (
-        <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
+    if(!isLoggedIn){
+        return <div className='text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
             <div className='text-bold bg-white drop-shadow-[0_0_3px_rgba(0,0,0,0.1)] mt-3 rounded-lg'>  
                 
                 <form type="submit" onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
-                    <h4 className='my-2 font-medium text-lg inline-block'>Scholar Login</h4> 
+                    <h4 className='my-2 font-medium text-lg inline-block cursor-default'>Scholar Login</h4> 
                     <Link to='../login'  className="font-bold  mt-1 underline ml-[160px] text-violet-400 hover:text-violet-800">Company Login</Link>
                     <div>
                         <label>Email</label>
@@ -101,6 +101,9 @@ const ScholarLogin=()=>{
                 </form>
             </div>
         </div>
+    }
+    return (
+          <Loading message={'Loading...'}/>
     )
 }
 

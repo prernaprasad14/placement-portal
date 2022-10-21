@@ -13,10 +13,6 @@ const ForgotPassword = () =>{
     }
     const handleSubmit = async(e)=>{
         e.preventDefault();
-
-        console.log(`2 email `)
-        console.log(`3 email:: ${email}`)
-        console.log(`4 email:: JSON.stringify(email) `+JSON.stringify(email))
         try{
             const {data} = await axios.post('api/user/forgot-password/', {email})
             console.log("5 data.message"+data.message)
@@ -41,8 +37,8 @@ const ForgotPassword = () =>{
                         <div>
                             <label>Email</label>
                             <input type="email" name="email" placeholder='Enter your email here'  onChange={handleChange} className="px-3 my-2 border-2 rounded-md  border-violet-200" /> 
-                            {success && <p className='mt-0 text-[#1BDA9C] opacity-100 text-sm pl-2 pb-4'>{success}</p>}
-                            {error && <p className='mt-0 text-pink-600 opacity-100 text-sm pl-2 pb-4'>{error}</p>}
+                            {success.length>0 && <p className='mt-0 text-[#1BDA9C] opacity-100 text-sm pl-2 pb-4'>{success}</p>}
+                            {error.length>0 && <p className='mt-0 text-pink-600 opacity-100 text-sm pl-2 pb-4'>{error}</p>}
                         </div>
                         <div>
                             <input type="submit" value="Send Password Reset link" className="bg-[#8751c4] hover:bg-violet-400 text-white font-bold py-2 px-4 mr-2 rounded-md" />

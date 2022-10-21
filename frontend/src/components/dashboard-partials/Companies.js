@@ -1,25 +1,19 @@
 import { useState, useEffect, useContext } from "react"
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import CompanyCard from "./CompanyCard"
 import axios from "../../axiosConfig"
 import { UserContext } from "../../App";
-
-const Companies=({data})=>{
-    console.log("1 inside Companies")
-    console.log("3333333 companiesData"+data)
+import Loading from "../Loading";
+import {CgOrganisation} from 'react-icons/cg'
+const Companies=()=>{
+   document.title='Recruiting Companies | DUCS Placement Portal'
+   
     const {state}=useContext(UserContext)
     const [companies, setCompanies]= useState('')
+    const [isLoading, setIsLoading]= useState(true)
     const date= Date.now()
-    console.log("2 Company")
-    useEffect(()=>{
-        if(state==='ADMIN'|| state==='SCHOLAR'){
-        
-            getAllCompanies()
-        }
-    },[]);
 
     const getAllCompanies=()=>{
-        console.log("here here")
+        console.log("Inside getAllCompanies")
         axios.get('/companies')
         .then((res)=>{
             const companies = res.data.companies;
@@ -27,31 +21,32 @@ const Companies=({data})=>{
             console.log(res)
             console.log(res.data)
             setCompanies(companies);
+            setIsLoading(false)
         })
         .catch(err=> console.log("Error getAllCompanies : "+err))
     }
-    if(data!=null){
-        console.log("6666666666 data"+data)
-        return(<>
-        <div className="w-90% rounded h-auto flex flex-col m-3 bg-white">
-            <div className="flex space-between my-3">
-                <div className="text-lg mx-12 font-semibold w-4/6"><p>Companies</p></div>
-            </div>
-            <CompanyCard companies={data}/>
-        </div>
 
-        </>)
+    useEffect(()=>{ 
+        console.log("Inside Companies")
+        if(state==='admin'|| state==='scholar'){
+            getAllCompanies()
+        }
+    },[]);
+    
+    
+    if(isLoading){
+        return <Loading message={"Just a moment"}/>
+    
     }
-    return(
-        <>
-        <div className="bg-yellow-300">
-            <div className="bg-emerald-600 hover:bg-green-500  inline-block rounded m-auto px-4 py-2 text-white font-300"><ReactHTMLTableToExcel id="test-table-xls-button" className="download-table-xls-button" target="_blank" table="company-table"
-            filename={`companies`+date} sheet="tablexls"  buttonText="Export"/></div>
-            <div onLoad={getAllCompanies} className=" p-9">Companies
-                <CompanyCard companies={companies}/>
-            </div>
+
+    return(<>
+    <div className="w-90% rounded h-auto flex flex-col m-3 min-h-[685px] bg-white">
+        <div className="flex space-between my-3">
+            <div className="text-lg mx-12 font-semibold w-4/6 "><p><CgOrganisation className='mb-2 mx-1 font-bold text-xl inline-block'/>Companies</p></div>
         </div>
-        </>
-    )
+        <CompanyCard companies={companies}/>
+    </div>
+    </>)
+    
 }
 export default Companies

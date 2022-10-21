@@ -4,60 +4,54 @@ import ScholarTable from "../studentdashboard/ScholarTable"
 import axios from "../../axiosConfig"
 import { UserContext } from "../../App";
 import Loading from "../Loading";
+import {FaUserGraduate} from 'react-icons/fa'
 
-const Scholars=({data})=>{
-    console.log("1 inside Scholars")
+const Scholars=()=>{
+   
     const {state}= useContext(UserContext)
     const date = Date.now()
-    const [scholars, setScholars]= useState(null)
-    console.log("2 Scholar")
-    useEffect(()=>{
-        console.log(typeof data)
-        getAllScholars()
-    },[]);
-
-
+    const [isLoading, setIsLoading] = useState(true)
+    const [data, setData]= useState(null)
+    
+    //fetch all scholars
     const getAllScholars=()=>{
-        console.log("here here")  
-        console.log(state)
-        axios.post(`/scholars/${state}`)
+        console.log("Inside getAllScholars")  
+        axios.get(`/api/scholar/scholars`)
         .then((res)=>{
             const scholars = res.data.scholars;
-            console.log("here")
             console.log(res)
             console.log(res.data)
-            setScholars({scholars});
-            console.log(typeof scholars)
-            setScholars(scholars);
-            console.log(typeof scholars)
-
+            setData(scholars);
+            console.log(scholars)
+            setIsLoading(false)
         })
         .catch(err=> console.log("Error getAllScholars : "+err))
     }
-        
-        
-    
-    if(data!=''){
-        return(
-            <>
-            <div className="w-90% rounded h-auto flex flex-col m-3 bg-white">
-                <div className="flex justify-end my-3">
-                    <div className="text-lg mx-12  w-4/6 font-semibold"><p>Scholars</p></div>
-                    <div className="download-xls-btn ">
-                        <ReactHTMLTableToExcel id="test-table-xls-button"  target="_blank" table="scholars-table"
-                        filename={`${date}-scholars`} sheet="tablexls" buttonText="Export"/>
-                    </div>
-                </div>
-                    <ScholarTable scholars={data}/>
-            </div>
-            </>
-        )
-    }
 
+    useEffect(()=>{ 
+        console.log("Inside Scholars")
+        getAllScholars();
+    },[]);
+
+  
+    if(isLoading){
+        return <Loading message={"Fetching data...This may take a while"}/>
+    }
+    
     return(
-        <Loading message={"Fetching data...This may take a while"}/>
+        <>
+        <div className="w-90% rounded h-auto flex flex-col  m-3 min-h-[685px] bg-white">
+            <div className="flex justify-end my-3 user-select-none">
+                <div className="text-lg mx-12  w-4/6 font-semibold"><p><FaUserGraduate className='mb-2  mx-1  font-bold text-lg inline-block'/>Scholars</p></div>
+                <div className="download-xls-btn ">
+                    <ReactHTMLTableToExcel id="test-table-xls-button"  target="_blank" table="scholars-table"
+                    filename={`${date}-scholars`} sheet="tablexls" buttonText="Export&nbsp;View"/>
+                </div>
+            </div>
+            <ScholarTable scholars={data}/>
+        </div>
+        </>
     )
- 
     
     // return(
     //     <>

@@ -1,15 +1,17 @@
 import {useNavigate, Link} from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import axios from '../../axiosConfig';
+import validator from 'validator'
 
 
-const LoginDetails=({ prevStep,  handleChange, values }) => {
+const LoginDetails=({ isValid,prevStep,  handleChange, values }) => {
   console.log("values"+values)
   console.log("values"+ JSON.stringify(values))
   console.log("values.email"+ JSON.stringify(values.email))
   
   const navigate = useNavigate(); 
   const [success, setSuccess]= useState(false)
+  const [error, setError] = useState(false)
     useEffect(() => {
       window.scrollTo(0, 0)
     }, [])
@@ -20,14 +22,10 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
     }
 
     const onSubmit= async(e) => { 
-      console.log("1. LoginDetails page, inside onsubmit: ")
-
-      console.log("1.1 values:: "+JSON.stringify(values))
       try{
-        e.preventDefault();
-       
-        console.log(`2.  LoginDetails try-block, inside onsubmit: hello`);
-         const companyData = {
+          e.preventDefault();
+
+          const companyData = {
           // "loginDetails":{
              email:values.email,
              password:values.password,
@@ -76,9 +74,7 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
           // }
         };
      
-        console.log("3. :: companyData  :: "+companyData )
-        console.log("4. :: companyData  :: "+JSON.stringify(companyData ))
-        //  await axios.post(`api/user/register/email=${email}&user=${username}&token=${token}`, companyData )
+        //  await axios.post(`api/user/register/email=${email}&username=${username}&token=${token}`, companyData )
         const data = await axios.post(`api/company/register`,companyData )
          .then((res) => {
             console.log("4.1 res.data: "+res) 
@@ -95,6 +91,7 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
               navigate(`/login`)
             }
          }).catch((error) => {
+            setError(error.response.data.error.map(err=><li>{err.msg}</li>))
                  console.log("5. error: "+error)
                  
             });
@@ -107,35 +104,37 @@ const LoginDetails=({ prevStep,  handleChange, values }) => {
 
   return(  
     <>
-       <div className='text-bold box-border flex justify-center bg-slate-100 h-auto p-8'>
+        <div className='form-head text-bold box-border flex justify-center bg-slate-100 h-auto p-8'>
             <div className='text-bold'>
-            <h1 className="my-5 p-4 text-md font-semibold text-white bg-[#7947b3] rounded-md">Step 6 (Final) :  Login Details</h1>
-            <form id ="intermediate"  className='px-40 py-8 bg-white rounded-md'>
+            <h1 className='flex justify-center sm:justify-start my-2 p-3 text-md font-semibold text-white rounded-md'>Step 7 (Final) :  Login Details</h1>
+            <form className='px-40 py-8 bg-white rounded-md'>
               <p>Required <span className='text-pink-600'>*</span></p>
               
-              {/* <div className="my-5">
+              {/* <div className="form-group">
                 <label className='m-0 p-0'>Username</label>
                 <input type="text"  onChange={handleChange('username')} defaultValue={values.username}
                    className="px-3 my-2 border-2 rounded-md  border-violet-200" />
               </div> */}
-              <div className="my-5">
+              {/* <div className="form-group">
                 <label className='m-0 p-0'>Username</label>
                 <input type="text"  onChange={handleChange('username')} defaultValue={values.username}
                    className="px-3 my-2 border-2 rounded-md  border-violet-200" />
-              </div>
-              <div className="my-5">
+              </div> */}
+              <div className="form-group">
                 <label className='m-0 p-0'>Password</label>
                 <input type="password" onChange={handleChange('password')} defaultValue={values.password}
                    className="px-3 my-2 border-2 rounded-md  border-violet-200" />
               </div>
-              <div className="my-5">
+              <div className="form-group">
                 <label className='m-0 p-0'>Confirm password</label>
                 <input type="password" onChange={handleChange('confirmPassword')} defaultValue={values.confirmPassword}
                    className="px-3 my-2 border-2 rounded-md  border-violet-200" />
               </div>
-              <button type="submit" className="bg-[#6F42A2] hover:bg-violet-400 text-white font-bold py-2 px-4 mr-2 rounded-md" onClick={ Previous }>Previous</button>
-              {/* <button className="bg-[#7947b3] hover:bg-[#572a89] text-white border-2  font-bold py-2 px-4 ml-[144px] rounded-md" onClick={ onSubmit} type="submit" >Submit</button> */}
-              <button  className="bg-[#6F42A2] hover:bg-violet-400 text-white font-bold py-2 px-4 ml-[200px] rounded-md" type="submit"onClick={ onSubmit} >Submit</button>
+              {error.length>0 && <p className='text-pink-600'>
+                <ul className='ml-4 my-2 list-decimal'>{error}</ul></p>}
+              <div className='flex flex-row justify-center'>            
+                <button className='mx-3 my-2 bg-violet-500 hover:bg-violet-400 text-white font-bold py-2 px-4  rounded-md' onClick={ onSubmit } type='submit' >Submit</button>
+          </div>
         </form>
         </div>
       </div>

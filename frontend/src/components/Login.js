@@ -1,30 +1,34 @@
-
 import {useNavigate} from 'react-router-dom';
 import React, {useContext, useEffect, useState} from 'react';
 import axios from '../axiosConfig';
 import {Link} from 'react-router-dom'
 import {UserContext} from '../App';
+import Loading from './Loading';
 
 const Login=()=>{
     document.title='Login | DUCS Placement Portal'
-    const {state, dispatch} = useContext(UserContext);
     const navigate = useNavigate()
+    const {dispatch} = useContext(UserContext);
     const [email, setEmail]= useState('')
     const [password, setPassword]= useState('')
     const [error, setError]= useState('')
-    const [isLoggedIn, setIsLoggedIn]= useState(false)
-    const [id, setId]= useState('')
+    const [isLoggedIn, setIsLoggedIn]= useState(true)
 
-    const checkLoggedIn=()=>{
+    const checkLoggedIn=()=>{  
         axios.get('/api/user/logged-in')
          .then((res)=>{
              console.log(res.status)
              if(res.status==200){
-                dispatch({type:"USER",role:"COMPANY"})
+                dispatch({type:"LOGGEDIN",role:res.data.role})
                 setIsLoggedIn(true)
-             }
-         }).catch((error)=>{
-             console.log("error checkLoggedIn"+error)
+                setTimeout(()=>{
+                    navigate('/dashboard/company')
+                },1000)
+            }
+        }).catch((error)=>{
+            console.log(error)
+            setIsLoggedIn(false)
+            dispatch({type:"USER",role:"USER"})
          }) 
      }
      useEffect(()=>{
@@ -40,27 +44,21 @@ const Login=()=>{
     const onSubmit = async(e) =>{
         e.preventDefault()
         const userObject = {
-            // "loginDetails":{
-                email: email,
-                password: password
-            // } 
+            email: email,
+            password: password
         };
-        console.log(":: userObject :: "+userObject)
-        console.log(":: userObject :: "+JSON.stringify(userObject))
         
-            await axios.post('api/company/login', userObject)
-            .then((res) => {
-                console.log(res.data)
-                setId(res.data.id)
-                if(res.data.success){
-                    dispatch({type:"LOGGEDIN",role:"COMPANY"})
-                    navigate(`/dashboard`)
-                    // navigate(`/dashboard}`)
-                }
-                else{
-                   console.log("error")
-                }
-            }).catch((error) => {
+        await axios.post('api/company/login', userObject)
+        .then((res) => {
+            console.log(res.data)
+            if(res.data.success){
+                dispatch({type:"LOGGEDIN",role:"company"})
+                navigate(`/dashboard`)
+            }
+            else{
+                console.log("error")
+            }
+        }).catch((error) => {
             if(error?.response?.data){
                 const {data} = error.response
                 console.log("catch catch")
@@ -72,19 +70,17 @@ const Login=()=>{
                     }
                 }
             }
-            
             console.log("catch part: "+error)
         });
         
     }
-    if(isLoggedIn){
-        navigate('/dashboard')
-    }
-    return (
+
+    if(!isLoggedIn){
+        return (
         <div className='z-10 text-bold box-border flex justify-center h-auto p-8 bg-gray-200'>
             <div className='text-bold bg-white drop-shadow-[0_0_3px_rgba(0,0,0,0.1)] mt-3 rounded-lg'>  
                 <form type="submit" onSubmit={onSubmit} className='px-36 py-8 rounded-lg' >
-                        <h4 className='my-2 font-medium text-lg inline-block'>Company Login</h4> 
+                        <h4 className='my-2 font-medium text-lg inline-block cursor-default'>Company Login</h4> 
                         <Link to='../scholar-login' className="font-bold underline ml-[138px] text-violet-400 hover:text-violet-800">Login as scholar</Link>
                     <div>
                         <label>Email</label>
@@ -103,5 +99,12 @@ const Login=()=>{
             </div>
         </div>
     )
+    }
+
+    return (
+        <Loading message={'Just a moment...'}/>
+    )
+
+    
 }
 export default Login

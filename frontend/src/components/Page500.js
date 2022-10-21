@@ -7,8 +7,8 @@ import Loading from './Loading'
 import {AiFillHome }from 'react-icons/ai'
 
 
-function Page403() {
-    document.title='403 Forbidden | DUCS Placement Portal'
+function Page500() {
+    document.title='500 Internal Server Error | DUCS Placement Portal'
 
     const {state, dispatch}= useContext(UserContext)
     const navigate = useNavigate()
@@ -40,15 +40,14 @@ function Page403() {
         return(<Loading message={'Just a moment'}/>)
     }
 
-    document.title='403 Forbidden | DUCS Placement Portal'
     if(isLoggedIn){
         return (
             <>
             <div className='bg-zinc-100 bg-gradient-to-b h-full z-50 from-white via-zinc-100/25 to-zinc-100/30'>
             <div className=' flex flex-col py-40 items-center '>
-                <p className='px-2 text-6xl font-bold text-zinc-400/75'>403</p>
-                <p className='px-2 text-3xl font-bold text-zinc-400/75'>Forbidden</p>
-                <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>You don't have permission to access this resouce</p>
+                <p className='px-2 text-6xl font-bold text-zinc-400/75'>500</p>
+                <p className='px-2 text-3xl font-bold text-zinc-400/75'>Internal Server Error</p>
+                <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>Server Error</p>
                 <p className='mx-6  mt-3 text-lg'>
                     <Link to="/dashboard"  className=' text-zinc-600 hover:text-white hover:bg-purple-300 hover:rounded-md hover:p-4 '>
                         <AiFillHome className=' mx-1 mb-1 inline-block'/>Back to Dashboard
@@ -61,11 +60,11 @@ function Page403() {
     }
     return (
         <>
-        <div className='bg-zinc-100 bg-gradient-to-b h-full z-50 from-white via-zinc-100/25 to-zinc-100/30'>
+        <div className='bg-zinc-100 bg-gradient-to-b  from-white via-zinc-100/25 to-zinc-100/30'>
         <div className=' flex flex-col py-40 items-center '>
-            <p className='px-2 text-6xl font-bold text-zinc-400/75'>403</p>
-            <p className='px-2 text-3xl font-bold text-zinc-400/75'>Forbidden</p>
-            <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>You don't have permission to access this resouce</p>
+            <p className='px-2 text-6xl font-bold text-zinc-400/75'>500</p>
+            <p className='px-2 text-3xl font-bold text-zinc-400/75'>Internal Server Error</p>
+            <p className='justify-center font-500 text-lg mt-3 p-5 text-zinc-400'>Server Error</p>
             <p className='mx-6  mt-3 text-lg'>
                 <Link to="/"  className=' text-zinc-600 hover:text-white hover:bg-purple-300 hover:rounded-md hover:p-4 '>
                     <AiFillHome className=' mx-1 mb-1 inline-block'/>Back to Home
@@ -77,4 +76,4 @@ function Page403() {
     )
     
   }
-export default Page403
+export default Page500

@@ -1,9 +1,11 @@
 export const initialState= 'USER';
 
-export const reducer = (state, action)=>{
+export const reducer = (state, action) => {
     if(action.type === 'LOGGEDIN'){
-        console.log("state"+state)
+        console.log("role:1 "+state)
         return action.role;
     }
-    return state;
+    action.role = "USER"
+    console.log("role:2 "+state)
+    return action.role;
 }
