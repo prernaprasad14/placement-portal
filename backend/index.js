@@ -4,17 +4,22 @@ const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const { JsonWebTokenError } = require('jsonwebtoken');
 const Scholar = require('./model/Scholar')
 const Company = require('./model/Company')
 const Admin = require('./model/Admin')
-//Import routes
+
+//route imports
 const adminRoute = require('./routes/admin/admin');
 const companyRoute = require('./routes/company');
 const scholarRoute = require('./routes/scholar');
 const userRoute = require('./routes/user');
-const { JsonWebTokenError } = require('jsonwebtoken');
 const User = require('./model/User');
-const {isAdmin, isScholar, isLoggedIn}= require('./middleware/authenticate')
+const {isAdmin, isScholar, isLoggedIn, authenticateUser}= require('./middleware/authenticate')
+const {urlencoded}= require('body-parser');
+
+
+
 
 
 dotenv.config();
@@ -25,56 +30,53 @@ require('./db/conn.js')
 //Middleware
 app.use(
     cors({
-        origin: 'http://localhost:3000', // 3000 is where we have set our frontend to run
+        origin:'http://localhost:3000',
         credentials: true,
     })
 );
 
+//enable when testing on tablet and mobile devices
+// var whitelist = ['http://localhost:3000' ,'http://process.env.IP_ADDRESS:3000'] // port 3000 is where the frontend is set to run
+
+// app.use(
+//     cors({
+//         origin: function (origin, callback) {
+//             if (whitelist.indexOf(origin) !== -1) {
+//               callback(null, true)
+//             } else {
+//               callback(new Error('Not allowed by CORS'))
+//             }
+//         },
+//         credentials: true,
+//     })
+// );
+
+app.use(express.urlencoded({
+    limit: '50mb', extended: true, parameterLimit: 1000000
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
-
-
-app.get('/' ,(req, res)=>{
-    console.log("request for homepage"+req)
-});
 
 //Route middleware
 app.use('/api/admin', adminRoute);
 app.use('/api/user', userRoute);
 app.use('/api/scholar', scholarRoute);
-app.use('/api/company', companyRoute);
+app.use('/api/company', companyRoute); 
 
-app.use('/scholars/:state', async (req, res)=>{
-    console.log("scholars route passed !")
-    const {state}=req.params
-    if(state==='ADMIN'){
-        const scholars = await Scholar.find({}, {password:0, token:0, createdAt:0, __v:0})
-        if(!scholars){
-            return res.status(400).json({success:false, message:"couldnt complete reqest"})
-        }const date= new Date()
-        console.log(date)
-        res.json({success: true, message:"retrieved scholars", scholars}) 
-    }else if(state==='COMPANY'){
-        const scholars = await Scholar.find({}, {password:0, placement_status : 0, token:0, createdAt:0, __v:0})
-        if(!scholars){
-            return res.status(400).json({success:false, message:"couldnt complete reqest"})
+app.use('/companies', authenticateUser, async (req, res)=>{
+    try{
+        if(req.role==='admin' || req.role==='scholar'){
+        const companies = await Company.find({}, {website:1, username:1, pre_placement_talk:1, coding_test_date:1})
+        const date= new Date()    
+        res.status(200).json({success: true, message:"Retrieved companies", companies})
+    }else{
+            res.status(403).json({success: true, message:"Unauthorized" })
         }
-        const date= new Date()
-        console.log(date)
-        res.json({success: true, message:"retrieved scholars", scholars}) 
+    }catch(err){
+        console.log(err)
+        res.status(500).json({success: false, message: "Internal Server Error" })
     }
-});
-
-app.use('/companies', isLoggedIn, async (req, res)=>{
-    console.log("companies route passed !")
-    const companies = await Company.find({}, { website:1, username:1, pre_placement_talk:1, coding_test_date:1})
-    // const companies = await Company.find({}, {"loginDetails.password":0, token:0, createdAt:0, __v:0, _id:0})
-    console.log("companies route passed !"+companies)
-    console.log("companies route passed !"+JSON.stringify(companies))
-    const date= new Date()
-    console.log(date)
-    res.json({success: true, message:"retrieved companies", companies})
 });
 
 

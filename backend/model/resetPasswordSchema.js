@@ -1,12 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); 
-const {mailTransport } = require('../mail');
 
 const resetPasswordSchema = new mongoose.Schema( { 
         owner:{
             type:mongoose.Schema.Types.ObjectId,
-            ref: "User",
+            ref: "Admin",
+            ref: "Scholar",
             ref: "Company",
             required: true
         },

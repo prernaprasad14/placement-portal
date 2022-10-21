@@ -1,18 +1,27 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const crypto = require('crypto');
-var nodemailer = require('nodemailer');
 const Credentials = require('../model/Credentials');
 const Company = require('../model/Company');
-const jwt = require('jsonwebtoken');
-const {validateCompanyRegistration,  validateLogin, validate} = require('../userinputvalidation');
-const cookieParser = require('cookie-parser');
-const { generateCreateUserMail } = require('../mail');
-const { authenticateCompany ,authenticateUser} = require('../middleware/authenticate');
+const {validateCompanyRegistration, validateLogin, validate} = require('../userinputvalidation');
+const {authenticateUser} = require('../middleware/authenticate');
+
+
+router.get('/is-company-registered',async(req, res)=>{
+    try{
+        console.log("GET company/is-company-registered")
+
+        const company = await Company.findOne({email:req.query.email})
+        if(!company) return res.status(412).json({success:false, message:'Company not registered'})
+        return res.status(200).json({success:true, message:'Company registered'})
+    }catch(error){
+        console.log(`Error occurred in GET company/is-company-registered for ${req.body.email}`,error)
+        res.status(500).json({success: false, message:"Internal Server Error"})
+    }
+});
 
 router.post('/register', validateCompanyRegistration, validate , async (req, res)=>{
     try{
-        console.log("hello")
+        console.log("POST company/register")
         
         const user = await Company.findOne({email:req.body.email})
         if(user) return res.status(400).json({success:false, message:"You already have an account"}).
@@ -20,34 +29,15 @@ router.post('/register', validateCompanyRegistration, validate , async (req, res
         console.log(req.body.username)
         console.log(req.body.confirmPassword)
         if(req.body.password !== req.body.confirmPassword)  return res.status(401).json({success:false, message:"passwords do not match"})
-
-      
-        console.log("1 here")
-        
-        const {username, email } = req.body
-        console.log("2 here "+username+" "+ email)
-        
-        const {cname, phone, website} = req.body
-        console.log("3 reached here "+cname+" "+ phone+" "+ website)
-        
-        const {head_name,head_email, head_mobile}= req.body
-        console.log("4 reached here "+head_name+" "+head_email+" "+ head_mobile)
-        
-        const {second_name,second_email, second_mobile}= req.body
-        console.log("5 reached here "+second_name+" "+second_email+" "+second_mobile)
-        
-        const {job_profile, designation, place_of_posting, job_desc, recruitment_type}= req.body
-        console.log("6 reached here "+job_profile+" "+designation+" "+ place_of_posting+" "+ job_desc+" "+ recruitment_type)
-        
-        const {annual_package, breakage_ctc}= req.body
-        console.log("7 reached here "+annual_package+" "+breakage_ctc)
-        
-        const {courses_allowed, aptitude_test, coding_test, interview, hr_round, any_other_rounds}= req.body
-        console.log("8 reached here "+courses_allowed+" "+ aptitude_test+" "+ coding_test+" "+ interview+" "+ hr_round+" "+ any_other_rounds)
-        
-        const {pre_placement_talk, coding_test_date, interview_date, notes}= req.body
-        console.log("9 reached here "+pre_placement_talk+" "+coding_test_date+" "+interview_date)
-        
+              
+        const {username, email } = req.body        
+        const {cname, phone, website} = req.body        
+        const {head_name,head_email, head_mobile}= req.body        
+        const {second_name,second_email, second_mobile}= req.body        
+        const {job_profile, designation, place_of_posting, job_desc, recruitment_type}= req.body        
+        const {annual_package, breakage_ctc}= req.body        
+        const {courses_allowed, aptitude_test, coding_test, interview, hr_round, any_other_rounds}= req.body        
+        const {pre_placement_talk, coding_test_date, interview_date, notes}= req.body        
         const password = await bcrypt.hash(req.body.password, 8)
    
         const newUser = new Company({
@@ -98,84 +88,116 @@ router.post('/register', validateCompanyRegistration, validate , async (req, res
             //   }
             } 
         );
-            console.log("newUser:: "+newUser)
-            const token = await newUser.generateToken();
-            res.cookie("jwt", token, {
-                expires:new Date(Date.now()+3000),
-                // secure:true,
-                //httpOnly: true
-            });
-            await newUser.save()
-            console.log(`Registered Company ${newUser}`)  
-            return res.status(201).json({success:true, message: `${newUser.username} registered successfully`, newUser })
-        }catch{err => console.log(err);}
+        const token = await newUser.generateToken();
+        res.cookie("jwt", token, {
+            expires:new Date(Date.now()+3000),
+        // secure:true,
+        //httpOnly: true
+        });
+        await newUser.save()
+    
+        Credentials.findOneAndUpdate({email:req.body.email},{status:'Registered'})
+        .then(res=>{
+            console.log("then"+res)
+        })
+        .catch(err=>{
+            console.log("catch"+err)
+        })
+
+        console.log(`Registered Company ${newUser}`)  
+        return res.status(201).json({success:true, message: `${newUser.username} registered successfully`, newUser })
+    }catch(error){
+            console.log("catch block "+error);
+            res.status(500).json({success:false, message:"Internal Server error"})
+    }
    
 });
 
 router.post('/login', validateLogin, validate,  async (req, res)=>{
    
-    const user = await Company.findOne({email:req.body.email})
+   try{ 
+        console.log("POST company/login")
+        const user = await Company.findOne({email:req.body.email})
    
-    if(!user) return res.status(400).json({success:false, message:"Invalid credentials"})
+        if(!user) return res.status(400).json({success:false, message:"Invalid credentials"})
    
-    const validPass = await bcrypt.compare(req.body.password, user.password)
-   
-    if(!validPass) return res.status(400).json({success:false, message:"Invalid credentials"})
+        const validPass = await bcrypt.compare(req.body.password, user.password)
+    
+        if(!validPass) return res.status(400).json({success:false, message:"Invalid credentials"})
 
-    const token =await user.generateToken()
-    const date = new Date();
-    
-    res.cookie("jwt", token, {
-        
-        expires:new Date( date + 30*24*60*60*1000),
-        maxAge:  30*24*60*60*1000,
-        // secure:true,
-        // httpOnly: true
-    });
-    console.log("hereeeeeee")
-    res.status(200).json({success: true, message:"Logged in", role:"COMPANY", user})
-    
+        const token =await user.generateToken()
+        const date = new Date();
+            res.cookie("jwt", token, {
+                
+                expires:new Date( date + 30*24*60*60*1000),
+                maxAge:  30*24*60*60*1000,
+                // secure:true,
+                httpOnly: true
+            });
+        res.status(200).json({success: true, message:"Logged in", role:"company", user})
+    }catch(error){
+        console.log(`Error occurred in GET company/login for ${req.body.email}`,error)
+        res.status(500).json({success: false, message:"Internal Server Error"})
+    }
     
 });
+
 router.get('/verify-email', async(req, res)=>{
-    const email = req.body.email
-    console.log("0 req.body"+JSON.stringify(req.body))
-    console.log("1 email"+ email)
-    const exists = await Company.findOne({email})
-    console.log("2 exists"+ exists)
-    if(exists) return res.status(400).json({success: false, message:"already registered"})
-    return res.status(200).json({success: true, message:"Not registered"})
+    try{
+        console.log("GET company/verify-email")
+        const email = req.body.email
+        const exists = await Company.findOne({email})
+        if(exists) return res.status(400).json({success: false, message:"already registered"})
+        return res.status(200).json({success: true, message:"Not registered"})
+    }catch(error){
+        console.log(`Error occurred in GET company/verify-email for ${req.body.email}`,error)
+        res.status(500).json({success: false, message:"Internal Server Error"})
+    }
 });
 
 router.get('/job-desc/:username/', authenticateUser, async(req, res)=>{
-    console.log("company /job-desc   passed route")
-    if(req.role=='scholar'){
-        var company= await Company.findOne({username : req.params.username},{password:0, token:0, email:0, head_name:0, head_email:0, second_email:0, second_mobile:0,
-                                             second_name:0})
-    }else{
-       company= await Company.findOne({username : req.params.username},{password:0, token:0,})
+   try{
+        console.log("GET compnay/job-desc/:username")
+        if(req.role=='admin' || req.role=='scholar'){
+            var company;
+            if(req.role=='scholar'){
+                company = await Company.findOne({username : req.params.username},
+                    {   password:0, token:0, email:0, 
+                        head_name:0, head_email:0, head_mobile:0,
+                        second_email:0, second_mobile:0, second_name:0
+                    })
+            }else{
+                company= await Company.findOne({username : req.params.username},{password:0, token:0})
+            }
 
+                if(!company){
+
+                    return res.status(404).json({success:false, message:"Not found"})
+                }
+            return res.status(200).json({success:true, company, role:req.role})
+        }
+        else{
+            return res.status(403).json({success:false, message:'Unauthorized'})
+            
+        }
+    }catch(error){
+        console.log(`Error occurred in  GET compnay/job-desc/:username while fetching usersname -${req.params.username}`,error)
+        res.status(500).json({success: false, message:"Internal Server Error"})
     }
-    return res.status(200).json({success:true, company})
 });
 
-router.get('/profile', authenticateCompany, async(req,res)=>{
-    console.log("company /profile   passed route")
-    // const user = Company.findById({"loginDetails.username": req.params.username}, function (err, user) {
-    //     if(err){ 
-    //         console.log(err);
-    //         return res.send(error)
-    //     }
-    //     else{
-    //         console.log( user);
-    //         return res.json({success:true ,message:`Retrieved user ${user.loginDetails.username}`, user}) 
-    //     }})
-            console.log( "company::profile");
-            console.log( req.user);
-            console.log( "company::profile");
-    res.status(200).json({success: true, message:"retrieved company profile", company:req.user})
-        console.log(req.user)
-      
+router.get('/profile', authenticateUser, async(req,res)=>{
+    try{
+        console.log("GET /company/profile ")
+        if(req.role ==='company'){
+            res.status(200).json({success: true, message:"Retrieved company profile", company:req.user, role:req.role})
+        }else{
+            res.status(500).json({success: false, message:"Internal Server Error"})
+        } 
+    }catch(error){
+        console.log("Error occurred in  GET /profile",error)
+        res.status(500).json({success: false, message:"Internal Server Error"})
+    }     
 });
 
 

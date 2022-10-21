@@ -89,7 +89,7 @@ const companySchema = new mongoose.Schema({
         },
         // salary_details:{
             annual_package: {
-                type : String,
+                type : Number,
                 required: true
             },
             breakage_ctc: {
@@ -101,27 +101,27 @@ const companySchema = new mongoose.Schema({
     // selectionDetails:{
         courses_allowed:{
             type:String,
-            enum:['MCA','Msc','both'],
+            enum:['MCA','Msc','Msc, MCA'],
             required: true
         },    
         aptitude_test:{
             type:String,
-            enum:['yes','no'],
+            enum:['Yes','No'],
             required : true
         },
         coding_test:{
             type:String,
-            enum:['yes','no'],
+            enum:['Yes','No'],
             required : true
         },
         interview:{
             type:String,
-            enum:['yes','no'],
+            enum:['Yes','No'],
             required : true
         },
         hr_round:{
             type:String,
-            enum:['yes','no'],
+            enum:['Yes','No'],
             required : true
         },
         any_other_rounds:{
@@ -148,33 +148,32 @@ const companySchema = new mongoose.Schema({
             required:true
         },
     // },
+    lastLogged:{
+        type:Date,
+        default:''
+    },
     createdAt:{
         type: Date,
         default: Date.now
     },
-    token: {
-        type: String,
-        required: true 
-    }
+    tokens:[{
+        token: {
+            type: String,
+            required: true 
+        }
+    }]
   
 });
 
 companySchema.methods.generateToken = async function (){
     try{
-        console.log("1 here")
         const token = jwt.sign({_id: this._id}, process.env.TOKEN_SECRET)
-        console.log("2 here")
-        // if(this.tokens.length == 0 ){
-            this.token = token
-            console.log("3 here "+token)
-            await this.save();  
-            console.log("4here ")
-        // }
-    
+        this.tokens = this.tokens.concat({token:token})
+        await this.save(); 
         return token
-    }catch(err){
-        
-        console.log(`error ${err}`) 
+
+    }catch(error){
+        console.log("Error occurred in company-generateToken", error)
     }
 }
 

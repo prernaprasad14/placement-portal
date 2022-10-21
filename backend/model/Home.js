@@ -47,6 +47,19 @@ const homeSchema = new mongoose.Schema( {
                 }
             }
         ],
+        brochures:[{
+            brochure:{
+                type:String,
+            },  
+            name: {
+                type: String,
+                required: [true, "Uploaded file must have a name"],
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+            }
+        }],
         createdAt :{
             type: Date,
             default: Date.now
@@ -57,24 +70,6 @@ const homeSchema = new mongoose.Schema( {
         }
 
 });
-
-homeSchema.methods.generateToken = async function (){
-    try{
-        console.log("1 1 here home")
-        const token = jwt.sign({_id: this._id}, process.env.TOKEN_SECRET)
-        console.log("2 2 here")
-        // if(this.tokens.length == 0 ){
-            this.token = token
-            console.log("3 3 here"+token)
-            await this.save();  
-            console.log("4 4 here ")
-            return token
-
-    }catch(err){
-        res.status(400).send(`error ${err}`)
-        console.log(`error ${err}`) 
-    }
-}
 
 module.exports = mongoose.model('home', homeSchema);
  

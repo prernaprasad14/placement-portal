@@ -27,7 +27,7 @@ exports.mailTransport = () =>
 		rateLimit:3, 
     });   
 
-exports.generateFooterMail = ( username, email, msg)=>{
+exports.generateContactFormMail = ( username, email, msg)=>{
 	return `
 	<div >
 	<table style="border: 2px solid #F7F7F7;table-layout:auto;min-width: 60%; max-width:100%;font-family: Arial, Helvetica, sans-serif; background-color:#fbfbfb; border-radius:13px">	

@@ -5,60 +5,59 @@ const Admin = require('../model/Admin')
 
 exports.authenticateUser = async(req, res, next)=>{
     try{
-        console.log("authenticate scholar middleware")
+        console.log("Middleware - authenticateUser")
         const token = req.cookies.jwt;
-        console.log("token"+token)
         if(!token){
-            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
+            return res.status(401).json({success: false, message:"Unauthorized: Please login", role:"USER"})
         } 
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
         console.log("verifyToken")
-        console.log(verifyToken)
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
         }
-        const admin = await Admin.findOne({_id:verifyToken._id, token});
+        const admin = await Admin.findOne({_id:verifyToken._id, token},{ _id:0,password:0, token:0 });
         if(!admin){
-            const scholar = await Scholar.findOne({_id:verifyToken._id, token});
+            const scholar = await Scholar.findOne({_id:verifyToken._id, token},{ _id:0,password:0, token:0 });
             if(!scholar){
-                const company = await Company.findOne({_id:verifyToken._id, token});
+                const company = await Company.findOne({_id:verifyToken._id, token},{ _id:0,password:0, token:0 });
                 if(!company) {throw new Error("company not found")}
                 req.token = token;
-                req.company = company;
-                req.companyId = company._id;
+                req.user = company;
+                req.userId = company._id;
                 req.role = 'company'
             }
             else{
                 req.token = token;
-                req.scholar = scholar;
-                req.scholarId = scholar._id;
+                req.user = scholar;
+                req.userId = scholar._id;
                 req.role = 'scholar'
             }
         }
         else{
                 req.token = token;
-                req.admin = admin;
-                req.adminId = admin._id;
+                req.user = admin;
+                req.userId = admin._id;
                 req.role = 'admin'
         }
         next();
     }catch{
-        console.log("Company authentication error")
+        console.log("Authentication error")
         return res.status(401).json({success: false, message: "Unauthorized access"})
 
     }
 }
+
 exports.authenticateScholar = async(req, res, next)=>{
     try{
-        console.log("authenticate scholar middleware")
+        console.log("Middleware - authenticateScholar")
         const token = req.cookies.jwt;
-        console.log("token"+token)
+
         if(!token){
-            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
+            return res.status(401).json({success: false, message:"Unauthorized: Please login", role:"USER"})
         } 
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
-        console.log("verifyToken")
-        console.log(verifyToken)
+        console.log("verifyToken",verifyToken)
+
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
         }
@@ -80,17 +79,17 @@ exports.authenticateScholar = async(req, res, next)=>{
 
     }
 }
+
 exports.authenticateCompany = async(req, res, next)=>{
     try{
-        console.log("authenticate company middleware")
+        console.log("Middleware - authenticateCompany")
         const token = req.cookies.jwt;
-        console.log("token"+token)
+
         if(!token){
-            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
+            return res.status(401).json({success: false, message:"Unauthorized: Please login", role:"USER"})
         } 
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
         console.log("verifyToken")
-        console.log(verifyToken)
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
         }
@@ -110,48 +109,50 @@ exports.authenticateCompany = async(req, res, next)=>{
 
 exports.isLoggedIn = async (req, res, next)=>{
     try{
-        console.log("authenticate user middleware")
+        console.log("Middleware - isLoggedIn")
         const token = req.cookies.jwt;
-        console.log("token"+token)
         if(!token){
-            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
-        }
-        const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
-        console.log("verifyToken")
-        console.log(verifyToken)
-        if(!verifyToken) {
-            return res.status(403).json({success: false, message:"Forbidden"})
-        }
-        const admin = await Admin.findOne({_id:verifyToken._id, token});
-        console.log(admin)
-        if(!admin){
-            const scholar = await Scholar.findOne({_id:verifyToken._id, token});
-            console.log(scholar)
-            if(!scholar){
-                const company = await Company.findOne({_id:verifyToken._id, token});
-                console.log(company)
-                if(!company) { return res.status(404).json({success:false, message:"not found"})}
-                req.token = token;
-                req.company = company;
-                req.companyId = company._id;
-                req.role = 'COMPANY'
+            req.role= "USER"
+        }else{
+            const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
+            console.log("verifyToken",verifyToken)
+
+            if(!verifyToken) {
+                return res.status(403).json({success: false, message:"Forbidden"})
+            }
+            const admin = await Admin.findOne({_id:verifyToken._id, token});
+            if(!admin){
+                console.log("Not admin")
+                const scholar = await Scholar.findOne({_id:verifyToken._id, token});
+                if(!scholar){
+                    console.log("Not scholar")
+                    const company = await Company.findOne({_id:verifyToken._id, token});
+                    if(!company){ 
+                        return res.status(404).json({success:false, message:"not found"})
+                    }
+                    req.token = token;
+                    req.user = company;
+                    req.userId = company._id;
+                    req.role = 'company'
+                }
+                else{
+                    req.token = token;
+                    req.user = scholar;
+                    req.userId = scholar._id;
+                    req.role = 'scholar'
+                }
             }
             else{
-                req.token = token;
-                req.scholar = scholar;
-                req.scholarId = scholar._id;
-                req.role = 'SCHOLAR'
+                    req.token = token;
+                    req.user = admin;
+                    req.userId = admin._id;
+                    req.role = 'admin'
             }
         }
-        else{
-                req.token = token;
-                req.admin = admin;
-                req.adminId = admin._id;
-                req.role = 'ADMIN'
-        }
+        
         next();
     }catch{
-        console.log("Company authentication error")
+        console.log("Middleware - isLoggedIn authentication error")
         return res.status(401).json({success: false, message: "Unauthorized access"})
 
     }
@@ -159,10 +160,11 @@ exports.isLoggedIn = async (req, res, next)=>{
 
 exports.isAdmin=async(req,res,next)=>{
     try{
-        console.log("isAdmin middleware")
-            const token = req.cookies.jwt
+        console.log("Middleware - isAdmin")
+
+        const token = req.cookies.jwt
         if(!token)
-            res.status(401).json({success:false, message:"Not authorized"})
+        return res.status(401).json({success: false, message:"Unauthorized: Please login", role:"USER"})
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
@@ -174,20 +176,21 @@ exports.isAdmin=async(req,res,next)=>{
         req.userId = user._id;
         next();
     }catch(error){
-        console.log("isAdmin error"+error)
+        console.log("isAdmin error",error)
     }
 }
+
 exports.isScholar=async(req,res,next)=>{
     try{
-        console.log("isScholar middleware")
+        console.log("Middleware - isScholar")
         const token = req.cookies.jwt;
-        console.log("token"+token)
+
         if(!token){
-            return res.status(401).json({success: false, message:"Unauthorized: Please login"})
+            return res.status(401).json({success: false, message:"Unauthorized: Please login", role:"USER"})
         } 
         const verifyToken = jwt.verify(token, process.env.TOKEN_SECRET)
-        console.log("verifyToken")
-        console.log(verifyToken)
+        console.log("verifyToken",verifyToken)
+
         if(!verifyToken) {
             return res.status(403).json({success: false, message:"Forbidden"})
         }
@@ -200,7 +203,7 @@ exports.isScholar=async(req,res,next)=>{
 
         next();
     }catch{
-        console.log("scholar authentication error")
+        console.log("Error middleware - isScholar")
         return res.status(401).json({success: false, message: "Unauthorized access"})
 
     }
