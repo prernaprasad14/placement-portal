@@ -70,7 +70,7 @@ const JobDesc=()=>{
                 </div>
                 <div className="px-5 py-3">
                 <div className="row py-2 sm:ml-8 "> 
-                        <div className="col-md-12"><label className="font-normal text-2xl">Compnay name :</label>
+                        <div className="col-md-12"><label className="font-normal text-2xl">Company name :</label>
                             <p className="inline-block pl-2 py-1 rounded-md">
                                 {data.cname}
                                
