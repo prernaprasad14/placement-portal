@@ -171,7 +171,7 @@ const ManageBrochures=()=>{
                                     const id= brochure[1]._id
                                     return <li name='file' value={file} className='list-disc border-slate-100 py-2 border-b-2 only:border-b-0 last:border-b-0 font-semibold '>
                                     <button className='px-2' onClick={(e)=>handleDelete(e,id)} type='button' >
-                                        <CgFileRemove className='mr-4 hover:cursor-pointer hover:text-rose-500 text-2xl inline-block'/>{file}</button></li>
+                                        <CgFileRemove className='mr-4 hover:cursor-pointer hover:text-rose-500 text-2xl inline-block'/></button>{file}</li>
                                 })}
                             </ul>
                         </section>
