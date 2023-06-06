@@ -14,10 +14,8 @@ const Card=({data})=> {
 
     return(
         <>
-            <div className='border-t-[30px] rounded-md border-violet-300  bg-white flex drop-shadow-md flex-col items-center m-2 w-56'>
-                <div className='relative border-t-2  border-r-2 mt-[-23px] p-2 bg-gray-100 border-gray-200 rounded drop-shadow-sm  w-2 h-2'></div>
+            <div className='border-t-[10px] rounded-md border-violet-300  bg-white flex drop-shadow-md flex-col items-center m-2 w-56'>
                 <div className='my-3 form-group flex flex-col justify-center items-center'>
-                   
                 {
                     Object.entries(avatar).map((datum, index)=>{
                         const base64String = btoa(new Uint8Array(avatar.img.data.data).reduce(function (data, byte) {
